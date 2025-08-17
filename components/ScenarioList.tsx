@@ -24,6 +24,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { apiCall } from "../utils/api";
 import API from "../api/api";
 import Loader from "./Loader";
+import { PSBColors } from "../utils/PSBColors";
 
 const { width } = Dimensions.get("window");
 
@@ -135,7 +136,7 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      <LinearGradient colors={["#1e293b", "#334155"]} style={styles.container}>
+      <LinearGradient colors={["#f8fafc", "#f8fafc"]} style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           {/* Header */}
           <View style={styles.header}>
@@ -195,7 +196,7 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
                           color={
                             selectedCategory === category.id
                               ? "#ffffff"
-                              : "#94a3b8"
+                              : "rgba(0,0,0,0.5)"
                           }
                         />
                         <Text
@@ -342,7 +343,7 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
                     </Text>
 
                     <View style={styles.playButton}>
-                      <Play size={16} color="#3b82f6" />
+                      <Play size={16} color={PSBColors.primary.darkGreen} />
                       <Text style={styles.playButtonText}>
                         {completed ? "Play Again" : "Start Scenario"}
                       </Text>
@@ -382,13 +383,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#ffffff",
+    color: "#000",
     textAlign: "center",
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: "#cbd5e1",
+    color: "rgba(0,0,0,0.5)",
     textAlign: "center",
     lineHeight: 24,
     marginBottom: 24,
@@ -396,12 +397,12 @@ const styles = StyleSheet.create({
   statsContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 20,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: "rgba(0, 0, 0, 0.05)",
   },
   statItem: {
     flex: 1,
@@ -410,18 +411,18 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#ffffff",
+    color: "#000",
     marginTop: 4,
     marginBottom: 2,
   },
   statLabel: {
     fontSize: 12,
-    color: "#94a3b8",
+    color: "rgba(0,0,0,0.5)",
   },
   statDivider: {
     width: 1,
     height: 40,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
     marginHorizontal: 16,
   },
   filtersContainer: {
@@ -433,31 +434,36 @@ const styles = StyleSheet.create({
   filterTitle: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "black",
     marginBottom: 12,
   },
   filterButtons: {
     flexDirection: "row",
     gap: 8,
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
+    borderRadius: 20,
+    borderColor: "rgba(0, 0, 0, 0.05)",
+    borderWidth: 1,
+    // padding: 4,
   },
   filterButton: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(255, 255, 255, 0.05)",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 18,
+    paddingVertical: 10,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.1)",
     gap: 8,
   },
   filterButtonActive: {
-    backgroundColor: "#3b82f6",
-    borderColor: "#3b82f6",
+    backgroundColor: PSBColors.primary.darkGreen,
+    borderColor: PSBColors.primary.darkGreen,
   },
   filterButtonText: {
     fontSize: 14,
-    color: "#94a3b8",
+    color: "rgba(0,0,0,0.5)",
     fontWeight: "500",
   },
   filterButtonTextActive: {
@@ -469,16 +475,21 @@ const styles = StyleSheet.create({
   scenariosTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#000",
     marginBottom: 16,
   },
   scenarioCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: "rgba(50, 50, 50, 0.01)",
     borderRadius: 16,
     padding: 20,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: "rgba(0, 0, 0, 0.1)",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    // elevation: 2,
   },
   completedCard: {
     borderColor: "rgba(16, 185, 129, 0.3)",
@@ -508,13 +519,13 @@ const styles = StyleSheet.create({
   scenarioTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#000",
     marginBottom: 4,
     lineHeight: 24,
   },
   scenarioDescription: {
     fontSize: 14,
-    color: "#94a3b8",
+    color: "rgba(0,0,0,0.5)",
     lineHeight: 20,
   },
   completedBadge: {
@@ -559,22 +570,24 @@ const styles = StyleSheet.create({
   learningObjective: {
     flex: 1,
     fontSize: 13,
-    color: "#cbd5e1",
+    color: "rgba(0,0,0,0.4)",
     lineHeight: 18,
     marginRight: 16,
   },
   playButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(59, 130, 246, 0.2)",
+    backgroundColor: PSBColors.primary.lightGreen,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
+    borderWidth: 1,
+    borderColor: PSBColors.primary.green,
     gap: 8,
   },
   playButtonText: {
     fontSize: 14,
-    color: "#60a5fa",
+    color: PSBColors.primary.darkGreen,
     fontWeight: "600",
   },
   emptyState: {

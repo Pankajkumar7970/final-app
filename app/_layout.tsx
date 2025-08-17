@@ -7,8 +7,11 @@ import { Provider } from "react-redux";
 import { AuthProvider } from "../contexts/AuthContext";
 import store from "../redux/store";
 import Toast from "react-native-toast-message";
-import { GoalsProvider } from "../contexts/GoalsContext";
-import { SecurityProvider, SecurityStatusIndicator } from "../components/SecurityProvider";
+
+import {
+  SecurityProvider,
+  SecurityStatusIndicator,
+} from "../components/SecurityProvider";
 
 function MainLayout() {
   useFrameworkReady();
@@ -16,17 +19,15 @@ function MainLayout() {
   return (
     <SecurityProvider>
       <ThemeProvider>
-        <GoalsProvider>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <AuthProvider>
-              <Slot />
-              <StatusBar style="light" backgroundColor="#1a1a2e" />
-              <SecurityStatusIndicator />
-              {/* ✅ Global Toast */}
-              <Toast position="top" visibilityTime={3000} />
-            </AuthProvider>
-          </GestureHandlerRootView>
-        </GoalsProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <AuthProvider>
+            <Slot />
+            <StatusBar style="light" backgroundColor="#1a1a2e" />
+            <SecurityStatusIndicator />
+            {/* ✅ Global Toast */}
+            <Toast position="top" visibilityTime={3000} />
+          </AuthProvider>
+        </GestureHandlerRootView>
       </ThemeProvider>
     </SecurityProvider>
   );

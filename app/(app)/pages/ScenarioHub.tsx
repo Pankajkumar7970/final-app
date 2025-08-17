@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, BackHandler } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScenarioList } from "../../../components/ScenarioList";
 import { ScenarioSimulator } from "../../../components/ScenarioSimulator";
@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import API from "../../../api/api"; // Adjust the import path as necessary
 import axios from "axios";
 import Loader from "../../../components/Loader";
+import { router, useFocusEffect } from "expo-router";
 
 const COMPLETED_SCENARIOS_KEY = "completed_scenarios";
 
@@ -16,6 +17,17 @@ export default function ScenarioHub() {
   );
   const [completedScenarios, setCompletedScenarios] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+
+  useFocusEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        router.push("/(app)/(tabs)");
+        return true;
+      }
+    );
+    return () => backHandler.remove(); // Clean up the listener
+  });
 
   useEffect(() => {
     loadCompletedScenarios();
@@ -40,14 +52,6 @@ export default function ScenarioHub() {
         );
       }
       setLoading(false);
-
-      // If you want to fallback to local storage if no progress is returned
-      // else {
-      //   const stored = await AsyncStorage.getItem(COMPLETED_SCENARIOS_KEY);
-      //   if (stored) {
-      //     setCompletedScenarios(JSON.parse(stored));
-      //   }
-      // }
     } catch (error) {
       console.error("Failed to load completed scenarios:", error);
     }
@@ -65,12 +69,6 @@ export default function ScenarioHub() {
     });
     // console.log("Scenario", response.data.choice);
     return [response.data.choice, response.data.points]; // Assuming the API returns the updated scenario data
-
-    // console.log("Scenario completion response:", response.data);
-    // if (result.scenarioId) {
-    //   saveCompletedScenario(result.scenarioId);
-    // }
-    // setCurrentScenarioId(null);
   };
 
   const handleExit = () => {
@@ -110,6 +108,6 @@ export default function ScenarioHub() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1e293b",
+    backgroundColor: "#f8fafc",
   },
 });

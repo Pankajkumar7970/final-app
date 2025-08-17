@@ -1,6 +1,7 @@
 import { Redirect, Stack } from "expo-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { View, Text, ActivityIndicator } from "react-native";
+import { GoalsProvider } from "../../contexts/GoalsContext";
 
 export default function AppLayout() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -29,10 +30,12 @@ export default function AppLayout() {
 
   // Render the protected app
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
-      <Stack.Screen name="(tabs)" />
-      {/* <Stack.Screen name="pages" /> */}
-    </Stack>
+    <GoalsProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(tabs)" />
+        {/* <Stack.Screen name="pages" /> */}
+      </Stack>
+    </GoalsProvider>
   );
 }

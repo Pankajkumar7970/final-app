@@ -185,8 +185,6 @@ export default function SignupScreen({ onSignupSuccess }) {
           error?.response?.data?.error || "Failed to send OTP";
         Toast.show({ type: "error", text1: errorMessage });
       }
-
-      // Simulate API call
     }
   };
 

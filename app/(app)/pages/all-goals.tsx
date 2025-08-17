@@ -28,6 +28,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useGoals } from "../../../contexts/GoalsContext";
+import { PSBColors } from "../../../utils/PSBColors";
 
 const { width } = Dimensions.get("window");
 
@@ -148,7 +149,7 @@ export default function AllGoals() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <LinearGradient
-        colors={["#667eea", "#764ba2"]}
+        colors={[PSBColors.gradient.primary[0], PSBColors.gradient.primary[1]]}
         style={styles.headerGradient}
       >
         <View style={styles.header}>
@@ -165,9 +166,9 @@ export default function AllGoals() {
               found
             </Text>
           </View>
-          <TouchableOpacity style={styles.searchButton}>
+          {/* <TouchableOpacity style={styles.searchButton}>
             <Search size={24} color="#FFFFFF" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </LinearGradient>
 
@@ -187,10 +188,10 @@ export default function AllGoals() {
               return (
                 <TouchableOpacity
                   key={category.id}
-                  style={[
-                    styles.filterItem,
-                    isSelected && styles.filterItemActive,
-                  ]}
+                  // style={[
+                  //   styles.filterItem,
+                  //   isSelected && styles.filterItemActive,
+                  // ]}
                   onPress={() => setFilterCategory(category.id)}
                 >
                   {isSelected ? (
@@ -204,12 +205,17 @@ export default function AllGoals() {
                       </Text>
                     </LinearGradient>
                   ) : (
-                    <>
+                    <View
+                      style={[
+                        styles.filterItem,
+                        isSelected && styles.filterItemActive,
+                      ]}
+                    >
                       <IconComponent size={18} color={category.color} />
                       <Text style={styles.filterText}>
                         {category.name} ({categoryGoals})
                       </Text>
-                    </>
+                    </View>
                   )}
                 </TouchableOpacity>
               );
@@ -305,7 +311,7 @@ export default function AllGoals() {
                   </View>
                 </View>
 
-                <View style={styles.goalActions}>
+                {/* <View style={styles.goalActions}>
                   <TouchableOpacity
                     style={styles.contributeButton}
                     onPress={(e) => {
@@ -316,7 +322,7 @@ export default function AllGoals() {
                     <Plus size={16} color="#FFFFFF" />
                     <Text style={styles.contributeButtonText}>Add Money</Text>
                   </TouchableOpacity>
-                </View>
+                </View> */}
               </LinearGradient>
             </TouchableOpacity>
           );
@@ -364,6 +370,7 @@ const styles = StyleSheet.create({
   headerCenter: {
     flex: 1,
     alignItems: "center",
+    marginRight: 30,
   },
   headerTitle: {
     fontSize: 24,
@@ -405,12 +412,13 @@ const styles = StyleSheet.create({
   },
   filterItemActive: {
     borderColor: "transparent",
+    backgroundColor: "transparent",
   },
   filterGradient: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 4,
-    paddingVertical: 2,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
     borderRadius: 16,
   },
   filterText: {

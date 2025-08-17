@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Audio } from 'expo-av';
-import { Play, Pause, RotateCcw, Volume2 } from 'lucide-react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useState, useEffect, useCallback } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Audio } from "expo-av";
+import { Play, Pause, RotateCcw, Volume2 } from "lucide-react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useFocusEffect } from "@react-navigation/native";
+import { PSBColors } from "../utils/PSBColors";
 
 interface AudioPlayerProps {
   audioSrc: string | number;
@@ -11,7 +12,11 @@ interface AudioPlayerProps {
   onEnd?: () => void;
 }
 
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc, title, onEnd }) => {
+const AudioPlayer: React.FC<AudioPlayerProps> = ({
+  audioSrc,
+  title,
+  onEnd,
+}) => {
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -19,7 +24,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc, title, onEnd }) => 
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    console.log('Received audioSrc:', audioSrc); // ✅ Log the incoming audioSrc
+    console.log("Received audioSrc:", audioSrc); // ✅ Log the incoming audioSrc
     loadAudio();
     return () => {
       if (sound) {
@@ -41,15 +46,17 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc, title, onEnd }) => 
   );
 
   const loadAudio = async () => {
-    const BASE_AUDIO_URL = "https://cdn.jsdelivr.net/gh/Nishant-Manocha/FineduGuard_StaticFiles@main/audio";
+    const BASE_AUDIO_URL =
+      "https://cdn.jsdelivr.net/gh/Nishant-Manocha/FineduGuard_StaticFiles@main/audio";
     try {
       const source =
-        typeof audioSrc === 'string' ? { uri: `${BASE_AUDIO_URL}/${audioSrc}` } : audioSrc;
+        typeof audioSrc === "string"
+          ? { uri: `${BASE_AUDIO_URL}/${audioSrc}` }
+          : audioSrc;
 
-      const { sound: newSound } = await Audio.Sound.createAsync(
-        source,
-        { shouldPlay: false }
-      );
+      const { sound: newSound } = await Audio.Sound.createAsync(source, {
+        shouldPlay: false,
+      });
 
       setSound(newSound);
 
@@ -67,7 +74,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc, title, onEnd }) => 
         }
       });
     } catch (error) {
-      console.log('Audio loading error:', error);
+      console.log("Audio loading error:", error);
       setIsLoaded(true);
       setDuration(180000);
     }
@@ -84,7 +91,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc, title, onEnd }) => 
       }
       setIsPlaying(!isPlaying);
     } catch (error) {
-      console.log('Playback error:', error);
+      console.log("Playback error:", error);
     }
   };
 
@@ -95,14 +102,14 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc, title, onEnd }) => 
       setCurrentTime(0);
       setIsPlaying(false);
     } catch (error) {
-      console.log('Restart error:', error);
+      console.log("Restart error:", error);
     }
   };
 
   const formatTime = (timeMs: number) => {
     const minutes = Math.floor(timeMs / 60000);
     const seconds = Math.floor((timeMs % 60000) / 1000);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
@@ -110,11 +117,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc, title, onEnd }) => 
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['rgba(255,255,255,0.9)', 'rgba(255,255,255,0.6)']}
+        colors={["rgba(255,255,255,0.9)", "rgba(255,255,255,0.6)"]}
         style={styles.gradient}
       >
         <View style={styles.header}>
-          <Volume2 size={20} color="#1e40af" />
+          <Volume2 size={20} color={PSBColors.primary.darkGreen} />
           <Text style={styles.title} numberOfLines={2}>
             {title}
           </Text>
@@ -126,7 +133,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc, title, onEnd }) => 
             onPress={restart}
             disabled={!isLoaded}
           >
-            <RotateCcw size={20} color={!isLoaded ? '#9ca3af' : '#1e40af'} />
+            <RotateCcw
+              size={20}
+              color={!isLoaded ? "#9ca3af" : PSBColors.primary.darkGreen}
+            />
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -135,7 +145,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc, title, onEnd }) => 
             disabled={!isLoaded}
           >
             <LinearGradient
-              colors={['#3b82f6', '#1d4ed8']}
+              colors={[
+                PSBColors.gradient.primary[0],
+                PSBColors.gradient.primary[1],
+              ]}
               style={styles.playButtonGradient}
             >
               {isPlaying ? (
@@ -168,22 +181,64 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioSrc, title, onEnd }) => 
 };
 
 const styles = StyleSheet.create({
-  container: { borderRadius: 16, overflow: 'hidden', elevation: 4, shadowColor: '#1e40af', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.1, shadowRadius: 20 },
+  container: {
+    borderRadius: 16,
+    overflow: "hidden",
+    shadowColor: "#1e40af",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 20,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+  },
   gradient: { padding: 24 },
-  header: { flexDirection: 'row', alignItems: 'center', marginBottom: 16 },
-  title: { fontSize: 16, fontWeight: '500', color: '#1f2937', marginLeft: 12, flex: 1 },
-  controls: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
-  controlButton: { width: 48, height: 48, borderRadius: 24, backgroundColor: 'rgba(30, 64, 175, 0.1)', alignItems: 'center', justifyContent: 'center', marginRight: 16 },
-  playButton: { width: 64, height: 64, borderRadius: 32, overflow: 'hidden' },
-  playButtonGradient: { width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' },
+  header: { flexDirection: "row", alignItems: "center", marginBottom: 16 },
+  title: {
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#1f2937",
+    marginLeft: 12,
+    flex: 1,
+  },
+  controls: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 16,
+  },
+  controlButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: PSBColors.primary.lightGreen,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 16,
+  },
+  playButton: { width: 64, height: 64, borderRadius: 32, overflow: "hidden" },
+  playButtonGradient: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   disabled: { opacity: 0.5 },
   progressContainer: { marginTop: 8 },
-  progressBar: { height: 8, backgroundColor: '#e5e7eb', borderRadius: 4, overflow: 'hidden' },
-  progressFill: { height: '100%', backgroundColor: '#3b82f6' },
-  timeContainer: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
-  timeText: { fontSize: 12, color: '#6b7280' },
-  loadingContainer: { alignItems: 'center', marginTop: 8 },
-  loadingText: { fontSize: 12, color: '#6b7280' },
+  progressBar: {
+    height: 8,
+    backgroundColor: "#e5e7eb",
+    borderRadius: 4,
+    overflow: "hidden",
+  },
+  progressFill: { height: "100%", backgroundColor: "#3b82f6" },
+  timeContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 8,
+  },
+  timeText: { fontSize: 12, color: "#6b7280" },
+  loadingContainer: { alignItems: "center", marginTop: 8 },
+  loadingText: { fontSize: 12, color: "#6b7280" },
 });
 
 export default AudioPlayer;

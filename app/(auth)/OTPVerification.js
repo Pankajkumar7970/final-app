@@ -1,12 +1,21 @@
 import React, { useState, useRef } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { signUp, sendOtp } from "../../redux/services/operations/authServices";
 import Toast from "react-native-toast-message";
 import SecureTextInput from "../../components/SecureTextInput";
+import { PSBColors } from "../../utils/PSBColors";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 
-const OTPVerification = ({ onBackToSignup, onVerificationComplete }) => {
+const OTPVerification = ({ onVerificationComplete }) => {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputs = useRef([]);
   const dispatch = useDispatch();
@@ -33,19 +42,38 @@ const OTPVerification = ({ onBackToSignup, onVerificationComplete }) => {
       if (result?.error) {
         const errorMessage = result.error.toLowerCase();
 
-        if (errorMessage.includes("user already exists") || errorMessage.includes("already registered")) {
-          Toast.show({ type: "error", text1: "User already exists", text2: "Please login instead" });
+        if (
+          errorMessage.includes("user already exists") ||
+          errorMessage.includes("already registered")
+        ) {
+          Toast.show({
+            type: "error",
+            text1: "User already exists",
+            text2: "Please login instead",
+          });
           const { router } = await import("expo-router");
           router.replace("/");
           return;
         }
 
-        if (errorMessage.includes("invalid otp") || errorMessage.includes("otp expired") || errorMessage.includes("incorrect otp")) {
-          Toast.show({ type: "error", text1: "Invalid or expired OTP", text2: "Please try again or request a new OTP" });
+        if (
+          errorMessage.includes("invalid otp") ||
+          errorMessage.includes("otp expired") ||
+          errorMessage.includes("incorrect otp")
+        ) {
+          Toast.show({
+            type: "error",
+            text1: "Invalid or expired OTP",
+            text2: "Please try again or request a new OTP",
+          });
           return;
         }
 
-        Toast.show({ type: "error", text1: "Verification failed", text2: result.error });
+        Toast.show({
+          type: "error",
+          text1: "Verification failed",
+          text2: result.error,
+        });
         return;
       }
 
@@ -69,19 +97,37 @@ const OTPVerification = ({ onBackToSignup, onVerificationComplete }) => {
       if (response?.error) {
         const errorMessage = response.error.toLowerCase();
 
-        if (errorMessage.includes("user already exists") || errorMessage.includes("already registered")) {
-          Toast.show({ type: "error", text1: "User already exists", text2: "Please login instead" });
+        if (
+          errorMessage.includes("user already exists") ||
+          errorMessage.includes("already registered")
+        ) {
+          Toast.show({
+            type: "error",
+            text1: "User already exists",
+            text2: "Please login instead",
+          });
           const { router } = await import("expo-router");
           router.replace("/");
           return;
         }
 
-        Toast.show({ type: "error", text1: "Failed to resend OTP", text2: response.error });
+        Toast.show({
+          type: "error",
+          text1: "Failed to resend OTP",
+          text2: response.error,
+        });
       } else {
-        Toast.show({ type: "success", text1: "OTP resent successfully", text2: "Please check your email" });
+        Toast.show({
+          type: "success",
+          text1: "OTP resent successfully",
+          text2: "Please check your email",
+        });
       }
     } else {
-      Toast.show({ type: "error", text1: "Email not found. Please go back to signup." });
+      Toast.show({
+        type: "error",
+        text1: "Email not found. Please go back to signup.",
+      });
     }
   };
 
@@ -91,16 +137,18 @@ const OTPVerification = ({ onBackToSignup, onVerificationComplete }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Back Button */}
-      <TouchableOpacity style={styles.backBtn} onPress={onBackToSignup}>
+      <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
         <Ionicons name="arrow-back" size={20} color="#151717" />
       </TouchableOpacity>
 
       {/* Card */}
       <View style={styles.card}>
         <Text style={styles.title}>Enter OTP</Text>
-        <Text style={styles.subtitle}>We have sent a verification code to your email address</Text>
+        <Text style={styles.subtitle}>
+          We have sent a verification code to your email address
+        </Text>
 
         <View style={styles.otpContainer}>
           {otp.map((digit, index) => (
@@ -116,8 +164,14 @@ const OTPVerification = ({ onBackToSignup, onVerificationComplete }) => {
           ))}
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleVerify} disabled={loading}>
-          <Text style={styles.buttonText}>{loading ? "Verifying..." : "Verify OTP"}</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleVerify}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>
+            {loading ? "Verifying..." : "Verify OTP"}
+          </Text>
         </TouchableOpacity>
 
         <View style={styles.resendContainer}>
@@ -127,7 +181,7 @@ const OTPVerification = ({ onBackToSignup, onVerificationComplete }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -145,7 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 25,
     alignItems: "center",
-    shadowColor: "#1b8a5a",
+    shadowColor: PSBColors.primary.darkGreen,
     shadowOpacity: 0.15,
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
@@ -153,7 +207,7 @@ const styles = StyleSheet.create({
   },
   backBtn: {
     position: "absolute",
-    top: 40,
+    top: 50,
     left: 20,
     backgroundColor: "#f1f9f6",
     borderRadius: 25,
@@ -162,7 +216,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#8fcba3",
+    borderColor: PSBColors.primary.darkGreen,
     shadowColor: "#8fcba3",
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 2 },
@@ -180,7 +234,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
     textAlign: "center",
-    color:"#c0392b",
+    color: "#c0392b",
     marginVertical: 10,
   },
   otpContainer: {
@@ -201,7 +255,7 @@ const styles = StyleSheet.create({
     color: "#1e2a3a",
     fontSize: 20,
     borderWidth: 1.5,
-    borderColor: "#8fcba3",
+    borderColor: PSBColors.primary.darkGreen,
     shadowColor: "#8fcba3",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
@@ -209,7 +263,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   button: {
-    backgroundColor: "#1b8a5a",
+    backgroundColor: PSBColors.primary.darkGreen,
     borderRadius: 12,
     height: 50,
     justifyContent: "center",

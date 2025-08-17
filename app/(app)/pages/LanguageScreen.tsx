@@ -8,6 +8,7 @@ import {
   Image,
   Animated,
   Dimensions,
+  BackHandler,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Shield, ChevronDown, Globe } from "lucide-react-native";
@@ -15,6 +16,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { languages } from "../../../data/lessonsData";
 import API from "../../../api/api";
 import Loader from "../../../components/Loader";
+import { PSBColors } from "../../../utils/PSBColors";
+import { router, useFocusEffect } from "expo-router";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -24,6 +27,17 @@ const LanguageScreen: React.FC = ({ navigation }: any) => {
   const [currentLessons, setCurrentLessons] = useState<any[]>([]);
   const [fadeAnim] = useState(new Animated.Value(0));
   const [loading, setLoading] = useState(false);
+
+  useFocusEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        router.push("/(app)/(tabs)/education");
+        return true;
+      }
+    );
+    return () => backHandler.remove();
+  });
 
   useEffect(() => {
     (async () => {
@@ -73,7 +87,10 @@ const LanguageScreen: React.FC = ({ navigation }: any) => {
           {/* Header */}
           <View style={styles.header}>
             <LinearGradient
-              colors={["#3b82f6", "#1d4ed8"]}
+              colors={[
+                PSBColors.gradient.primary[0],
+                PSBColors.gradient.primary[1],
+              ]}
               style={styles.logoGradient}
             >
               <Shield size={32} color="white" />
@@ -92,7 +109,7 @@ const LanguageScreen: React.FC = ({ navigation }: any) => {
               style={styles.cardGradient}
             >
               <View style={styles.languageHeader}>
-                <Globe size={20} color="#1e40af" />
+                <Globe size={20} color={PSBColors.primary.darkGreen} />
                 <Text style={styles.languageTitle}>Select Your Language</Text>
               </View>
 
@@ -223,7 +240,9 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: "hidden",
     marginBottom: 24,
-    elevation: 4,
+    // elevation: 2,
+    borderColor: "#e5e7eb",
+    borderWidth: 1,
   },
   cardGradient: { padding: 24 },
   languageHeader: {

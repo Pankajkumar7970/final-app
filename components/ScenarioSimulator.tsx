@@ -28,6 +28,7 @@ import { router } from "expo-router";
 import { apiCall } from "../utils/api";
 import API from "../api/api";
 import Loader from "./Loader";
+import { PSBColors } from "../utils/PSBColors";
 
 const { width } = Dimensions.get("window");
 
@@ -61,7 +62,7 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
         const data = response.data;
         console.log("Fetched scenario data:", data);
         setCurrentScenario(data.scenario);
-        setTimeLeft(data.timeLimit || null);
+        setTimeLeft(data.scenario.timeLimit || null);
         setStartTime(new Date());
         setLoading(false);
       } catch (error) {
@@ -98,7 +99,7 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
     Alert.alert(
       "Time's Up!",
       "You didn't make a decision in time. In real life, delayed decisions can also have consequences.",
-      [{ text: "OK", onPress: () => setShowResult(true) }]
+      [{ text: "OK", onPress: () => router.replace("/pages/ScenarioHub") }]
     );
   };
 
@@ -169,11 +170,6 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
         <Loader />
       </SafeAreaView>
     );
-    <SafeAreaView
-      style={{ flex: 1, alignContent: "center", justifyContent: "center" }}
-    >
-      <Loader />
-    </SafeAreaView>;
   }
 
   if (!currentScenario) {
@@ -312,7 +308,7 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      <LinearGradient colors={["#1e293b", "#334155"]} style={styles.container}>
+      <LinearGradient colors={["#f8fafc", "#f8fafc"]} style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           {/* Header */}
           <View style={styles.header}>
@@ -425,7 +421,7 @@ const styles = StyleSheet.create({
   categoryBadge: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
@@ -433,7 +429,7 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     fontSize: 12,
-    color: "#ffffff",
+    color: "#000",
     fontWeight: "600",
   },
   difficultyBadge: {
@@ -449,20 +445,22 @@ const styles = StyleSheet.create({
   scenarioTitle: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#ffffff",
+    color: "#000",
     marginBottom: 8,
     lineHeight: 34,
   },
   scenarioDescription: {
     fontSize: 16,
-    color: "#cbd5e1",
+    color: "rgba(0,0,0,0.6)",
     lineHeight: 24,
     marginBottom: 16,
   },
   timerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(245, 158, 11, 0.2)",
+    backgroundColor: "rgba(245, 158, 11, 0.3)",
+    borderColor: "rgba(245, 158, 11, 0.6)",
+    borderWidth: 1,
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 20,
@@ -478,22 +476,22 @@ const styles = StyleSheet.create({
     color: "#ef4444",
   },
   situationCard: {
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
     borderRadius: 16,
     padding: 20,
     marginBottom: 24,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: "rgba(0 ,0,0, 0.1)",
   },
   situationTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#000",
     marginBottom: 12,
   },
   situationText: {
     fontSize: 16,
-    color: "#e2e8f0",
+    color: "rgba(0,0,0,0.7)",
     lineHeight: 24,
   },
   choicesContainer: {
@@ -502,15 +500,15 @@ const styles = StyleSheet.create({
   choicesTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#ffffff",
+    color: "#000",
     marginBottom: 16,
   },
   choiceButton: {
-    backgroundColor: "rgba(255, 255, 255, 0.05)",
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
     borderRadius: 12,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.1)",
+    borderColor: "rgba(0, 0, 0, 0.1)",
     overflow: "hidden",
   },
   choiceContent: {
@@ -522,7 +520,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: "#3b82f6",
+    backgroundColor: PSBColors.primary.darkGreen,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 16,
@@ -535,7 +533,7 @@ const styles = StyleSheet.create({
   choiceButtonText: {
     flex: 1,
     fontSize: 16,
-    color: "#ffffff",
+    color: "#000",
     lineHeight: 22,
   },
   objectiveCard: {
@@ -559,7 +557,7 @@ const styles = StyleSheet.create({
   },
   objectiveText: {
     fontSize: 14,
-    color: "#cbd5e1",
+    color: "rgba(0,0,0,0.6)",
     lineHeight: 20,
   },
   errorContainer: {

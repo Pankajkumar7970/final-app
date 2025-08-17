@@ -214,6 +214,93 @@ module.exports = (app) => {
     updatedAt: { type: Date, default: Date.now },
   });
 
+  const progressionSchema = new mongoose.Schema(
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+        unique: true, // one progression doc per user
+      },
+
+      xp: { type: Number, default: 0 }, // total XP earned
+      level: { type: Number, default: 1 }, // gamified levels
+      streak: { type: Number, default: 0 }, // daily streak count
+
+      // Stats for badges & analytics
+      stats: {
+        coursesCompleted: { type: Number, default: 0 },
+        lessonsCompleted: { type: Number, default: 0 },
+        quizzesCompleted: { type: Number, default: 0 },
+        scenariosCompleted: { type: Number, default: 0 },
+        toolsUsed: { type: Number, default: 0 }, // simulators & calculators
+      },
+
+      // Completed course/quiz/lesson IDs for progress tracking
+      completed: {
+        courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
+        lessons: [{ type: mongoose.Schema.Types.ObjectId, ref: "Lesson" }],
+        quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Quiz" }],
+        scenarios: [{ type: mongoose.Schema.Types.ObjectId, ref: "Scenario" }],
+        tools: [{ type: String }], // tool identifiers
+      },
+
+      // Activity log for analytics
+      activityLog: [
+        {
+          action: { type: String }, // e.g., "completed_lesson", "completed_quiz"
+          targetId: { type: String }, // lessonId, quizId, etc.
+          xpGained: { type: Number, default: 0 },
+          date: { type: Date, default: Date.now },
+        },
+      ],
+    },
+    { timestamps: true }
+  );
+
+  // -------------------- Badge Schema --------------------
+  const badgeSchema = new mongoose.Schema(
+    {
+      name: { type: String, required: true }, // "Quiz Master"
+      description: { type: String },
+      icon: { type: String }, // URL or asset name
+      xpReward: { type: Number, default: 0 }, // bonus XP when unlocked
+
+      condition: {
+        type: String,
+        enum: [
+          "complete_first_course",
+          "complete_5_courses",
+          "complete_first_quiz",
+          "complete_10_lessons",
+          "use_5_tools",
+          "daily_streak_7",
+          "daily_streak_30",
+        ],
+        required: true,
+      },
+    },
+    { timestamps: true }
+  );
+
+  // -------------------- UserBadge Schema --------------------
+  const userBadgeSchema = new mongoose.Schema(
+    {
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      badgeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Badge",
+        required: true,
+      },
+      earnedAt: { type: Date, default: Date.now },
+    },
+    { timestamps: true }
+  );
+
   // Contribution Schema
   const contributionSchema = new mongoose.Schema({
     // userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -343,6 +430,9 @@ module.exports = (app) => {
   );
   const Achievement = mongoose.model("Achievement", achievementSchema);
   const Notification = mongoose.model("Notification", notificationSchema);
+  const Progression = mongoose.model("Progression", progressionSchema);
+  const Badge = mongoose.model("Badge", badgeSchema);
+  const UserBadge = mongoose.model("UserBadge", userBadgeSchema);
 
   const authenticateToken = (req, res, next) => {
     try {
@@ -1139,6 +1229,238 @@ module.exports = (app) => {
       res
         .status(500)
         .json({ message: "Error adding contribution", error: error.message });
+    }
+  });
+
+  /////Progression and badges///////////////////////
+  // controllers/progressionController.js
+  const updateDailyStreak = async (userId) => {
+    const today = new Date().setHours(0, 0, 0, 0);
+
+    let progression = await Progression.findOne({ userId });
+    if (!progression) {
+      progression = await Progression.create({
+        userId,
+        streak: 1,
+        lastLogin: new Date(),
+        xp: 10,
+      });
+      return { progression, message: "🔥 Streak started!" };
+    }
+    app.post("/streak", authenticateToken, updateDailyStreak);
+
+    // ✅ Daily Streak & Course Completion Combined
+
+    // ✅ Daily Streak Handler
+
+    const lastLogin = new Date(progression.lastLogin).setHours(0, 0, 0, 0);
+
+    if (lastLogin === today) {
+      return { progression, message: "✅ Already counted today" };
+    }
+
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    if (lastLogin === yesterday.setHours(0, 0, 0, 0)) {
+      progression.streak += 1; // continue streak
+    } else {
+      progression.streak = 1; // reset streak
+    }
+
+    progression.xp += 10;
+    progression.lastLogin = new Date();
+    await progression.save();
+
+    // 🎖 Award streak badges
+    if ([7, 30].includes(progression.streak)) {
+      const badge = await Badge.findOne({
+        condition: `daily_streak_${progression.streak}`,
+      });
+      if (badge) {
+        const alreadyEarned = await UserBadge.findOne({
+          userId,
+          badgeId: badge._id,
+        });
+        if (!alreadyEarned)
+          await UserBadge.create({ userId, badgeId: badge._id });
+      }
+    }
+
+    return { progression, message: "🔥 Streak updated!" };
+  };
+
+  // ✅ Course Completion Endpoint
+  app.post("/course/complete", authenticateToken, async (req, res) => {
+    try {
+      const { courseId } = req.body;
+      const userId = req.user.id;
+
+      const streakUpdate = await updateDailyStreak(userId);
+
+      let progress = await Progression.findOne({ userId });
+      if (!progress) progress = await Progression.create({ userId });
+
+      if (progress.completed.courses.includes(courseId)) {
+        return res
+          .status(400)
+          .json({ message: "⚠ Course already completed!" });
+      }
+
+      progress.completed.courses.push(courseId);
+      progress.stats.coursesCompleted += 1;
+      progress.xp += 100;
+
+      // Log activity
+      progress.activityLog.push({
+        action: "completed_course",
+        targetId: courseId,
+        xpGained: 100,
+      });
+
+      await progress.save();
+
+      // 🎖 Badge logic
+      const milestones = [1, 5, 10];
+      if (milestones.includes(progress.stats.coursesCompleted)) {
+        const badge = await Badge.findOne({
+          condition: `complete_${progress.stats.coursesCompleted}_courses`,
+        });
+        if (badge) {
+          const alreadyEarned = await UserBadge.findOne({
+            userId,
+            badgeId: badge._id,
+          });
+          if (!alreadyEarned)
+            await UserBadge.create({ userId, badgeId: badge._id });
+        }
+      }
+
+      res.json({
+        message: "🎉 Course completed!",
+        streakMessage: streakUpdate.message,
+        stats: progress.stats,
+        xp: progress.xp,
+        streak: progress.streak,
+        completedCourses: progress.completed.courses,
+      });
+    } catch (err) {
+      console.error("❌ Error in /course/complete:", err);
+      res.status(500).json({ message: "Error updating course progress" });
+    }
+  });
+
+  // ✅ Quiz Completion Endpoint
+  app.post("/quiz/complete", authenticateToken, async (req, res) => {
+    try {
+      const { quizId } = req.body;
+      const userId = req.user.id;
+
+      const streakUpdate = await updateDailyStreak(userId);
+
+      let progress = await Progression.findOne({ userId });
+      if (!progress) progress = await Progression.create({ userId });
+
+      if (progress.completed.quizzes.includes(quizId)) {
+        return res.status(400).json({ message: "⚠ Quiz already completed!" });
+      }
+
+      progress.completed.quizzes.push(quizId);
+      progress.stats.quizzesCompleted += 1;
+      progress.xp += 50;
+
+      progress.activityLog.push({
+        action: "completed_quiz",
+        targetId: quizId,
+        xpGained: 50,
+      });
+
+      await progress.save();
+
+      const milestones = [1, 5, 10];
+      if (milestones.includes(progress.stats.quizzesCompleted)) {
+        const badge = await Badge.findOne({
+          condition: `complete_${progress.stats.quizzesCompleted}_quizzes `,
+        });
+        if (badge) {
+          const alreadyEarned = await UserBadge.findOne({
+            userId,
+            badgeId: badge._id,
+          });
+          if (!alreadyEarned)
+            await UserBadge.create({ userId, badgeId: badge._id });
+        }
+      }
+
+      res.json({
+        message: "🎉 Quiz completed!",
+        streakMessage: streakUpdate.message,
+        stats: progress.stats,
+        xp: progress.xp,
+        streak: progress.streak,
+        completedQuizzes: progress.completed.quizzes,
+      });
+    } catch (err) {
+      console.error("❌ Error in /quiz/complete:", err);
+      res.status(500).json({ message: "Error updating quiz progress" });
+    }
+  });
+
+  // ✅ Daily Scenario Completion Endpoint
+  app.post("/scenario/complete", authenticateToken, async (req, res) => {
+    try {
+      const { scenarioId } = req.body;
+      const userId = req.user.id;
+
+      const streakUpdate = await updateDailyStreak(userId);
+
+      let progress = await Progression.findOne({ userId });
+      if (!progress) progress = await Progression.create({ userId });
+
+      if (progress.completed.scenarios.includes(scenarioId)) {
+        return res
+          .status(400)
+          .json({ message: "⚠ Scenario already completed!" });
+      }
+
+      progress.completed.scenarios.push(scenarioId);
+      progress.stats.scenariosCompleted += 1;
+      progress.xp += 30;
+
+      progress.activityLog.push({
+        action: "completed_scenario",
+        targetId: scenarioId,
+        xpGained: 30,
+      });
+
+      await progress.save();
+
+      const milestones = [1, 5, 15];
+      if (milestones.includes(progress.stats.scenariosCompleted)) {
+        const badge = await Badge.findOne({
+          condition: `complete_${progress.stats.scenariosCompleted}_scenarios `,
+        });
+        if (badge) {
+          const alreadyEarned = await UserBadge.findOne({
+            userId,
+            badgeId: badge._id,
+          });
+          if (!alreadyEarned)
+            await UserBadge.create({ userId, badgeId: badge._id });
+        }
+      }
+
+      res.json({
+        message: "🎉 Scenario completed!",
+        streakMessage: streakUpdate.message,
+        stats: progress.stats,
+        xp: progress.xp,
+        streak: progress.streak,
+        completedScenarios: progress.completed.scenarios,
+      });
+    } catch (err) {
+      console.error("❌ Error in /scenario/complete:", err);
+      res.status(500).json({ message: "Error updating scenario progress" });
     }
   });
 };

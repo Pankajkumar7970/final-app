@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  BackHandler,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -24,9 +25,10 @@ import {
 import { getUserProgress } from "../../../data/quizData";
 import QuizCard from "../../../components/QuizCard";
 import { LinearGradient } from "expo-linear-gradient";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import API from "../../../api/api";
 import Loader from "../../../components/Loader";
+import { PSBColors } from "../../../utils/PSBColors";
 
 const QuizzesScreen = () => {
   const [completedQuizzes, setCompletedQuizzes] = useState([]);
@@ -36,6 +38,17 @@ const QuizzesScreen = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useFocusEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        router.push("/(app)/(tabs)");
+        return true;
+      }
+    );
+    return () => backHandler.remove();
+  });
 
   useEffect(() => {
     // Fetch quizzes from the server or local data
@@ -232,7 +245,10 @@ const QuizzesScreen = () => {
               ]}
               onPress={() => setShowFilters(!showFilters)}
             >
-              <Filter size={20} color={showFilters ? "#ffffff" : "#6366f1"} />
+              <Filter
+                size={20}
+                color={showFilters ? "#ffffff" : PSBColors.primary.darkGreen}
+              />
             </TouchableOpacity>
           </View>
 
@@ -394,7 +410,7 @@ const styles = StyleSheet.create({
   },
   headerGradient: {
     flex: 1,
-    backgroundColor: "#6366f1",
+    backgroundColor: PSBColors.primary.darkGreen,
     paddingVertical: 24,
     // background: new LinearGradient(135deg, #6366f1 0%, #8b5cf6 100%),
     justifyContent: "center",
@@ -549,7 +565,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   filterButtonActive: {
-    backgroundColor: "#6366f1",
+    backgroundColor: PSBColors.primary.darkGreen,
   },
   filtersContainer: {
     backgroundColor: "#ffffff",
@@ -587,8 +603,8 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   filterOptionActive: {
-    backgroundColor: "#6366f1",
-    borderColor: "#6366f1",
+    backgroundColor: PSBColors.primary.darkGreen,
+    borderColor: PSBColors.primary.darkGreen,
   },
   filterOptionText: {
     fontSize: 14,

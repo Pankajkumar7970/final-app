@@ -38,6 +38,7 @@ import {
   Rocket,
   Crown,
   Flame,
+  BarChart2,
 } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -144,6 +145,17 @@ const simulatorModules: SimulatorModule[] = [
     route: "/pages/TaxCalculator",
     gradient: ["#fdbb2d", "#22c1c3", "#059669"],
     accentColor: "#059669",
+    popular: true,
+  },
+  {
+    id: "financial-planning-calculator",
+    title: "Finance Planning Engine",
+    description: "Intelligent finance optimization with smart recommendations",
+    icon: BarChart2,
+    category: "financial",
+    route: "/pages/FinancePlanner",
+    gradient: ["#f093fb", "#f5576c", "#ec4899"],
+    accentColor: "#f093fb",
     popular: true,
   },
 ];

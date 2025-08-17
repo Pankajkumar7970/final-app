@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { initializeAuth } from "../redux/services/operations/initAuth";
 import { logout } from "../redux/services/operations/authServices";
 import { setUser } from "../redux/slices/profileSlices";
-import AsyncStorageService, { STORAGE_KEYS } from "../utils/AsyncStorage";
 
 interface AuthContextType {
   signIn: () => void;
@@ -57,7 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     if (!isAuthenticated && !inAuthGroup) {
       // Redirect to auth if not authenticated and not in auth group
-      router.replace("/(auth)/login");
+      router.replace("/");
     } else if (isAuthenticated && inAuthGroup) {
       // Redirect to app if authenticated and in auth group
       router.replace("/(app)/(tabs)");

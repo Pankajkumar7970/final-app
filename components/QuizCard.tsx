@@ -11,6 +11,7 @@ import {
   Target,
 } from "lucide-react-native";
 import API from "../api/api";
+import { PSBColors } from "../utils/PSBColors";
 // import { Quiz, getUserProgress } from "../data/quizData";
 
 interface QuizCardProps {
@@ -399,7 +400,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   startButton: {
-    backgroundColor: "#6366f1",
+    backgroundColor: PSBColors.primary.darkGreen,
   },
   retakeButton: {
     backgroundColor: "#f8fafc",

@@ -17,6 +17,7 @@ import Toast from "react-native-toast-message";
 import { router } from "expo-router";
 import SecureTextInput from "../../components/SecureTextInput";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { PSBColors } from "../../utils/PSBColors";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -168,10 +169,11 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: PSBColors.primary.lightGreen,
     // backgroundColor: "#eafaf1",
   },
   header: {
-    backgroundColor: "#1b8a5a",
+    backgroundColor: PSBColors.primary.darkGreen,
     alignItems: "center",
     justifyContent: "center",
     position: "relative",
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 25,
     alignItems: "center",
-    shadowColor: "#1b8a5a",
+    shadowColor: PSBColors.primary.darkGreen,
     shadowOpacity: 0.15,
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
@@ -232,7 +234,7 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    borderColor: "#8fcba3",
+    borderColor: PSBColors.primary.darkGreen,
     borderWidth: 1.5,
     borderRadius: 12,
     height: 50,
@@ -248,13 +250,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   button: {
-    backgroundColor: "#1b8a5a",
+    backgroundColor: PSBColors.primary.darkGreen,
     borderRadius: 12,
     height: 50,
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 15,
-    shadowColor: "#1b8a5a",
+    shadowColor: PSBColors.primary.darkGreen,
     shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 6,

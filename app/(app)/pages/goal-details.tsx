@@ -36,6 +36,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { router, useLocalSearchParams } from "expo-router";
 import { useGoals } from "../../../contexts/GoalsContext";
 import { get } from "mongoose";
+import { PSBColors } from "../../../utils/PSBColors";
 
 const { width } = Dimensions.get("window");
 
@@ -219,7 +220,7 @@ export default function GoalDetails() {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <LinearGradient
-        colors={[categoryInfo.gradient[0], categoryInfo.gradient[1]]}
+        colors={[PSBColors.gradient.primary[0], PSBColors.gradient.primary[1]]}
         style={styles.headerGradient}
       >
         <View style={styles.header}>
@@ -301,7 +302,10 @@ export default function GoalDetails() {
           >
             <View style={styles.goalHeader}>
               <LinearGradient
-                colors={[categoryInfo.gradient[0], categoryInfo.gradient[1]]}
+                colors={[
+                  PSBColors.gradient.primary[0],
+                  PSBColors.gradient.primary[1],
+                ]}
                 style={styles.goalIcon}
               >
                 <IconComponent size={32} color="#FFFFFF" />
@@ -319,7 +323,10 @@ export default function GoalDetails() {
               </View>
               <View style={styles.progressBarContainer}>
                 <LinearGradient
-                  colors={[categoryInfo.gradient[0], categoryInfo.gradient[1]]}
+                  colors={[
+                    PSBColors.gradient.primary[0],
+                    PSBColors.gradient.primary[1],
+                  ]}
                   style={[
                     styles.progressBarFill,
                     { width: `${goal.progress}%` },
@@ -404,7 +411,10 @@ export default function GoalDetails() {
             onPress={() => setAddMoneyModalVisible(true)}
           >
             <LinearGradient
-              colors={[categoryInfo.gradient[0], categoryInfo.gradient[1]]}
+              colors={[
+                PSBColors.gradient.primary[0],
+                PSBColors.gradient.primary[1],
+              ]}
               style={styles.primaryActionGradient}
             >
               <Plus size={20} color="#FFFFFF" />
@@ -439,11 +449,11 @@ export default function GoalDetails() {
                     )}
                   </Text>
                 </View>
-                <View style={styles.historyType}>
+                {/* <View style={styles.historyType}>
                   <Text style={styles.historyTypeText}>
                     {contribution.type}
                   </Text>
-                </View>
+                </View> */}
               </View>
             ))}
           </View>
@@ -482,7 +492,10 @@ export default function GoalDetails() {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <LinearGradient
-              colors={[categoryInfo.gradient[0], categoryInfo.gradient[1]]}
+              colors={[
+                PSBColors.gradient.primary[0],
+                PSBColors.gradient.primary[1],
+              ]}
               style={styles.modalHeader}
             >
               <Text style={styles.modalTitle}>Add Money</Text>
@@ -525,7 +538,10 @@ export default function GoalDetails() {
               onPress={handleAddContribution}
             >
               <LinearGradient
-                colors={[categoryInfo.gradient[0], categoryInfo.gradient[1]]}
+                colors={[
+                  PSBColors.gradient.primary[0],
+                  PSBColors.gradient.primary[1],
+                ]}
                 style={styles.addMoneyGradient}
               >
                 <Plus size={20} color="#FFFFFF" />
@@ -541,7 +557,10 @@ export default function GoalDetails() {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <LinearGradient
-              colors={[categoryInfo.gradient[0], categoryInfo.gradient[1]]}
+              colors={[
+                PSBColors.gradient.primary[0],
+                PSBColors.gradient.primary[1],
+              ]}
               style={styles.modalHeader}
             >
               <Text style={styles.modalTitle}>Edit Goal</Text>
@@ -612,7 +631,10 @@ export default function GoalDetails() {
               onPress={handleEditGoal}
             >
               <LinearGradient
-                colors={[categoryInfo.gradient[0], categoryInfo.gradient[1]]}
+                colors={[
+                  PSBColors.gradient.primary[0],
+                  PSBColors.gradient.primary[1],
+                ]}
                 style={styles.editGoalGradient}
               >
                 <CheckCircle size={20} color="#FFFFFF" />
@@ -1084,6 +1106,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F3F4F6",
     padding: 12,
+    paddingHorizontal: 10,
     borderRadius: 8,
     alignItems: "center",
     borderWidth: 1,

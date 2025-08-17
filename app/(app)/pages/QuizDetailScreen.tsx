@@ -26,6 +26,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import API from "../../../api/api";
 import { set } from "mongoose";
 import Loader from "../../../components/Loader";
+import { PSBColors } from "../../../utils/PSBColors";
 
 const QuizDetailScreen = () => {
   const { quizId } = useLocalSearchParams();
@@ -160,8 +161,8 @@ const QuizDetailScreen = () => {
                 {percentage >= 80
                   ? "Excellent Work!"
                   : percentage >= 60
-                  ? "Great Progress!"
-                  : "Keep Learning!"}
+                    ? "Great Progress!"
+                    : "Keep Learning!"}
               </Text>
               <View style={styles.scoreContainer}>
                 <View
@@ -172,8 +173,8 @@ const QuizDetailScreen = () => {
                         percentage >= 80
                           ? "#10b981"
                           : percentage >= 60
-                          ? "#6366f1"
-                          : "#f59e0b",
+                            ? "#6366f1"
+                            : "#f59e0b",
                     },
                   ]}
                 >
@@ -189,8 +190,8 @@ const QuizDetailScreen = () => {
                         percentage >= 80
                           ? "#dcfce7"
                           : percentage >= 60
-                          ? "#e0e7ff"
-                          : "#fef3c7",
+                            ? "#e0e7ff"
+                            : "#fef3c7",
                     },
                   ]}
                 >
@@ -202,8 +203,8 @@ const QuizDetailScreen = () => {
                           percentage >= 80
                             ? "#166534"
                             : percentage >= 60
-                            ? "#3730a3"
-                            : "#92400e",
+                              ? "#3730a3"
+                              : "#92400e",
                       },
                     ]}
                   >
@@ -277,7 +278,10 @@ const QuizDetailScreen = () => {
         {/* Header */}
         <View style={styles.header}>
           <LinearGradient
-            colors={["#6366f1", "#8b5cf6"]}
+            colors={[
+              PSBColors.gradient.primary[0],
+              PSBColors.gradient.primary[1],
+            ]}
             style={styles.headerGradient}
           >
             <View style={styles.headerGradient}>
@@ -440,7 +444,7 @@ const styles = StyleSheet.create({
   quizTitle: {
     fontSize: 24,
     fontWeight: "700",
-    color: "#000",
+    color: "white",
     marginBottom: 12,
     letterSpacing: 0.9,
     textAlign: "center",
@@ -462,7 +466,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   fraudCategoryBadge: {
-    backgroundColor: "rgba(239, 68, 68, 0.2)",
+    backgroundColor: "rgba(235, 238, 248, 0.2)",
   },
   financialCategoryBadge: {
     backgroundColor: "rgba(16, 185, 129, 0.2)",
@@ -529,9 +533,9 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   selectedOption: {
-    backgroundColor: "#6366f1",
-    borderColor: "#6366f1",
-    shadowColor: "#6366f1",
+    backgroundColor: PSBColors.primary.darkGreen,
+    borderColor: PSBColors.primary.darkGreen,
+    shadowColor: PSBColors.primary.darkGreen,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -606,7 +610,7 @@ const styles = StyleSheet.create({
   },
   primaryButton: {
     flex: 1,
-    backgroundColor: "#6366f1",
+    backgroundColor: PSBColors.primary.darkGreen,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 16,
@@ -645,7 +649,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   secondaryButtonText: {
-    color: "#6366f1",
+    color: PSBColors.primary.darkGreen,
     fontSize: 16,
     fontWeight: "700",
   },

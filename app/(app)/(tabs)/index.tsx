@@ -46,6 +46,8 @@ import ChatbotButton from "../../../components/ChatbotButton";
 import ChatbotPopup from "../../../components/ChatbotPopup";
 import { router, useFocusEffect } from "expo-router";
 import { useTheme } from "../../../contexts/ThemeContext";
+import API from "../../../api/api";
+import Toast from "react-native-toast-message";
 
 const width = Dimensions.get("window").width;
 
@@ -233,6 +235,27 @@ const home = () => {
   const waveAnim = useRef(new Animated.Value(0)).current;
   const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
   const AnimatedView = Animated.createAnimatedComponent(View);
+
+  const [streak, setStreak] = useState(0);
+
+  useEffect(() => {
+    // ✅ Runs once when user opens the app
+    const fetchStreak = async () => {
+      try {
+        const res = await API.get("/streak");
+        setStreak(res.data.streak);
+        Toast.show({
+          type: "success",
+          text1: "Streak Fetched",
+          text2: `Your current streak is ${res.data.streak} days.`,
+        });
+      } catch (err) {
+        console.error("Error fetching streak:", err);
+      }
+    };
+
+    fetchStreak();
+  }, []); // ✅ empty dependency → only once
 
   useFocusEffect(() => {
     const backHandler = BackHandler.addEventListener(

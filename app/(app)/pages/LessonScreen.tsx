@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeft, ArrowRight, BookOpen, Clock } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import AudioPlayer from "../../../components/AudioPlayer";
+import { PSBColors } from "../../../utils/PSBColors";
 
 const LessonScreen: React.FC = ({ route, navigation }: any) => {
   const { lesson, language } = route.params || {};
@@ -122,7 +123,10 @@ const LessonScreen: React.FC = ({ route, navigation }: any) => {
                   activeOpacity={0.8}
                 >
                   <LinearGradient
-                    colors={["#3b82f6", "#1d4ed8"]}
+                    colors={[
+                      PSBColors.gradient.primary[0],
+                      PSBColors.gradient.primary[1],
+                    ]}
                     style={styles.quizButtonGradient}
                   >
                     <ArrowRight
@@ -181,7 +185,9 @@ const styles = StyleSheet.create({
   descriptionCard: {
     borderRadius: 16,
     overflow: "hidden",
-    elevation: 4,
+    // elevation: 4,
+    borderColor: "#e5e7eb",
+    borderWidth: 1,
     shadowColor: "#1e40af",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
@@ -200,7 +206,9 @@ const styles = StyleSheet.create({
   quizCard: {
     borderRadius: 16,
     overflow: "hidden",
-    elevation: 4,
+    // elevation: 4,
+    borderColor: "#e5e7eb",
+    borderWidth: 1,
     shadowColor: "#1e40af",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,

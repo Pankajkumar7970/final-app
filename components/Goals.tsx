@@ -309,7 +309,10 @@ export default function Goals() {
             activeOpacity={0.85}
           >
             <LinearGradient
-              colors={["#FFDE59", "#007749"]}
+              colors={[
+                PSBColors.gradient.success[1],
+                PSBColors.gradient.primary[0],
+              ]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
               style={styles.viewAllGradient}
@@ -328,7 +331,10 @@ export default function Goals() {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <LinearGradient
-              colors={["#667eea", "#764ba2"]}
+              colors={[
+                PSBColors.gradient.primary[0],
+                PSBColors.gradient.primary[1],
+              ]}
               style={styles.modalHeader}
             >
               <Text style={styles.modalTitle}>Add New Financial Goal</Text>
@@ -427,18 +433,12 @@ export default function Goals() {
                         }
                       >
                         {isSelected ? (
-                          <LinearGradient
-                            colors={[
-                              category.gradient[0],
-                              category.gradient[1],
-                            ]}
-                            style={styles.categorySelectorGradient}
-                          >
+                          <View style={styles.categorySelectorGradient}>
                             <IconComponent size={20} color="#FFFFFF" />
                             <Text style={styles.categorySelectorTextActive}>
                               {category.name}
                             </Text>
-                          </LinearGradient>
+                          </View>
                         ) : (
                           <>
                             <IconComponent size={20} color={category.color} />
@@ -711,7 +711,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   viewAllText: {
-    color: "#000000ff",
+    color: "#fff",
     fontSize: 20,
     fontWeight: "600",
     textAlign: "center",
@@ -832,7 +832,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     paddingVertical: 2,
     borderRadius: 20,
-    backgroundColor: "#FFD93D",
+    // backgroundColor: "#FFD93D",
   },
   categorySelectorText: {
     fontSize: 14,

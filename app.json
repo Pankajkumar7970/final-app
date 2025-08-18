@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "FinGuard",
-    "slug": "FinGuard",
+    "name": "FinEduGuard",
+    "slug": "FinEduGuard",
     "scheme": "FinEduguard",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/splash-icon.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {

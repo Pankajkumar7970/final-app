@@ -32,7 +32,7 @@ import { Badge } from "./ui/Badge";
 import { Progress } from "./ui/Progress";
 import { Alert as CustomAlert, AlertTitle, AlertDescription } from "./ui/Alert";
 import { LoadingSpinner } from "./ui/LoadingSpinner";
-import API from "../api/api"; // adjust the path if needed
+import API from "../api/api";
 
 interface AnalysisResult {
   score: number;
@@ -70,13 +70,29 @@ export function FraudAnalyzer() {
   const [activeTab, setActiveTab] = useState("email");
   const [history, setHistory] = useState<AnalysisHistory[]>([]);
   const [showHistory, setShowHistory] = useState(false);
-  // const [backendStatus, setBackendStatus] = useState<
-  //   "checking" | "ok" | "fail"
-  // >("checking");
+  const [backendStatus, setBackendStatus] = useState<
+    "checking" | "ok" | "fail"
+  >("checking");
   const [copied, setCopied] = useState(false);
   const [selectedHistory, setSelectedHistory] =
     useState<AnalysisHistory | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+
+  // IMPORTANT: For Expo Go on a physical device, use your computer's local IP address below (not localhost)
+  const BACKEND_URL = process.env.SERVER_URL; // <-- Your actual computer IP
+
+  useEffect(() => {
+    fetch(`${BACKEND_URL}/health`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.status === "ok") {
+          setBackendStatus("ok");
+        } else {
+          setBackendStatus("fail");
+        }
+      })
+      .catch((err) => setBackendStatus("fail"));
+  }, []);
 
   // Enhanced fraud detection with more sophisticated patterns
   const suspiciousEmails = [
@@ -110,39 +126,6 @@ export function FraudAnalyzer() {
     "apple-support.click",
   ];
 
-  const phishingKeywords = [
-    "urgent",
-    "verify account",
-    "suspended",
-    "click here",
-    "act now",
-    "limited time",
-    "congratulations",
-    "you've won",
-    "claim now",
-    "update payment",
-    "confirm identity",
-    "security alert",
-    "unusual activity",
-    "account locked",
-    "expires today",
-    "final notice",
-    "immediate action",
-    "verify now",
-    "account closure",
-    "refund pending",
-    "tax refund",
-  ];
-
-  const suspiciousPatterns = [
-    /\b\d{4}[-\s]\d{4}[-\s]\d{4}[-\s]\d{4}\b/, // Credit card pattern
-    /\b\d{3}[-\s]\d{2}[-\s]\d{4}\b/, // SSN pattern
-    /password.*[:=]\s*\w+/i, // Password requests
-    /pin.*[:=]\s*\d+/i, // PIN requests
-    /routing.*number/i, // Banking info
-    /account.*number/i, // Account numbers
-  ];
-
   const triggerHaptic = () => {
     if (Platform.OS !== "web") {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -156,94 +139,6 @@ export function FraudAnalyzer() {
     setTimeout(() => setCopied(false), 1500);
   };
 
-  const extractEmailFromContent = (content: string): string | null => {
-    const emailMatch = content.match(/from:\s*([^\s@]+@[^\s@]+\.[^\s@]+)/i);
-    return emailMatch ? emailMatch[1].toLowerCase() : null;
-  };
-
-  const analyzeEmailSender = (
-    content: string
-  ): { flags: any[]; score: number } => {
-    const flags = [];
-    let score = 100;
-
-    const senderEmail = extractEmailFromContent(content);
-    if (senderEmail) {
-      if (suspiciousEmails.includes(senderEmail)) {
-        flags.push({
-          type: "Known Malicious Sender",
-          severity: "high" as const,
-          description: `Sender ${senderEmail} is in our threat intelligence database`,
-          recommendation: "Block this sender immediately and report as spam",
-        });
-        score -= 50;
-      }
-
-      const domain = senderEmail.split("@")[1];
-      if (domain) {
-        for (let redDomain of redFlagDomains) {
-          if (domain.includes(redDomain)) {
-            flags.push({
-              type: "High-Risk Domain",
-              severity: "high" as const,
-              description: `Domain uses suspicious TLD or pattern: ${redDomain}`,
-              recommendation: "Avoid clicking any links from this domain",
-            });
-            score -= 40;
-            break;
-          }
-        }
-
-        // Check for domain impersonation
-        const legitimateDomains = [
-          "paypal.com",
-          "amazon.com",
-          "microsoft.com",
-          "apple.com",
-          "google.com",
-        ];
-        for (let legitDomain of legitimateDomains) {
-          if (
-            domain.includes(legitDomain.split(".")[0]) &&
-            !domain.endsWith(legitDomain)
-          ) {
-            flags.push({
-              type: "Domain Impersonation",
-              severity: "high" as const,
-              description: `Domain mimics legitimate ${legitDomain} but is not official`,
-              recommendation:
-                "Verify sender through official channels before taking any action",
-            });
-            score -= 45;
-            break;
-          }
-        }
-      }
-    }
-
-    return { flags, score };
-  };
-
-  const generateDetailedAnalysis = (
-    level: string,
-    flagCount: number,
-    type: string
-  ): string => {
-    const typeText = type === "email" ? "Email" : "Website";
-
-    if (level === "safe") {
-      return `${typeText} analysis complete. ${
-        flagCount === 0
-          ? "No security issues detected."
-          : `${flagCount} minor issue(s) found.`
-      } This appears to be legitimate and safe to interact with.`;
-    } else if (level === "suspicious") {
-      return `${typeText} analysis complete. Found ${flagCount} security concern(s). Exercise caution and verify authenticity through official channels before taking any action.`;
-    } else {
-      return `${typeText} analysis complete. DANGER: Found ${flagCount} critical security issue(s). This shows strong indicators of fraud or malicious intent. Do not interact with this ${type}.`;
-    }
-  };
-
   const analyzeEmail = async () => {
     if (!emailContent.trim()) {
       Alert.alert("Input Required", "Please paste email content to analyze");
@@ -254,8 +149,10 @@ export function FraudAnalyzer() {
     setProgress(0);
     setEmailResult(null);
     try {
-      const res = await API.post("/check", { input: emailContent.trim() });
-      const data = res.data;
+      const response = await API.post("/check", {
+        input: emailContent.trim(),
+      });
+      const data = await response.data;
       console.log("API response:", data);
       setEmailResult({
         score: data.final_score,
@@ -308,13 +205,9 @@ export function FraudAnalyzer() {
     setProgress(0);
     setUrlResult(null);
     try {
-      const response = await fetch(`${process.env.SERVER_URL}/check`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: websiteUrl.trim() }),
-      });
-      const data = await response.json();
-      console.log("API response:", data);
+      const res = await API.post("/check", { input: websiteUrl.trim() });
+      const data = res.data;
+      console.log("Check result:", data);
       setUrlResult({
         score: data.final_score,
         verdict: data.verdict,
@@ -406,7 +299,8 @@ export function FraudAnalyzer() {
     const summaryReasons = result.reason ? result.reason.slice(0, 2) : [];
     // Determine card background color
     let cardBg = styles.resultCard.backgroundColor;
-    if (result.score < 50) cardBg = "#2d1a1a"; // deep red for dangerous
+    if (result.score < 50)
+      cardBg = "#2d1a1a"; // deep red for dangerous
     else if (result.score < 80) cardBg = "#332a1a"; // yellowish for caution
 
     return (
@@ -450,8 +344,8 @@ export function FraudAnalyzer() {
                       result.score < 50
                         ? "destructive"
                         : result.score < 80
-                        ? "secondary"
-                        : "default"
+                          ? "secondary"
+                          : "default"
                     }
                     style={[styles.levelBadge, { marginRight: 8 }]}
                   >
@@ -536,8 +430,8 @@ export function FraudAnalyzer() {
                           scan.virustotal_score >= 7
                             ? "destructive"
                             : scan.virustotal_score >= 4
-                            ? "secondary"
-                            : "outline"
+                              ? "secondary"
+                              : "outline"
                         }
                         style={styles.flagBadge}
                       >
@@ -800,8 +694,8 @@ export function FraudAnalyzer() {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.content}>
         {/* Backend connection status message */}
-        {/* <View style={{ marginBottom: 16 }}>
-          {backendStatus === "checking" && (
+        {/* <View style={{ marginBottom: 16 }}> */}
+        {/* {backendStatus === "checking" && (
             <Text
               style={{
                 color: "#f59e0b",
@@ -811,8 +705,8 @@ export function FraudAnalyzer() {
             >
               Checking backend connection...
             </Text>
-          )}
-          {backendStatus === "ok" && (
+          )} */}
+        {/* {backendStatus === "ok" && (
             <Text
               style={{
                 color: "#10b981",
@@ -822,8 +716,8 @@ export function FraudAnalyzer() {
             >
               Backend connection successful!
             </Text>
-          )}
-          {backendStatus === "fail" && (
+          )} */}
+        {/* {backendStatus === "fail" && (
             <Text
               style={{
                 color: "#ef4444",
@@ -833,8 +727,8 @@ export function FraudAnalyzer() {
             >
               Backend connection failed!
             </Text>
-          )}
-        </View> */}
+          )} */}
+        {/* </View> */}
         <Animated.View entering={FadeInDown.delay(100)} style={styles.header}>
           <View style={styles.headerTitle}>
             <View style={styles.logoContainer}>
@@ -878,7 +772,7 @@ export function FraudAnalyzer() {
                   name="mail"
                   size={18}
                   color={activeTab === "email" ? "#10b981" : "#9ca3af"}
-                  // style={{ marginRight: 16 }}
+                  style={{ marginRight: 16 }}
                 />
                 <Text
                   style={[
@@ -898,9 +792,7 @@ export function FraudAnalyzer() {
                 <Text
                   style={[
                     styles.tabText,
-                    {
-                      color: activeTab === "website" ? "#10b981" : "#9ca3af",
-                    },
+                    { color: activeTab === "website" ? "#10b981" : "#9ca3af" },
                   ]}
                 >
                   Website
@@ -964,8 +856,8 @@ export function FraudAnalyzer() {
                           progress < 50
                             ? "default"
                             : progress < 80
-                            ? "warning"
-                            : "success"
+                              ? "warning"
+                              : "success"
                         }
                         style={styles.progress}
                       />
@@ -1033,8 +925,8 @@ export function FraudAnalyzer() {
                           progress < 50
                             ? "default"
                             : progress < 80
-                            ? "warning"
-                            : "success"
+                              ? "warning"
+                              : "success"
                         }
                         style={styles.progress}
                       />
@@ -1099,7 +991,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "100%",
     paddingHorizontal: 20,
-    paddingVertical: 28,
+    paddingVertical: 40,
   },
   header: {
     alignItems: "center",

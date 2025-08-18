@@ -27,6 +27,7 @@ import QuizSimulation from "../../../components/QuizSimulation";
 import SecurityTips from "../../../components/SecurityTips";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import API from "../../../api/api";
 
 type Step =
   | "intro"
@@ -51,7 +52,8 @@ export default function Index() {
   const resetSimulation = () => {
     setCurrentStep("intro");
     setUserData({ account: "", otp: "", password: "" });
-    router.push("/(app)/(tabs)/simulator");
+    API.post("/simulator-use/phishing-simulator");
+    router.replace("/(app)/(tabs)/simulator");
   };
 
   if (currentStep === "intro") {

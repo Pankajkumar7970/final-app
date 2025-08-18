@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import {
   Shield,
   TriangleAlert as AlertTriangle,
@@ -15,9 +15,13 @@ import {
   Chrome as Home,
 } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import API from "../../../../api/api";
 
 export default function EducationalSummaryScreen() {
-  const router = useRouter();
+  const handleBackToScenarios = () => {
+    API.post("/simulator-use/identity-theft-simulator");
+    router.replace("/(app)/(tabs)/simulator");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -147,7 +151,7 @@ export default function EducationalSummaryScreen() {
 
         <TouchableOpacity
           style={styles.homeButton}
-          onPress={() => router.push("/(app)/(tabs)/simulator")}
+          onPress={handleBackToScenarios}
         >
           <Home size={20} color="#FFFFFF" />
           <Text style={styles.homeButtonText}>Return to Home</Text>

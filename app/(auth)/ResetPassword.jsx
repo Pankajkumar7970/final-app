@@ -6,6 +6,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Image,
 } from "react-native";
 import { router } from "expo-router";
 import { Shield, Lock } from "lucide-react-native";
@@ -106,7 +107,13 @@ export default function ResetPasswordScreen() {
           <View style={styles.content}>
             <View style={styles.headerSection}>
               <View style={styles.iconContainer}>
-                <Shield size={32} color={colors.primary.green} />
+                <Image
+                  source={{
+                    uri: "https://cdn.jsdelivr.net/gh/Nishant-Manocha/FineduGuard_StaticFiles@main/FinEduGuardtransparent.png",
+                  }}
+                  style={{ height: 85, width: 85 }}
+                  resizeMode="contain"
+                />
               </View>
               <Text style={styles.title}>Create New Password</Text>
               <Text style={styles.subtitle}>

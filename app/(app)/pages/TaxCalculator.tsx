@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  BackHandler,
 } from "react-native";
 import { Calculator, Upload, Target, FileText } from "lucide-react-native";
 import TaxCalculator from "../../../components/TaxCalculator";
@@ -13,6 +14,7 @@ import ReceiptUpload from "../../../components/ReceiptUpload";
 import PDFReportGenerator from "../../../components/PDFReportGenerator";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PSBColors } from "../../../utils/PSBColors";
+import { router, useFocusEffect } from "expo-router";
 
 const TaxCalculatorPage = () => {
   const [activeTab, setActiveTab] = useState("calculator");
@@ -43,6 +45,17 @@ const TaxCalculatorPage = () => {
   const [regime, setRegime] = useState("new");
   const [taxResult, setTaxResult] = useState(null);
   const [isCalculated, setIsCalculated] = useState(false);
+
+  useFocusEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        router.replace("/(app)/(tabs)/tools");
+        return true;
+      }
+    );
+    return () => backHandler.remove(); // Clean up the listener
+  });
 
   const tabs = [
     { id: "calculator", label: "Calculator", icon: Calculator },

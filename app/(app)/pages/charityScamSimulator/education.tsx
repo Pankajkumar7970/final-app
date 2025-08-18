@@ -15,8 +15,14 @@ import {
   TriangleAlert as AlertTriangle,
   Eye,
 } from "lucide-react-native";
+import API from "../../../../api/api";
 
 export default function EducationScreen() {
+  const handleBackToScenarios = () => {
+    API.post("/simulator-use/charity-scam-simulator");
+    router.replace("/pages/charityScamSimulator");
+  };
+
   const legitimatePlatforms = [
     {
       name: "GiveIndia",
@@ -228,7 +234,7 @@ export default function EducationScreen() {
 
           <TouchableOpacity
             style={styles.homeButton}
-            onPress={() => router.push("/pages/charityScamSimulator")}
+            onPress={handleBackToScenarios}
           >
             <Text style={styles.homeButtonText}>Back to Scenarios</Text>
           </TouchableOpacity>

@@ -9,6 +9,7 @@ import ReportList from "../../../components/ReportList";
 import { ReportProvider } from "../../../contexts/ReportContext";
 import { BackHandler } from "react-native";
 import { router, useFocusEffect } from "expo-router";
+import API from "../../../api/api";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +24,7 @@ export default function App() {
     );
     return () => backHandler.remove(); // Clean up the listener
   });
+
   return (
     <ReportProvider>
       <Tab.Navigator

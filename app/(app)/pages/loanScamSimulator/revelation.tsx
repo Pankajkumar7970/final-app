@@ -14,9 +14,11 @@ import {
   RotateCcw,
   ArrowLeft,
 } from "lucide-react-native";
+import API from "../../../../api/api";
 
 export default function RevelationScreen() {
   const handleRestart = () => {
+    API.post("/simulator-use/loan-scam-simulator");
     router.replace("/(app)/(tabs)/simulator");
   };
 

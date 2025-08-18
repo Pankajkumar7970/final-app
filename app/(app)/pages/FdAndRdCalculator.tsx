@@ -1,9 +1,21 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, BackHandler } from "react-native";
 import Calculator from "../../../components/Calculator";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { router, useFocusEffect } from "expo-router";
 
 export default function FdAndRdCalculator() {
+  useFocusEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        router.replace("/(app)/(tabs)/tools");
+        return true;
+      }
+    );
+    return () => backHandler.remove(); // Clean up the listener
+  });
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>

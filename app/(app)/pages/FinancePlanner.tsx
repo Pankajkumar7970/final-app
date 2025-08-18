@@ -17,6 +17,8 @@ import LearnScreen from "../../../components/LearnScreen";
 // Context
 import { AppProvider } from "../../../contexts/AppContext";
 import { PSBColors } from "../../../utils/PSBColors";
+import { router, useFocusEffect } from "expo-router";
+import { BackHandler } from "react-native";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -76,6 +78,17 @@ function AppStack() {
 }
 
 export default function App() {
+  useFocusEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        router.replace("/(app)/(tabs)/tools");
+        return true;
+      }
+    );
+    return () => backHandler.remove(); // Clean up the listener
+  });
+
   return (
     <SafeAreaProvider>
       <AppProvider>

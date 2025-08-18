@@ -99,6 +99,10 @@ export default function FormInput({
           placeholder={isFocused ? placeholder : ""}
           placeholderTextColor={colors.neutral.gray400}
           maxLength={maxLength}
+          autoCorrect={false}
+          spellCheck={false}
+          selectTextOnFocus={false}
+          contextMenuHidden={true}
         />
         {secureTextEntry && (
           <TouchableOpacity

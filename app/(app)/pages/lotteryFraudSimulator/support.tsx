@@ -21,6 +21,7 @@ import {
   X,
   ArrowLeft,
 } from "lucide-react-native";
+import API from "../../../../api/api";
 
 export default function SupportScreen() {
   const [message, setMessage] = useState("");
@@ -59,6 +60,7 @@ export default function SupportScreen() {
   };
 
   const goToEducation = () => {
+    API.post("/simulator-use/lottery-fraud-simulator");
     router.push("/education");
   };
 

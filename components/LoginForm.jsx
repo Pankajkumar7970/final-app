@@ -29,8 +29,7 @@ import {
   loginOrCreateWithSocial,
 } from "../redux/services/operations/authServices";
 import { LoginManager, AccessToken, Profile } from "react-native-fbsdk-next";
-import { auth as facebookAuth } from "../utils/facebookFirebase";
-import { signInWithFacebook } from "../utils/facebookAuthService";
+
 const width = Dimensions.get("window").width;
 
 export default function LoginScreen({
@@ -48,7 +47,6 @@ export default function LoginScreen({
   const loading = useSelector((state) => state.auth?.loading);
   const token = useSelector((state) => state.auth?.token);
   const [isGoogleSigningIn, setIsGoogleSigningIn] = useState(false);
-  const [isFacebookSigningIn, setIsFacebookSigningIn] = useState(false);
 
   const getFieldError = (field) => {
     return errors.find((error) => error.field === field)?.message;
@@ -72,89 +70,6 @@ export default function LoginScreen({
   }, []);
 
   // Your FB button press
-  async function onFacebookButtonPress() {
-    // if (isFacebookSigningIn) return;
-    setIsFacebookSigningIn(true);
-
-    try {
-      // Log out from any previous session
-      await LoginManager.logOut();
-      console.log("Logged out from previous FB session");
-
-      // Start login with Facebook permissions
-      const loginResult = await LoginManager.logInWithPermissions([
-        "public_profile",
-        "email",
-      ]);
-      console.log("loginResult:", loginResult);
-
-      if (loginResult.isCancelled) {
-        console.warn("Facebook Sign-In cancelled by user");
-        return;
-      }
-
-      // Get the access token
-      const data = await AccessToken.getCurrentAccessToken();
-      if (!data) {
-        console.error("Facebook Sign-In returned no access token");
-        Toast.show({
-          type: "error",
-          text1: "Facebook did not return an access token",
-        });
-        return;
-      }
-      console.log("data:", data);
-
-      // Build Firebase credential with the token
-      const facebookCredential = facebookAuth.FacebookAuthProvider.credential(
-        data.accessToken
-      );
-      console.log("facebookCredential:", facebookCredential);
-      const userCredential =
-        await facebookAuth().signInWithCredential(facebookCredential);
-      console.log("userCredential:", userCredential);
-      // Extract user details
-      const fbUser = userCredential?.user || {};
-      const profile = await Profile.getCurrentProfile(); // Sometimes FB SDK gives name/photo
-
-      const displayName = fbUser.displayName || profile?.name || "";
-      const [firstNameFromDisplay, ...restName] = displayName
-        .split(" ")
-        .filter(Boolean);
-      console.log("fbUser:", fbUser, "profile:", profile);
-      const email = fbUser?.email; // Sometimes Facebook does not return email if not verified
-      const firstName = profile?.firstName || firstNameFromDisplay || "User";
-      const lastName = profile?.lastName || restName.join(" ") || "Facebook";
-      const avatar = fbUser?.photoURL || profile?.imageURL;
-
-      if (!email) {
-        console.error("Facebook Sign-In returned no email");
-        Toast.show({
-          type: "error",
-          text1: "Facebook did not return an email",
-        });
-        return;
-      }
-
-      // Call backend login/create
-      const result = await dispatch(
-        loginOrCreateWithSocial({ email, firstName, lastName, avatar })
-      );
-      console.log(result);
-
-      if (result?.success) {
-        router.replace("/(app)/(tabs)");
-      } else {
-        Toast.show({ type: "error", text1: result?.error || "Sign-in failed" });
-      }
-    } catch (error) {
-      console.error("Facebook Sign-In Error:", error);
-      Toast.show({ type: "error", text1: "Facebook Sign-In failed" });
-    } finally {
-      setIsFacebookSigningIn(false);
-    }
-  }
-
   async function onGoogleButtonPress() {
     if (isGoogleSigningIn) return;
     setIsGoogleSigningIn(true);
@@ -355,17 +270,7 @@ export default function LoginScreen({
               disabled={isGoogleSigningIn}
               variant={"outline"}
             />
-
-            <PrimaryButton
-              onPress={onFacebookButtonPress}
-              title={
-                isFacebookSigningIn ? "Signing in..." : "Sign In with Facebook"
-              }
-              disabled={isFacebookSigningIn}
-              variant={"outline"}
-            />
           </View>
-
           <View style={styles.footerSection}>
             <Text style={styles.footerText}>
               Don't have an account?{" "}

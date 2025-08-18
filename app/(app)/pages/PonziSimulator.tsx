@@ -25,6 +25,7 @@ import {
   RotateCcw,
 } from "lucide-react-native";
 import { useTheme } from "../../../contexts/ThemeContext";
+import API from "../../../api/api";
 
 interface Investor {
   id: number;
@@ -51,6 +52,10 @@ const { width } = Dimensions.get("window");
 
 const SimulatorScreen = ({ navigation }: any) => {
   const { theme } = useTheme();
+
+  useEffect(() => {
+    API.post("/simulator-use/ponzi-simulator");
+  }, []);
 
   const [simulation, setSimulation] = useState<SimulationState>({
     investors: [

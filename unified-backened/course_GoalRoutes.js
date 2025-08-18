@@ -792,9 +792,8 @@ module.exports = (app) => {
     }
   });
 
-  app.post("/api/tool-use/:id", authenticateToken, async (req, res) => {
+  app.post("/api/simulator-use/:id", authenticateToken, async (req, res) => {
     try {
-      const { type } = req.query;
       const { id } = req.params; // ✅ correct destructuring
 
       console.log("➡️  Incoming request");
@@ -805,75 +804,31 @@ module.exports = (app) => {
       let oldProgress;
       let progress;
 
-      if (type === "tool") {
-        console.log("🛠️ Entered TOOL branch");
+      console.log("🎮 Entered SIMULATOR branch");
 
-        progress = {
-          userId: req.user.id,
-          toolId: id,
-          type: "tool",
-          experiencePoints: 50,
-          status: "completed",
-          completedAt: new Date(),
-        };
+      progress = {
+        userId: req.user.id,
+        simulatorId: id,
+        type: "simulator",
+        experiencePoints: 50,
+        status: "completed",
+        completedAt: new Date(),
+      };
 
-        console.log("🔎 Querying UserProgress with:", {
-          type,
-          toolId: id,
-          userId: req.user?.id,
-        });
-
-        oldProgress = await UserProgress.find({
-          type,
-          toolId: id,
-          userId: req.user.id,
-        });
-
-        console.log("✅ TOOL oldProgress found:", oldProgress);
-      } else if (type === "simulator") {
-        console.log("🎮 Entered SIMULATOR branch");
-
-        progress = {
-          userId: req.user.id,
-          simulatorId: id,
-          type: "simulator",
-          experiencePoints: 50,
-          status: "completed",
-          completedAt: new Date(),
-        };
-
-        console.log("🔎 Querying UserProgress with:", {
-          type,
-          simulatorId: id,
-          userId: req.user?.id,
-        });
-
-        oldProgress = await UserProgress.find({
-          type,
-          simulatorId: id,
-          userId: req.user.id,
-        });
-
-        console.log("✅ SIMULATOR oldProgress found:", oldProgress);
-      } else {
-        console.log("⚠️ Unknown type provided:", type);
-      }
+      oldProgress = await UserProgress.find({
+        type: "simulator",
+        simulatorId: id,
+        userId: req.user.id,
+      });
 
       // check if update or insert
       if (oldProgress && oldProgress.length > 0) {
         console.log("📌 Updating oldProgress record");
 
-        if (type === "tool") {
-          await UserProgress.findOneAndUpdate(
-            { toolId: id, userId: req.user.id },
-            progress
-          );
-        } else {
-          await UserProgress.findOneAndUpdate(
-            { simulatorId: id, userId: req.user.id },
-            progress
-          );
-        }
+        await UserProgress.findOneAndUpdate(
+          { simulatorId: id, userId: req.user.id },
+          progress
+        );
       } else {
         console.log("🆕 Creating new UserProgress record");
         const saved = await new UserProgress(progress).save();
@@ -1223,6 +1178,24 @@ module.exports = (app) => {
       res
         .status(500)
         .json({ message: "Error adding contribution", error: error.message });
+    }
+  });
+
+  app.get("/api/users/currentuser", authenticateToken, async (req, res) => {
+    try {
+      const user = await User.findById(req.user.id).select("-password");
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json({
+        success: true,
+        user,
+      });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Error fetching user", error: error.message });
     }
   });
 };

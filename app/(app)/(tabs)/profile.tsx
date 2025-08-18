@@ -47,8 +47,10 @@ import { PSBColors, PSBShadows, PSBSpacing } from "../../../utils/PSBColors";
 import Goals from "../../../components/Goals";
 import { useGoals } from "../../../contexts/GoalsContext";
 import { colors } from "../../../utils/colors";
+import API from "../../../api/api";
 
 const { width } = Dimensions.get("window");
+const levelThresholds = [0, 200, 500, 1000, 2000, 5000];
 
 const ProfileScreen = () => {
   const { resetState, setLoginState } = useGoals();
@@ -59,6 +61,51 @@ const ProfileScreen = () => {
 
   const progress = useSharedValue(0);
   const headerScale = useSharedValue(1);
+  const [userStats, setUserStats] = useState({
+    coursesCompleted: 0,
+    scenariosCompleted: 0,
+    quizzesCompleted: 0,
+    simulatorsUsed: 0,
+    currentLevel: 1,
+    experiencePoints: 0,
+    nextLevelXP: 0,
+  });
+
+  async function loadUserStats() {
+    console.log("Requesting user data.............................");
+    const user = await API.get("/users/currentuser");
+    console.log("User stats:", user.data.user);
+
+    const stats = await API.get("/progress");
+    const numCompletedCourses = stats.data.progress.filter(
+      (item) => item.type === "course"
+    ).length;
+    const numCompletedScenarios = stats.data.progress.filter(
+      (item) => item.type === "scenario"
+    ).length;
+    const numCompletedQuizzes = stats.data.progress.filter(
+      (item) => item.type === "quiz"
+    ).length;
+    const numSimulatorsUsed = stats.data.progress.filter(
+      (item) => item.type === "simulator"
+    ).length;
+    setUserStats((prev) => {
+      return {
+        ...prev,
+        experiencePoints: user.data.user.totalExperiencePoints,
+        currentLevel: user.data.user.level,
+        nextLevelXP: levelThresholds[user.data.user.level],
+        coursesCompleted: numCompletedCourses,
+        scenariosCompleted: numCompletedScenarios,
+        quizzesCompleted: numCompletedQuizzes,
+        simulatorsUsed: numSimulatorsUsed,
+      };
+    });
+  }
+
+  useEffect(() => {
+    loadUserStats();
+  }, []);
 
   useFocusEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -95,16 +142,6 @@ const ProfileScreen = () => {
     setLoginState();
     headerScale.value = withSpring(1, { damping: 15 });
   }, []);
-
-  const userStats = {
-    schemesExposed: 12,
-    redFlagsSpotted: 45,
-    storiesCompleted: 8,
-    badgesEarned: 6,
-    currentLevel: "Financial Detective",
-    experiencePoints: 2450,
-    nextLevelXP: 3000,
-  };
 
   const progressPercentage =
     (userStats.experiencePoints / userStats.nextLevelXP) * 100;
@@ -244,7 +281,9 @@ const ProfileScreen = () => {
                   ? `${userData.firstName || ""} ${userData.lastName || ""}`.trim()
                   : "Fraud Fighter"}
               </Text>
-              <Text style={styles.userLevel}>{userStats.currentLevel}</Text>
+              <Text style={styles.userLevel}>
+                Level {userStats.currentLevel}
+              </Text>
 
               {/* Experience Points Display */}
               <View style={styles.xpContainer}>
@@ -328,26 +367,26 @@ const ProfileScreen = () => {
                   {[
                     {
                       icon: Flag,
-                      value: userStats.schemesExposed,
-                      label: "Schemes Exposed",
+                      value: userStats.scenariosCompleted,
+                      label: "Scenarios Completed",
                       color: "#ff6b6b",
                     },
                     {
                       icon: Shield,
-                      value: userStats.redFlagsSpotted,
-                      label: "Red Flags Spotted",
+                      value: userStats.simulatorsUsed,
+                      label: "Simulators Used",
                       color: "#4ecdc4",
                     },
                     {
                       icon: BookOpen,
-                      value: userStats.storiesCompleted,
-                      label: "Stories Completed",
+                      value: userStats.quizzesCompleted,
+                      label: "Quizzes Completed",
                       color: "#45b7d1",
                     },
                     {
                       icon: Trophy,
-                      value: userStats.badgesEarned,
-                      label: "Badges Earned",
+                      value: userStats.coursesCompleted,
+                      label: "Courses Completed",
                       color: "#ffd93d",
                     },
                   ].map((stat, index) => (

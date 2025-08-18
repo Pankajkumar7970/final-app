@@ -150,7 +150,7 @@ const home = () => {
       icon: Lock,
       color: "#9C27B0",
       gradient: ["#f5576c", "#F50057"] as const,
-      route: "/pages/identityTheftSimulator/index",
+      route: "/pages/identityTheftSimulator",
       difficulty: "Intermediate",
     },
     {
@@ -160,7 +160,7 @@ const home = () => {
       icon: CreditCard,
       color: "#00BCD4",
       gradient: ["#00f2fe", "#4facfe"] as const,
-      route: "/pages/loanScamSimulator/index",
+      route: "/pages/loanScamSimulator",
       difficulty: "Advanced",
     },
     {
@@ -170,7 +170,7 @@ const home = () => {
       icon: Award,
       color: "#FF9800",
       gradient: ["#8b5cf6", "#a855f7"] as const,
-      route: "/pages/lotteryFraudSimulator/index",
+      route: "/pages/lotteryFraudSimulator",
       difficulty: "Beginner",
     },
   ];
@@ -236,24 +236,24 @@ const home = () => {
   const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
   const AnimatedView = Animated.createAnimatedComponent(View);
 
-  const [streakMessage, setStreakMessage] = useState("");
+  // const [streakMessage, setStreakMessage] = useState("");
 
-  useEffect(() => {
-    const updateStreak = async () => {
-      try {
-        const res = await API.post("/streak");
-        // 🔑 no need to attach headers manually, interceptor already adds token
-        setStreakMessage(res.data.message || "🔥 Welcome back!");
-      } catch (err) {
-        console.error("Streak error:", err.response?.data || err.message);
-        setStreakMessage("⚠ Unable to update streak");
-      } finally {
-        // setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const updateStreak = async () => {
+  //     try {
+  //       const res = await API.post("/streak");
+  //       // 🔑 no need to attach headers manually, interceptor already adds token
+  //       setStreakMessage(res.data.message || "🔥 Welcome back!");
+  //     } catch (err) {
+  //       console.error("Streak error:", err.response?.data || err.message);
+  //       setStreakMessage("⚠ Unable to update streak");
+  //     } finally {
+  //       // setLoading(false);
+  //     }
+  //   };
 
-    updateStreak();
-  }, []);
+  //   updateStreak();
+  // }, []);
 
   useFocusEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -422,7 +422,6 @@ const home = () => {
                 <View style={styles.greetingWrapper}>
                   <View style={styles.logoRow}>
                     <View style={styles.logoContainer}>
-                      <Shield size={28} color={PSBColors.primary.gold} />
                       <Text style={styles.logoText}>FinEduGuard</Text>
                     </View>
                   </View>

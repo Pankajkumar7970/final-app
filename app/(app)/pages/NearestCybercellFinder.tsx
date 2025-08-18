@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, StatusBar } from "react-native";
+import { View, StyleSheet, Text, StatusBar, BackHandler } from "react-native";
 import MapContainer from "../../../components/MapContainer";
 import SearchBox from "../../../components/SearchBox";
 import CyberCellList from "../../../components/CyberCellList";
@@ -8,6 +8,7 @@ import { calculateDistance } from "../../../utils/distance";
 import "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import API from "../../../api/api"; // adjust the path if needed
+import { router, useFocusEffect } from "expo-router";
 
 export default function App() {
   const [userLocation, setUserLocation] = useState(null);
@@ -17,6 +18,17 @@ export default function App() {
   });
   const [nearbyCells, setNearbyCells] = useState([]);
   const [currentAddress, setCurrentAddress] = useState("");
+
+  useFocusEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        router.replace("/(app)/(tabs)/tools");
+        return true;
+      }
+    );
+    return () => backHandler.remove(); // Clean up the listener
+  });
 
   // ✅ Fetch cyber cells from backend
   const fetchCyberCells = async (lat: number, lng: number) => {

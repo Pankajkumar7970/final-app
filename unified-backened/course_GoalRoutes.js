@@ -792,66 +792,115 @@ module.exports = (app) => {
     }
   });
 
-  //   app.post("/api/tool-use/:id", authenticateToken, async (req, res) => {
-  //     try {
-  //       const { type } = req.query;
-  //       const id = req.params.id;
+  app.post("/api/tool-use/:id", authenticateToken, async (req, res) => {
+    try {
+      const { type } = req.query;
+      const { id } = req.params; // ✅ correct destructuring
 
-  //       if(type==="tool"){
-  //       const progress = {
-  //         userId: req.user.id,
-  //         toolId: id,
-  //         type: "tool",
-  //         experiencePoints: 50,
-  //         status: "used",
-  //         completedAt: new Date(),
-  //       }}else if(type === "simulator"){
-  //          const progress = {
-  //            userId: req.user.id,
-  //            simulatorId: id,
-  //            type: "simulator",
-  //            experiencePoints: 50,
-  //            status: "used",
-  //            completedAt: new Date(),
-  //          };
+      console.log("➡️  Incoming request");
+      console.log("Params:", req.params);
+      console.log("Query:", req.query);
+      console.log("User:", req.user);
 
-  //          if(type==="tool"){
-  //  const oldProgress = await UserProgress.find({
-  //         type,
-  //         toolId,
-  //         userId: req.user.id,
-  //       })}else if(type === "simulator"){
-  //  const oldProgress = await UserProgress.find({
-  //         type,
-  //         simulatorId,
-  //         userId: req.user.id,
-  //       }
+      let oldProgress;
+      let progress;
 
-  //     }
-  //       if (oldProgress.length > 0&& type === "tool") {
-  //         await UserProgress.findAndUpdate({toolId: id}, progress);
-  //       } else if(oldProgress.length>0&& type ==="simulator"){
-  //         await UserProgress.findAndUpdate({simulatorId: id}, progress);
-  //       }
-  //        else {
-  //         await new UserProgress(progress).save();
-  //       }
-  //       const user = await User.findById(req.user.id);
-  //       const userExp = user.totalExperiencePoints + 50;
-  //       user.totalExperiencePoints = userExp;
-  //       user.level = calculateLevel(userExp);
-  //       await user.save();
-  //       res.json({
-  //         success: true,
-  //         progress,
-  //       });
-  //     } catch(error) {
-  //       res
-  //         .status(500)
-  //         .json({ message: "Error fetching progress", error: error.message });
-  //     }
-  //     }
-  //   });
+      if (type === "tool") {
+        console.log("🛠️ Entered TOOL branch");
+
+        progress = {
+          userId: req.user.id,
+          toolId: id,
+          type: "tool",
+          experiencePoints: 50,
+          status: "completed",
+          completedAt: new Date(),
+        };
+
+        console.log("🔎 Querying UserProgress with:", {
+          type,
+          toolId: id,
+          userId: req.user?.id,
+        });
+
+        oldProgress = await UserProgress.find({
+          type,
+          toolId: id,
+          userId: req.user.id,
+        });
+
+        console.log("✅ TOOL oldProgress found:", oldProgress);
+      } else if (type === "simulator") {
+        console.log("🎮 Entered SIMULATOR branch");
+
+        progress = {
+          userId: req.user.id,
+          simulatorId: id,
+          type: "simulator",
+          experiencePoints: 50,
+          status: "completed",
+          completedAt: new Date(),
+        };
+
+        console.log("🔎 Querying UserProgress with:", {
+          type,
+          simulatorId: id,
+          userId: req.user?.id,
+        });
+
+        oldProgress = await UserProgress.find({
+          type,
+          simulatorId: id,
+          userId: req.user.id,
+        });
+
+        console.log("✅ SIMULATOR oldProgress found:", oldProgress);
+      } else {
+        console.log("⚠️ Unknown type provided:", type);
+      }
+
+      // check if update or insert
+      if (oldProgress && oldProgress.length > 0) {
+        console.log("📌 Updating oldProgress record");
+
+        if (type === "tool") {
+          await UserProgress.findOneAndUpdate(
+            { toolId: id, userId: req.user.id },
+            progress
+          );
+        } else {
+          await UserProgress.findOneAndUpdate(
+            { simulatorId: id, userId: req.user.id },
+            progress
+          );
+        }
+      } else {
+        console.log("🆕 Creating new UserProgress record");
+        const saved = await new UserProgress(progress).save();
+        console.log("✅ Saved new progress:", saved);
+      }
+
+      // Update user XP
+      console.log("⭐ Updating user XP for userId:", req.user.id);
+
+      const user = await User.findById(req.user.id);
+      console.log("User before update:", user);
+
+      const userExp = user.totalExperiencePoints + 50;
+      user.totalExperiencePoints = userExp;
+      user.level = calculateLevel(userExp);
+
+      const updatedUser = await user.save();
+      console.log("✅ User after update:", updatedUser);
+
+      res.json({ success: true, progress });
+    } catch (error) {
+      console.error("❌ Error inside /api/tool-use/:id:", error);
+      res
+        .status(500)
+        .json({ message: "Error fetching progress", error: error.message });
+    }
+  });
 
   // ✅ User Progress Routes
   app.get("/api/progress", authenticateToken, async (req, res) => {

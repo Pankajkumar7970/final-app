@@ -327,7 +327,7 @@ const ModuleCard: React.FC<{ module: SimulatorModule; index: number }> = ({
   };
 
   const handlePress = () => {
-    router.push(module.route as any);
+    router.replace(module.route as any);
   };
 
   const rotation = rotateAnim.interpolate({

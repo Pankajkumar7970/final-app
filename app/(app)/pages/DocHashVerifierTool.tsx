@@ -1,9 +1,25 @@
 import React from "react";
-import { KeyboardAvoidingView, ScrollView, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { DocHashVerifier } from "../../../components/DocHashVerifier";
+import { router, useFocusEffect } from "expo-router";
 
 export default function DocHashVerifierTool() {
+  useFocusEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        router.replace("/(app)/(tabs)/tools");
+        return true;
+      }
+    );
+    return () => backHandler.remove(); // Clean up the listener
+  });
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>

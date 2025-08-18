@@ -7,10 +7,22 @@ import ScamMap from "../../../components/ScamMap";
 import ReportForm from "../../../components/ReportForm";
 import ReportList from "../../../components/ReportList";
 import { ReportProvider } from "../../../contexts/ReportContext";
+import { BackHandler } from "react-native";
+import { router, useFocusEffect } from "expo-router";
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  useFocusEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        router.replace("/(app)/(tabs)/tools");
+        return true;
+      }
+    );
+    return () => backHandler.remove(); // Clean up the listener
+  });
   return (
     <ReportProvider>
       <Tab.Navigator

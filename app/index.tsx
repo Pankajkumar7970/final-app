@@ -1,6 +1,6 @@
 import { Redirect, router } from "expo-router";
 import { useAuth } from "../contexts/AuthContext";
-import { View, ActivityIndicator, StyleSheet, Text } from "react-native";
+import { View, ActivityIndicator, StyleSheet, Text, Image } from "react-native";
 import { useEffect, useState } from "react";
 import { ensurePermission } from "../utils/permissions";
 import PrimaryButton from "../components/ui/PrimaryButton";
@@ -54,7 +54,13 @@ export default function Index() {
         <View style={styles.content}>
           <View style={styles.headerSection}>
             <View style={styles.logoContainer}>
-              <Shield size={48} color={colors.primary.green} />
+              <Image
+                source={{
+                  uri: "https://cdn.jsdelivr.net/gh/Nishant-Manocha/FineduGuard_StaticFiles@main/FinEduGuardtransparent.png",
+                }}
+                style={{ height: 85, width: 85 }}
+                resizeMode="contain"
+              />
             </View>
             <Text style={styles.title}>Welcome to FinEduGuard App</Text>
             <Text style={styles.subtitle}>

@@ -82,6 +82,7 @@ export const DocHashVerifier = () => {
     setGeneratedHash("");
     setVerificationResult(null);
     setIsProcessing(true);
+    API.post("/tool-use/doc-hash-verifier?type=tool");
   };
 
   const handleHashGenerated = (hash: string) => {

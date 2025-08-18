@@ -10,9 +10,9 @@ export const SSL_PINNING_CONFIG = {
         "91:18:D9:5D:31:D8:27:B0:72:69:89:38:E3:8E:80:29:C1:C0:6F:12:36:C6:FC:DD:77:07:97:DD:A7:50:0E:4E",
     },
     API: {
-      domain: "api.onrender.com",
+      domain: "final-app-yzrb.onrender.com",
       fingerprint:
-        "0B:CD:A7:A3:81:C8:03:9E:3A:E4:D3:64:62:27:BC:DB:90:A1:A8:B9:FE:5C:2D:EC:FF:20:A9:63:D1:A7:F3:39", // same cert if shared
+        "0B:CD:A7:A3:81:C8:03:9E:3A:E4:D3:64:62:27:BC:DB:90:A1:A8:B9:FE:5C:2D:EC:FF:20:A9:63:D1:A7:F3:39",
       backup:
         "91:18:D9:5D:31:D8:27:B0:72:69:89:38:E3:8E:80:29:C1:C0:6F:12:36:C6:FC:DD:77:07:97:DD:A7:50:0E:4E",
     },

@@ -122,6 +122,7 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
         scenarioId,
         choiceId: selectedChoice.id,
         timeSpent,
+        points: selectedChoice.points,
       };
       onComplete(result).then((response) => {
         if (response) {

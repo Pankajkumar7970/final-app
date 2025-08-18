@@ -120,6 +120,7 @@ require("./phishingRoutes")(app);
 require("./nearestCyberCell")(app);
 require("./course_GoalRoutes")(app);
 require("./scanHeatMap")(app);
+require("./finance-planner")(app);
 const authRoutes = require("./authRoutes");
 app.use("/api/auth", authRoutes);
 

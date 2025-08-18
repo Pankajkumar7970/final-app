@@ -236,26 +236,24 @@ const home = () => {
   const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
   const AnimatedView = Animated.createAnimatedComponent(View);
 
-  const [streak, setStreak] = useState(0);
+  const [streakMessage, setStreakMessage] = useState("");
 
   useEffect(() => {
-    // ✅ Runs once when user opens the app
-    const fetchStreak = async () => {
+    const updateStreak = async () => {
       try {
-        const res = await API.get("/streak");
-        setStreak(res.data.streak);
-        Toast.show({
-          type: "success",
-          text1: "Streak Fetched",
-          text2: `Your current streak is ${res.data.streak} days.`,
-        });
+        const res = await API.post("/streak");
+        // 🔑 no need to attach headers manually, interceptor already adds token
+        setStreakMessage(res.data.message || "🔥 Welcome back!");
       } catch (err) {
-        console.error("Error fetching streak:", err);
+        console.error("Streak error:", err.response?.data || err.message);
+        setStreakMessage("⚠ Unable to update streak");
+      } finally {
+        // setLoading(false);
       }
     };
 
-    fetchStreak();
-  }, []); // ✅ empty dependency → only once
+    updateStreak();
+  }, []);
 
   useFocusEffect(() => {
     const backHandler = BackHandler.addEventListener(

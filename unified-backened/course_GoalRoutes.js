@@ -1,6 +1,26 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
+const levelThresholds = [
+  { level: 1, xp: 0 },
+  { level: 2, xp: 200 },
+  { level: 3, xp: 500 },
+  { level: 4, xp: 1000 },
+  { level: 5, xp: 2000 },
+  { level: 6, xp: 5000 },
+];
+
+// Method: calculate level from XP
+const calculateLevel = function (totalXp) {
+  let lvl = 1;
+  for (let i = 0; i < levelThresholds.length; i++) {
+    if (totalXp >= levelThresholds[i].xp) {
+      lvl = levelThresholds[i].level;
+    }
+  }
+  return lvl;
+};
+
 module.exports = (app) => {
   // ======== SCHEMAS ==========
   const userSchema = new mongoose.Schema({
@@ -22,6 +42,8 @@ module.exports = (app) => {
       twoFactorEnabled: { type: Boolean, default: false },
       lastPasswordChange: { type: Date, default: Date.now },
     },
+    totalExperiencePoints: { type: Number, default: 0 },
+    level: { type: Number, default: 1 },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   });
@@ -163,9 +185,11 @@ module.exports = (app) => {
     lessonId: { type: String },
     quizId: { type: String },
     scenarioId: { type: String },
+    toolId: { type: String },
+    simulatorId: { type: String },
     type: {
       type: String,
-      enum: ["course", "lesson", "quiz", "scenario"],
+      enum: ["course", "lesson", "quiz", "scenario", "tool", "simulator"],
       required: true,
     },
     status: {
@@ -173,6 +197,8 @@ module.exports = (app) => {
       enum: ["not_started", "in_progress", "completed"],
       default: "not_started",
     },
+    experiencePoints: { type: Number, default: 0 },
+    streak: { type: Number, default: 0 },
     lessonIndex: { type: Number, default: 0 }, // for lessons
     score: { type: Number },
     timeSpent: { type: Number }, // in minutes
@@ -213,93 +239,6 @@ module.exports = (app) => {
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   });
-
-  const progressionSchema = new mongoose.Schema(
-    {
-      userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-        unique: true, // one progression doc per user
-      },
-
-      xp: { type: Number, default: 0 }, // total XP earned
-      level: { type: Number, default: 1 }, // gamified levels
-      streak: { type: Number, default: 0 }, // daily streak count
-
-      // Stats for badges & analytics
-      stats: {
-        coursesCompleted: { type: Number, default: 0 },
-        lessonsCompleted: { type: Number, default: 0 },
-        quizzesCompleted: { type: Number, default: 0 },
-        scenariosCompleted: { type: Number, default: 0 },
-        toolsUsed: { type: Number, default: 0 }, // simulators & calculators
-      },
-
-      // Completed course/quiz/lesson IDs for progress tracking
-      completed: {
-        courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
-        lessons: [{ type: mongoose.Schema.Types.ObjectId, ref: "Lesson" }],
-        quizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Quiz" }],
-        scenarios: [{ type: mongoose.Schema.Types.ObjectId, ref: "Scenario" }],
-        tools: [{ type: String }], // tool identifiers
-      },
-
-      // Activity log for analytics
-      activityLog: [
-        {
-          action: { type: String }, // e.g., "completed_lesson", "completed_quiz"
-          targetId: { type: String }, // lessonId, quizId, etc.
-          xpGained: { type: Number, default: 0 },
-          date: { type: Date, default: Date.now },
-        },
-      ],
-    },
-    { timestamps: true }
-  );
-
-  // -------------------- Badge Schema --------------------
-  const badgeSchema = new mongoose.Schema(
-    {
-      name: { type: String, required: true }, // "Quiz Master"
-      description: { type: String },
-      icon: { type: String }, // URL or asset name
-      xpReward: { type: Number, default: 0 }, // bonus XP when unlocked
-
-      condition: {
-        type: String,
-        enum: [
-          "complete_first_course",
-          "complete_5_courses",
-          "complete_first_quiz",
-          "complete_10_lessons",
-          "use_5_tools",
-          "daily_streak_7",
-          "daily_streak_30",
-        ],
-        required: true,
-      },
-    },
-    { timestamps: true }
-  );
-
-  // -------------------- UserBadge Schema --------------------
-  const userBadgeSchema = new mongoose.Schema(
-    {
-      userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-      badgeId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Badge",
-        required: true,
-      },
-      earnedAt: { type: Date, default: Date.now },
-    },
-    { timestamps: true }
-  );
 
   // Contribution Schema
   const contributionSchema = new mongoose.Schema({
@@ -430,9 +369,6 @@ module.exports = (app) => {
   );
   const Achievement = mongoose.model("Achievement", achievementSchema);
   const Notification = mongoose.model("Notification", notificationSchema);
-  const Progression = mongoose.model("Progression", progressionSchema);
-  const Badge = mongoose.model("Badge", badgeSchema);
-  const UserBadge = mongoose.model("UserBadge", userBadgeSchema);
 
   const authenticateToken = (req, res, next) => {
     try {
@@ -532,6 +468,17 @@ module.exports = (app) => {
       const lessonIndex = course.lessons.findIndex(
         (l) => l._id.toString() === lessonId
       );
+      let xp;
+      if (status === "in_progress") {
+        xp = 0;
+      } else if (status === "completed") {
+        xp = 100;
+        const user = await User.findById(req.user.id);
+        const userExp = user.totalExperiencePoints + xp;
+        user.totalExperiencePoints = userExp;
+        user.level = calculateLevel(userExp);
+        await user.save();
+      }
 
       const progress = {
         userId: req.user.id,
@@ -540,6 +487,7 @@ module.exports = (app) => {
         type: "course",
         status,
         completedAt: new Date(),
+        experiencePoints: xp,
       };
 
       const existing = await UserProgress.findOne({ courseId, type: "course" });
@@ -610,75 +558,6 @@ module.exports = (app) => {
     }
   });
 
-  app.get("/api/courses", async (req, res) => {
-    try {
-      const { difficulty, category } = req.query;
-
-      let filter = {};
-      if (difficulty) filter.difficulty = difficulty;
-      if (category) filter.category = category;
-
-      const courses = await Course.find(filter);
-
-      res.json({
-        success: true,
-        courses,
-      });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Error fetching courses", error: error.message });
-    }
-  });
-
-  app.get("/api/courses/:id", async (req, res) => {
-    try {
-      console.log("Course Fetch Request Received for ID:", req.params.id);
-      const course = await Course.findById(req.params.id);
-      console.log("Course found:", course);
-      if (!course) return res.status(404).json({ message: "Course not found" });
-
-      res.json({ success: true, course });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Error fetching course", error: error.message });
-    }
-  });
-  /////authenticate token
-  app.post("/api/courses/:id/complete", authenticateToken, async (req, res) => {
-    try {
-      console.log("Course Completion Request Received");
-      const courseId = req.params.id;
-      const { lessonId, status } = req.body;
-      const course = await Course.findById(courseId);
-      // console.log("Course found:", course.lessons, lessonId);
-      const lessonIndex = course.lessons.findIndex((lesson) => {
-        return lesson._id.toString() === lessonId;
-      });
-      console.log("Course Completion Request:", lessonIndex);
-
-      const progress = {
-        userId: req.user.id,
-        courseId,
-        lessonIndex,
-        type: "course",
-        status,
-        completedAt: new Date(),
-      };
-
-      const oldProgress = await UserProgress.find({
-        type: "course",
-        courseId,
-      });
-      console.log(oldProgress);
-      if (oldProgress.length > 0) {
-        await UserProgress.findByIdAndUpdate(oldProgress[0]._id, progress);
-      } else {
-        await new UserProgress(progress).save();
-      }
-    } catch (error) {}
-  });
   // ✅ Quiz Routes
   app.get("/api/quizzes", async (req, res) => {
     try {
@@ -750,6 +629,7 @@ module.exports = (app) => {
       const score = Math.round((correctAnswers / quiz.questions.length) * 100);
 
       console.log("Score calculated:", score);
+      const xp = correctAnswers * 15;
       // Save progress
       const progress = {
         userId: req.user.id,
@@ -758,6 +638,7 @@ module.exports = (app) => {
         status: "completed",
         score,
         // timeSpent,
+        experiencePoints: xp,
         answers: processedAnswers,
         completedAt: new Date(),
       };
@@ -773,7 +654,12 @@ module.exports = (app) => {
       } else {
         await new UserProgress(progress).save();
       }
-      console.log("Progress successfully saved.");
+
+      const user = await User.findById(req.user.id);
+      const userExp = user.totalExperiencePoints + xp;
+      user.totalExperiencePoints = userExp;
+      user.level = calculateLevel(userExp);
+      await user.save();
 
       res.json({
         success: true,
@@ -828,7 +714,7 @@ module.exports = (app) => {
 
   app.post("/api/scenarios/:id/submit", authenticateToken, async (req, res) => {
     try {
-      const { choiceId, timeSpent } = req.body;
+      const { choiceId, timeSpent, points } = req.body;
       const scenarioId = req.params.id;
       console.log(req.user.id);
 
@@ -844,12 +730,6 @@ module.exports = (app) => {
         return res.status(404).json({ message: "Scenario not found" });
       }
 
-      // console.log(
-      //   "Scenario found:",
-      //   scenario.title || scenario.name || scenario.id
-      // );
-      // console.log("Available choices:", scenario.choices);
-
       const selectedChoice = scenario.choices.find(
         (choice) => choice.id === choiceId
       );
@@ -859,14 +739,12 @@ module.exports = (app) => {
         return res.status(400).json({ message: "Invalid choice" });
       }
 
-      // console.log("Selected choice:", selectedChoice);
-
       const progress = {
         userId: req.user.id,
         scenarioId,
         type: "scenario",
         status: "completed",
-        score: selectedChoice.points,
+        experiencePoints: points,
         timeSpent,
         answers: [
           {
@@ -893,6 +771,12 @@ module.exports = (app) => {
         await new UserProgress(progress).save();
       }
 
+      const user = await User.findById(req.user.id);
+      const userExp = user.totalExperiencePoints + points;
+      user.totalExperiencePoints = userExp;
+      user.level = calculateLevel(userExp);
+      await user.save();
+
       console.log("Progress successfully saved.");
 
       res.json({
@@ -907,6 +791,67 @@ module.exports = (app) => {
         .json({ message: "Error submitting scenario", error: error.message });
     }
   });
+
+  //   app.post("/api/tool-use/:id", authenticateToken, async (req, res) => {
+  //     try {
+  //       const { type } = req.query;
+  //       const id = req.params.id;
+
+  //       if(type==="tool"){
+  //       const progress = {
+  //         userId: req.user.id,
+  //         toolId: id,
+  //         type: "tool",
+  //         experiencePoints: 50,
+  //         status: "used",
+  //         completedAt: new Date(),
+  //       }}else if(type === "simulator"){
+  //          const progress = {
+  //            userId: req.user.id,
+  //            simulatorId: id,
+  //            type: "simulator",
+  //            experiencePoints: 50,
+  //            status: "used",
+  //            completedAt: new Date(),
+  //          };
+
+  //          if(type==="tool"){
+  //  const oldProgress = await UserProgress.find({
+  //         type,
+  //         toolId,
+  //         userId: req.user.id,
+  //       })}else if(type === "simulator"){
+  //  const oldProgress = await UserProgress.find({
+  //         type,
+  //         simulatorId,
+  //         userId: req.user.id,
+  //       }
+
+  //     }
+  //       if (oldProgress.length > 0&& type === "tool") {
+  //         await UserProgress.findAndUpdate({toolId: id}, progress);
+  //       } else if(oldProgress.length>0&& type ==="simulator"){
+  //         await UserProgress.findAndUpdate({simulatorId: id}, progress);
+  //       }
+  //        else {
+  //         await new UserProgress(progress).save();
+  //       }
+  //       const user = await User.findById(req.user.id);
+  //       const userExp = user.totalExperiencePoints + 50;
+  //       user.totalExperiencePoints = userExp;
+  //       user.level = calculateLevel(userExp);
+  //       await user.save();
+  //       res.json({
+  //         success: true,
+  //         progress,
+  //       });
+  //     } catch(error) {
+  //       res
+  //         .status(500)
+  //         .json({ message: "Error fetching progress", error: error.message });
+  //     }
+  //     }
+  //   });
 
   // ✅ User Progress Routes
   app.get("/api/progress", authenticateToken, async (req, res) => {
@@ -1229,238 +1174,6 @@ module.exports = (app) => {
       res
         .status(500)
         .json({ message: "Error adding contribution", error: error.message });
-    }
-  });
-
-  /////Progression and badges///////////////////////
-  // controllers/progressionController.js
-  const updateDailyStreak = async (userId) => {
-    const today = new Date().setHours(0, 0, 0, 0);
-
-    let progression = await Progression.findOne({ userId });
-    if (!progression) {
-      progression = await Progression.create({
-        userId,
-        streak: 1,
-        lastLogin: new Date(),
-        xp: 10,
-      });
-      return { progression, message: "🔥 Streak started!" };
-    }
-    app.post("/streak", authenticateToken, updateDailyStreak);
-
-    // ✅ Daily Streak & Course Completion Combined
-
-    // ✅ Daily Streak Handler
-
-    const lastLogin = new Date(progression.lastLogin).setHours(0, 0, 0, 0);
-
-    if (lastLogin === today) {
-      return { progression, message: "✅ Already counted today" };
-    }
-
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    if (lastLogin === yesterday.setHours(0, 0, 0, 0)) {
-      progression.streak += 1; // continue streak
-    } else {
-      progression.streak = 1; // reset streak
-    }
-
-    progression.xp += 10;
-    progression.lastLogin = new Date();
-    await progression.save();
-
-    // 🎖 Award streak badges
-    if ([7, 30].includes(progression.streak)) {
-      const badge = await Badge.findOne({
-        condition: `daily_streak_${progression.streak}`,
-      });
-      if (badge) {
-        const alreadyEarned = await UserBadge.findOne({
-          userId,
-          badgeId: badge._id,
-        });
-        if (!alreadyEarned)
-          await UserBadge.create({ userId, badgeId: badge._id });
-      }
-    }
-
-    return { progression, message: "🔥 Streak updated!" };
-  };
-
-  // ✅ Course Completion Endpoint
-  app.post("/course/complete", authenticateToken, async (req, res) => {
-    try {
-      const { courseId } = req.body;
-      const userId = req.user.id;
-
-      const streakUpdate = await updateDailyStreak(userId);
-
-      let progress = await Progression.findOne({ userId });
-      if (!progress) progress = await Progression.create({ userId });
-
-      if (progress.completed.courses.includes(courseId)) {
-        return res
-          .status(400)
-          .json({ message: "⚠ Course already completed!" });
-      }
-
-      progress.completed.courses.push(courseId);
-      progress.stats.coursesCompleted += 1;
-      progress.xp += 100;
-
-      // Log activity
-      progress.activityLog.push({
-        action: "completed_course",
-        targetId: courseId,
-        xpGained: 100,
-      });
-
-      await progress.save();
-
-      // 🎖 Badge logic
-      const milestones = [1, 5, 10];
-      if (milestones.includes(progress.stats.coursesCompleted)) {
-        const badge = await Badge.findOne({
-          condition: `complete_${progress.stats.coursesCompleted}_courses`,
-        });
-        if (badge) {
-          const alreadyEarned = await UserBadge.findOne({
-            userId,
-            badgeId: badge._id,
-          });
-          if (!alreadyEarned)
-            await UserBadge.create({ userId, badgeId: badge._id });
-        }
-      }
-
-      res.json({
-        message: "🎉 Course completed!",
-        streakMessage: streakUpdate.message,
-        stats: progress.stats,
-        xp: progress.xp,
-        streak: progress.streak,
-        completedCourses: progress.completed.courses,
-      });
-    } catch (err) {
-      console.error("❌ Error in /course/complete:", err);
-      res.status(500).json({ message: "Error updating course progress" });
-    }
-  });
-
-  // ✅ Quiz Completion Endpoint
-  app.post("/quiz/complete", authenticateToken, async (req, res) => {
-    try {
-      const { quizId } = req.body;
-      const userId = req.user.id;
-
-      const streakUpdate = await updateDailyStreak(userId);
-
-      let progress = await Progression.findOne({ userId });
-      if (!progress) progress = await Progression.create({ userId });
-
-      if (progress.completed.quizzes.includes(quizId)) {
-        return res.status(400).json({ message: "⚠ Quiz already completed!" });
-      }
-
-      progress.completed.quizzes.push(quizId);
-      progress.stats.quizzesCompleted += 1;
-      progress.xp += 50;
-
-      progress.activityLog.push({
-        action: "completed_quiz",
-        targetId: quizId,
-        xpGained: 50,
-      });
-
-      await progress.save();
-
-      const milestones = [1, 5, 10];
-      if (milestones.includes(progress.stats.quizzesCompleted)) {
-        const badge = await Badge.findOne({
-          condition: `complete_${progress.stats.quizzesCompleted}_quizzes `,
-        });
-        if (badge) {
-          const alreadyEarned = await UserBadge.findOne({
-            userId,
-            badgeId: badge._id,
-          });
-          if (!alreadyEarned)
-            await UserBadge.create({ userId, badgeId: badge._id });
-        }
-      }
-
-      res.json({
-        message: "🎉 Quiz completed!",
-        streakMessage: streakUpdate.message,
-        stats: progress.stats,
-        xp: progress.xp,
-        streak: progress.streak,
-        completedQuizzes: progress.completed.quizzes,
-      });
-    } catch (err) {
-      console.error("❌ Error in /quiz/complete:", err);
-      res.status(500).json({ message: "Error updating quiz progress" });
-    }
-  });
-
-  // ✅ Daily Scenario Completion Endpoint
-  app.post("/scenario/complete", authenticateToken, async (req, res) => {
-    try {
-      const { scenarioId } = req.body;
-      const userId = req.user.id;
-
-      const streakUpdate = await updateDailyStreak(userId);
-
-      let progress = await Progression.findOne({ userId });
-      if (!progress) progress = await Progression.create({ userId });
-
-      if (progress.completed.scenarios.includes(scenarioId)) {
-        return res
-          .status(400)
-          .json({ message: "⚠ Scenario already completed!" });
-      }
-
-      progress.completed.scenarios.push(scenarioId);
-      progress.stats.scenariosCompleted += 1;
-      progress.xp += 30;
-
-      progress.activityLog.push({
-        action: "completed_scenario",
-        targetId: scenarioId,
-        xpGained: 30,
-      });
-
-      await progress.save();
-
-      const milestones = [1, 5, 15];
-      if (milestones.includes(progress.stats.scenariosCompleted)) {
-        const badge = await Badge.findOne({
-          condition: `complete_${progress.stats.scenariosCompleted}_scenarios `,
-        });
-        if (badge) {
-          const alreadyEarned = await UserBadge.findOne({
-            userId,
-            badgeId: badge._id,
-          });
-          if (!alreadyEarned)
-            await UserBadge.create({ userId, badgeId: badge._id });
-        }
-      }
-
-      res.json({
-        message: "🎉 Scenario completed!",
-        streakMessage: streakUpdate.message,
-        stats: progress.stats,
-        xp: progress.xp,
-        streak: progress.streak,
-        completedScenarios: progress.completed.scenarios,
-      });
-    } catch (err) {
-      console.error("❌ Error in /scenario/complete:", err);
-      res.status(500).json({ message: "Error updating scenario progress" });
     }
   });
 };

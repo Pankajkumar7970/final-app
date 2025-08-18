@@ -16,7 +16,6 @@ export const SECURITY_CONFIG = {
   SSL_PINNING: {
     ENABLED: true,
     CERTIFICATES: {
-      // Add your actual certificate fingerprints here
       PRIMARY: {
         domain: "onrender.com",
         fingerprint:
@@ -26,19 +25,18 @@ export const SECURITY_CONFIG = {
       },
     },
     VALIDATION: {
-      ALLOW_BACKUP_CERTS: true,
-      MAX_CERT_AGE_DAYS: 90,
-      MAX_RETRIES: 3,
-      TIMEOUT_MS: 10000,
+      ALLOW_BACKUP_CERTS: true, // Allow fallback to backup certificate if primary fails
+      MAX_CERT_AGE_DAYS: 90, // Maximum age of certificate in days
+      MAX_RETRIES: 3, // Retry attempts for failed connections
+      TIMEOUT_MS: 10000, // 10 seconds timeout
     },
     DEBUG: {
-      LOG_PINNING_ATTEMPTS: true,
-      LOG_CERTIFICATE_DETAILS: true,
-      LOG_VALIDATION_RESULTS: true,
-      LOG_ERROR_DETAILS: true,
+      LOG_PINNING_ATTEMPTS: true, // Log each pinning attempt
+      LOG_CERTIFICATE_DETAILS: true, // Log full certificate info
+      LOG_VALIDATION_RESULTS: true, // Log success/failure validation
+      LOG_ERROR_DETAILS: true, // Log errors for debugging
     },
   },
-
   // API Security Configuration
   API: {
     BASE_URL: __DEV__

@@ -1,52 +1,34 @@
-// API Configuration
-const API_BASE_URL = "http://192.168.1.2:3000/api"; // Change this to your backend URL
+import API from "./api"; // ✅ This is your axios client with token handling
 
 class ApiService {
-  async makeRequest(endpoint, options = {}) {
-    try {
-      const url = `${API_BASE_URL}${endpoint}`;
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        ...options,
-      };
-
-      const response = await fetch(url, config);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error("API request failed:", error);
-      throw error;
-    }
-  }
-
   // Calculate savings based on income and expenses
   async calculateSavings(income, expenses, goal) {
-    return this.makeRequest("/calculate-savings", {
-      method: "POST",
-      body: JSON.stringify({ income, expenses, goal }),
+    const res = await API.post("/calculate-savings", {
+      income,
+      expenses,
+      goal,
     });
+    return res.data;
   }
 
   // Calculate investment projections
   async calculateInvestments(savingsPerMonth, goal, customRates = null) {
-    return this.makeRequest("/calculate-investments", {
-      method: "POST",
-      body: JSON.stringify({ savingsPerMonth, goal, customRates }),
+    const res = await API.post("/calculate-investments", {
+      savingsPerMonth,
+      goal,
+      customRates,
     });
+    return res.data;
   }
 
   // Get improvement tips
   async getImprovementTips(expenses, income, savingsGoal) {
-    return this.makeRequest("/improvement-tips", {
-      method: "POST",
-      body: JSON.stringify({ expenses, income, savingsGoal }),
+    const res = await API.post("/improvement-tips", {
+      expenses,
+      income,
+      savingsGoal,
     });
+    return res.data;
   }
 
   // Get personalized recommendations
@@ -57,16 +39,14 @@ class ApiService {
     goal,
     goalTimeframeYears
   ) {
-    return this.makeRequest("/personalized-recommendations", {
-      method: "POST",
-      body: JSON.stringify({
-        income,
-        expenses,
-        savingsPerMonth,
-        goal,
-        goalTimeframeYears,
-      }),
+    const res = await API.post("/personalized-recommendations", {
+      income,
+      expenses,
+      savingsPerMonth,
+      goal,
+      goalTimeframeYears,
     });
+    return res.data;
   }
 
   // Get financial health score
@@ -77,24 +57,24 @@ class ApiService {
     goal,
     currentSavings
   ) {
-    return this.makeRequest("/financial-health-score", {
-      method: "POST",
-      body: JSON.stringify({
-        income,
-        expenses,
-        savingsPerMonth,
-        goal,
-        currentSavings,
-      }),
+    const res = await API.post("/financial-health-score", {
+      income,
+      expenses,
+      savingsPerMonth,
+      goal,
+      currentSavings,
     });
+    return res.data;
   }
 
   // Get wealth gap analysis
   async getWealthGapAnalysis(age, annualIncome, currentSavings) {
-    return this.makeRequest("/wealth-gap", {
-      method: "POST",
-      body: JSON.stringify({ age, annualIncome, currentSavings }),
+    const res = await API.post("/wealth-gap", {
+      age,
+      annualIncome,
+      currentSavings,
     });
+    return res.data;
   }
 
   // Get FIRE (Financial Independence, Retire Early) calculation
@@ -104,30 +84,31 @@ class ApiService {
     monthlyIncome,
     investmentGrowthRate = 7
   ) {
-    return this.makeRequest("/fire-calculator", {
-      method: "POST",
-      body: JSON.stringify({
-        monthlyExpenses,
-        currentSavings,
-        monthlyIncome,
-        investmentGrowthRate,
-      }),
+    const res = await API.post("/fire-calculator", {
+      monthlyExpenses,
+      currentSavings,
+      monthlyIncome,
+      investmentGrowthRate,
     });
+    return res.data;
   }
 
   // Get learning content
   async getLearningContent() {
-    return this.makeRequest("/learn");
+    const res = await API.get("/learn");
+    return res.data;
   }
 
   // Get investment options
   async getInvestmentOptions() {
-    return this.makeRequest("/investment-options");
+    const res = await API.get("/investment-options");
+    return res.data;
   }
 
   // Health check
   async healthCheck() {
-    return this.makeRequest("/health");
+    const res = await API.get("/health");
+    return res.data;
   }
 }
 

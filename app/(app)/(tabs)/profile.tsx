@@ -175,7 +175,12 @@ const ProfileScreen = () => {
       color: "#96ceb4",
       action: () => router.push("/pages/LearnScreen"),
     },
-    { icon: Info, title: "About", color: "#ffd93d" },
+    {
+      icon: Info,
+      title: "About",
+      color: "#ffd93d",
+      action: () => router.push("/pages/about"),
+    },
   ];
 
   const handleLogout = () => {

@@ -62,8 +62,8 @@ const PlanScreen = ({ navigation }) => {
   const [salary, setSalary] = useState(state.user.income?.toString() || "");
   const [goal, setGoal] = useState("100000");
   const [expenses, setExpenses] = useState({
-    rent: state.user.expenses?.rent?.toString() || "",
-    emi: state.user.expenses?.emi?.toString() || "",
+    rent: state.user.expenses?.rent?.toString() || "2000",
+    emi: state.user.expenses?.emi?.toString() || "2000",
     food: state.user.expenses?.food?.toString() || "",
     transport: state.user.expenses?.transport?.toString() || "",
     utilities: state.user.expenses?.utilities?.toString() || "",
@@ -250,7 +250,7 @@ const PlanScreen = ({ navigation }) => {
           <DollarSign size={20} color="#6B7280" />
           <TextInput
             style={styles.textInput}
-            placeholder="Enter your monthly salary"
+            placeholder="Enter your monthly salary(*)"
             value={salary}
             onChangeText={setSalary}
             keyboardType="numeric"

@@ -66,6 +66,7 @@ export default function ScenarioHub() {
     const response = await API.post(`/scenarios/${result.scenarioId}/submit`, {
       choiceId: result.choiceId,
       timeSpent: result.timeSpent,
+      points: result.points,
     });
     // console.log("Scenario", response.data.choice);
     return [response.data.choice, response.data.points]; // Assuming the API returns the updated scenario data

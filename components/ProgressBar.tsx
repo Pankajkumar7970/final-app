@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Animated } from "react-native";
+import TranslatedText from "./TranslatedText";
 
 interface ProgressBarProps {
   progress: number; // 0 to 100
@@ -37,7 +38,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
   return (
     <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {label && <TranslatedText style={styles.label}>{label}</TranslatedText>}
       <View style={styles.progressContainer}>
         <View style={[styles.progressBackground, { height, backgroundColor }]}>
           <Animated.View
@@ -56,7 +57,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
           />
         </View>
         {showPercentage && (
-          <Text style={styles.percentage}>{Math.round(clampedProgress)}%</Text>
+          <TranslatedText style={styles.percentage}>
+            {Math.round(clampedProgress)}%
+          </TranslatedText>
         )}
       </View>
     </View>

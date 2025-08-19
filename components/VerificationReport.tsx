@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { Download, Shield, AlertTriangle, Calendar } from "lucide-react-native";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
-
+import TranslatedText from "./TranslatedText";
 export interface VerificationResult {
   isMatch: boolean;
   inputHash: string;
@@ -97,10 +97,12 @@ export const VerificationReport = ({ result }: VerificationReportProps) => {
             )}
           </View>
           <View>
-            <Text style={styles.title}>Verification Report</Text>
-            <Text style={styles.subtitle}>
+            <TranslatedText style={styles.title}>
+              Verification Report
+            </TranslatedText>
+            <TranslatedText style={styles.subtitle}>
               Download detailed verification results
-            </Text>
+            </TranslatedText>
           </View>
         </View>
 
@@ -111,7 +113,7 @@ export const VerificationReport = ({ result }: VerificationReportProps) => {
               result.isMatch ? styles.successBadge : styles.errorBadge,
             ]}
           >
-            <Text
+            <TranslatedText
               style={[
                 styles.badgeText,
                 result.isMatch
@@ -120,32 +122,35 @@ export const VerificationReport = ({ result }: VerificationReportProps) => {
               ]}
             >
               {result.isMatch ? "VERIFIED ✓" : "MISMATCH ✗"}
-            </Text>
+            </TranslatedText>
           </View>
-         
         </View>
       </View>
 
       {/* Verification Summary */}
       <View style={styles.summarySection}>
         <View style={styles.statusSection}>
-          <Text style={styles.statusLabel}>Verification Status</Text>
-          <Text style={styles.statusText}>
+          <TranslatedText style={styles.statusLabel}>
+            Verification Status
+          </TranslatedText>
+          <TranslatedText style={styles.statusText}>
             {result.isMatch
               ? "Document is authentic and untampered"
               : "Hash mismatch detected - possible tampering"}
-          </Text>
+          </TranslatedText>
           {result.savedDocument && (
-            <Text style={styles.documentInfo}>
+            <TranslatedText style={styles.documentInfo}>
               Matched against document saved on{" "}
               {new Date(result.savedDocument.timestamp).toLocaleDateString()}
-            </Text>
+            </TranslatedText>
           )}
         </View>
 
         <View style={styles.metricsContainer}>
           <View style={styles.metricItem}>
-            <Text style={styles.metricLabel}>Confidence Level</Text>
+            <TranslatedText style={styles.metricLabel}>
+              Confidence Level
+            </TranslatedText>
             <View style={styles.progressContainer}>
               <View style={styles.progressBar}>
                 <View
@@ -157,23 +162,27 @@ export const VerificationReport = ({ result }: VerificationReportProps) => {
                         result.confidence > 80
                           ? "#10b981"
                           : result.confidence > 50
-                          ? "#f59e0b"
-                          : "#ef4444",
+                            ? "#f59e0b"
+                            : "#ef4444",
                     },
                   ]}
                 />
               </View>
-              <Text style={styles.progressText}>{result.confidence}%</Text>
+              <TranslatedText style={styles.progressText}>
+                {result.confidence}%
+              </TranslatedText>
             </View>
           </View>
 
           <View style={styles.metricItem}>
-            <Text style={styles.metricLabel}>Verification Time</Text>
+            <TranslatedText style={styles.metricLabel}>
+              Verification Time
+            </TranslatedText>
             <View style={styles.timeContainer}>
               <Calendar size={16} color="#6b7280" />
-              <Text style={styles.timeText}>
+              <TranslatedText style={styles.timeText}>
                 {new Date(result.timestamp).toLocaleString()}
-              </Text>
+              </TranslatedText>
             </View>
           </View>
         </View>
@@ -181,31 +190,41 @@ export const VerificationReport = ({ result }: VerificationReportProps) => {
 
       {/* Download Options */}
       <View style={styles.downloadSection}>
-        <Text style={styles.downloadTitle}>Download Verification Proof</Text>
+        <TranslatedText style={styles.downloadTitle}>
+          Download Verification Proof
+        </TranslatedText>
         <View style={styles.downloadButtons}>
           <TouchableOpacity
             style={styles.downloadButton}
             onPress={() => downloadReport("json")}
           >
             <Download size={12} color="#374151" />
-            <Text style={styles.downloadButtonText}>JSON Report</Text>
+            <TranslatedText style={styles.downloadButtonText}>
+              JSON Report
+            </TranslatedText>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.downloadButton}
             onPress={() => downloadReport("txt")}
           >
             <Download size={12} color="#374151" />
-            <Text style={styles.downloadButtonText}>Text Report</Text>
+            <TranslatedText style={styles.downloadButtonText}>
+              Text Report
+            </TranslatedText>
           </TouchableOpacity>
         </View>
       </View>
 
       {/* Hash Comparison */}
       <View style={styles.hashSection}>
-        <Text style={styles.hashTitle}>Hash Comparison</Text>
+        <TranslatedText style={styles.hashTitle}>
+          Hash Comparison
+        </TranslatedText>
         <View style={styles.hashComparison}>
           <View style={styles.hashItem}>
-            <Text style={styles.hashLabel}>Current Document Hash:</Text>
+            <TranslatedText style={styles.hashLabel}>
+              Current Document Hash:
+            </TranslatedText>
             <View style={styles.hashValue}>
               <Text style={styles.hashText} selectable>
                 {result.currentHash}
@@ -213,7 +232,9 @@ export const VerificationReport = ({ result }: VerificationReportProps) => {
             </View>
           </View>
           <View style={styles.hashItem}>
-            <Text style={styles.hashLabel}>Compared Against:</Text>
+            <TranslatedText style={styles.hashLabel}>
+              Compared Against:
+            </TranslatedText>
             <View style={styles.hashValue}>
               <Text style={styles.hashText} selectable>
                 {result.inputHash}

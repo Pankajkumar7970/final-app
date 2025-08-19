@@ -32,6 +32,7 @@ import { useApp } from "../contexts/AppContext";
 // import api from "../api/financePlannerApi";
 import api from "../api/financePlannerApi";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 const { width } = Dimensions.get("window");
 
@@ -241,11 +242,15 @@ const PlanScreen = ({ navigation }) => {
 
   const renderInputForm = () => (
     <View style={styles.inputSection}>
-      <Text style={styles.sectionTitle}>Financial Planning Calculator</Text>
+      <TranslatedText style={styles.sectionTitle}>
+        Financial Planning Calculator
+      </TranslatedText>
 
       {/* Salary Input */}
       <View style={styles.inputGroup}>
-        <Text style={styles.inputLabel}>Monthly Salary</Text>
+        <TranslatedText style={styles.inputLabel}>
+          Monthly Salary
+        </TranslatedText>
         <View style={styles.inputWrapper}>
           <DollarSign size={20} color="#6B7280" />
           <TextInput
@@ -260,7 +265,7 @@ const PlanScreen = ({ navigation }) => {
 
       {/* Goal Input */}
       <View style={styles.inputGroup}>
-        <Text style={styles.inputLabel}>Savings Goal</Text>
+        <TranslatedText style={styles.inputLabel}>Savings Goal</TranslatedText>
         <View style={styles.inputWrapper}>
           <Target size={20} color="#6B7280" />
           <TextInput
@@ -275,7 +280,9 @@ const PlanScreen = ({ navigation }) => {
 
       {/* Current Savings Input */}
       <View style={styles.inputGroup}>
-        <Text style={styles.inputLabel}>Current Savings</Text>
+        <TranslatedText style={styles.inputLabel}>
+          Current Savings
+        </TranslatedText>
         <View style={styles.inputWrapper}>
           <PiggyBank size={20} color="#6B7280" />
           <TextInput
@@ -290,7 +297,7 @@ const PlanScreen = ({ navigation }) => {
 
       {/* Age Input */}
       <View style={styles.inputGroup}>
-        <Text style={styles.inputLabel}>Your Age</Text>
+        <TranslatedText style={styles.inputLabel}>Your Age</TranslatedText>
         <View style={styles.inputWrapper}>
           <Calendar size={20} color="#6B7280" />
           <TextInput
@@ -304,12 +311,16 @@ const PlanScreen = ({ navigation }) => {
       </View>
 
       {/* Expenses Section */}
-      <Text style={styles.subSectionTitle}>Monthly Expenses</Text>
+      <TranslatedText style={styles.subSectionTitle}>
+        Monthly Expenses
+      </TranslatedText>
       {expenseCategories.map((category) => {
         const IconComponent = category.icon;
         return (
           <View key={category.key} style={styles.inputGroup}>
-            <Text style={styles.inputLabel}>{category.label}</Text>
+            <TranslatedText style={styles.inputLabel}>
+              {category.label}
+            </TranslatedText>
             <View style={styles.inputWrapper}>
               <IconComponent size={20} color="#6B7280" />
               <TextInput
@@ -328,15 +339,17 @@ const PlanScreen = ({ navigation }) => {
 
       {/* Auto-calculated Surplus */}
       <View style={styles.surplusDisplay}>
-        <Text style={styles.surplusLabel}>Available for Savings:</Text>
-        <Text
+        <TranslatedText style={styles.surplusLabel}>
+          Available for Savings:
+        </TranslatedText>
+        <TranslatedText
           style={[
             styles.surplusValue,
             surplus < 0 ? styles.surplusNegative : styles.surplusPositive,
           ]}
         >
           {formatCurrency(surplus)}
-        </Text>
+        </TranslatedText>
       </View>
 
       {/* Calculate Button */}
@@ -353,17 +366,17 @@ const PlanScreen = ({ navigation }) => {
         ) : (
           <>
             <Calculator size={20} color="#fff" />
-            <Text style={styles.calculateButtonText}>
+            <TranslatedText style={styles.calculateButtonText}>
               Calculate Projections
-            </Text>
+            </TranslatedText>
           </>
         )}
       </TouchableOpacity>
 
       {surplus <= 0 && (
-        <Text style={styles.warningText}>
+        <TranslatedText style={styles.warningText}>
           Reduce expenses to enable savings calculations
-        </Text>
+        </TranslatedText>
       )}
     </View>
   );
@@ -373,66 +386,78 @@ const PlanScreen = ({ navigation }) => {
 
     return (
       <View style={styles.resultsSection}>
-        <Text style={styles.sectionTitle}>Savings Timeline</Text>
+        <TranslatedText style={styles.sectionTitle}>
+          Savings Timeline
+        </TranslatedText>
 
         <View style={styles.timelineCard}>
-          <Text style={styles.timelineTitle}>
+          <TranslatedText style={styles.timelineTitle}>
             Plain Savings (No Investment)
-          </Text>
-          <Text style={styles.timelineValue}>
+          </TranslatedText>
+          <TranslatedText style={styles.timelineValue}>
             {formatTimeToGoal(calculatedData.timeToGoalMonths)}
-          </Text>
-          <Text style={styles.timelineSubtext}>
+          </TranslatedText>
+          <TranslatedText style={styles.timelineSubtext}>
             Monthly savings: {formatCurrency(calculatedData.savingsPerMonth)}
-          </Text>
+          </TranslatedText>
         </View>
 
         {/* Financial Health Score */}
         {financialHealthScore && (
           <View style={styles.financialHealthSection}>
-            <Text style={styles.subSectionTitle}>Financial Health Score</Text>
+            <TranslatedText style={styles.subSectionTitle}>
+              Financial Health Score
+            </TranslatedText>
             <View style={styles.scoreCard}>
               <View style={styles.scoreCircle}>
-                <Text style={styles.scoreValue}>
+                <TranslatedText style={styles.scoreValue}>
                   {financialHealthScore.totalScore}
-                </Text>
-                <Text style={styles.scoreLabel}>out of 100</Text>
+                </TranslatedText>
+                <TranslatedText style={styles.scoreLabel}>
+                  out of 100
+                </TranslatedText>
               </View>
 
               <View style={styles.scoreBreakdown}>
-                <Text style={styles.scoreBreakdownTitle}>Score Breakdown:</Text>
+                <TranslatedText style={styles.scoreBreakdownTitle}>
+                  Score Breakdown:
+                </TranslatedText>
                 <View style={styles.scoreBreakdownItem}>
-                  <Text style={styles.scoreBreakdownLabel}>Savings Rate:</Text>
-                  <Text style={styles.scoreBreakdownValue}>
+                  <TranslatedText style={styles.scoreBreakdownLabel}>
+                    Savings Rate:
+                  </TranslatedText>
+                  <TranslatedText style={styles.scoreBreakdownValue}>
                     {financialHealthScore.savingsScore.score} pts
-                  </Text>
+                  </TranslatedText>
                 </View>
                 <View style={styles.scoreBreakdownItem}>
-                  <Text style={styles.scoreBreakdownLabel}>
+                  <TranslatedText style={styles.scoreBreakdownLabel}>
                     Debt-to-Income:
-                  </Text>
-                  <Text style={styles.scoreBreakdownValue}>
+                  </TranslatedText>
+                  <TranslatedText style={styles.scoreBreakdownValue}>
                     {financialHealthScore.debtScore.score} pts
-                  </Text>
+                  </TranslatedText>
                 </View>
                 <View style={styles.scoreBreakdownItem}>
-                  <Text style={styles.scoreBreakdownLabel}>Goal Progress:</Text>
-                  <Text style={styles.scoreBreakdownValue}>
+                  <TranslatedText style={styles.scoreBreakdownLabel}>
+                    Goal Progress:
+                  </TranslatedText>
+                  <TranslatedText style={styles.scoreBreakdownValue}>
                     {financialHealthScore.goalScore.score} pts
-                  </Text>
+                  </TranslatedText>
                 </View>
               </View>
             </View>
             <View style={styles.scoreMessages}>
-              <Text style={styles.scoreMessage}>
+              <TranslatedText style={styles.scoreMessage}>
                 {financialHealthScore.savingsScore.message}
-              </Text>
-              <Text style={styles.scoreMessage}>
+              </TranslatedText>
+              <TranslatedText style={styles.scoreMessage}>
                 {financialHealthScore.debtScore.message}
-              </Text>
-              <Text style={styles.scoreMessage}>
+              </TranslatedText>
+              <TranslatedText style={styles.scoreMessage}>
                 {financialHealthScore.goalScore.message}
-              </Text>
+              </TranslatedText>
             </View>
           </View>
         )}
@@ -440,28 +465,34 @@ const PlanScreen = ({ navigation }) => {
         {/* Wealth Gap Analysis */}
         {wealthGap && (
           <View style={styles.wealthGapSection}>
-            <Text style={styles.subSectionTitle}>Wealth Gap Analysis</Text>
+            <TranslatedText style={styles.subSectionTitle}>
+              Wealth Gap Analysis
+            </TranslatedText>
             <View style={styles.wealthGapCard}>
-              <Text style={styles.wealthGapTitle}>
+              <TranslatedText style={styles.wealthGapTitle}>
                 Age-Based Savings Benchmark
-              </Text>
+              </TranslatedText>
               <View style={styles.wealthGapItem}>
-                <Text style={styles.wealthGapLabel}>Your Current Savings:</Text>
-                <Text style={styles.wealthGapValue}>
+                <TranslatedText style={styles.wealthGapLabel}>
+                  Your Current Savings:
+                </TranslatedText>
+                <TranslatedText style={styles.wealthGapValue}>
                   {formatCurrency(wealthGap.currentSavings)}
-                </Text>
+                </TranslatedText>
               </View>
               <View style={styles.wealthGapItem}>
-                <Text style={styles.wealthGapLabel}>
+                <TranslatedText style={styles.wealthGapLabel}>
                   Recommended for Age {wealthGap.age}:
-                </Text>
-                <Text style={styles.wealthGapValue}>
+                </TranslatedText>
+                <TranslatedText style={styles.wealthGapValue}>
                   {formatCurrency(wealthGap.recommendedSavings)}
-                </Text>
+                </TranslatedText>
               </View>
               <View style={styles.wealthGapItem}>
-                <Text style={styles.wealthGapLabel}>Gap:</Text>
-                <Text
+                <TranslatedText style={styles.wealthGapLabel}>
+                  Gap:
+                </TranslatedText>
+                <TranslatedText
                   style={[
                     styles.wealthGapValue,
                     wealthGap.wealthGap >= 0
@@ -471,9 +502,11 @@ const PlanScreen = ({ navigation }) => {
                 >
                   {wealthGap.wealthGap >= 0 ? "+" : ""}
                   {formatCurrency(wealthGap.wealthGap)}
-                </Text>
+                </TranslatedText>
               </View>
-              <Text style={styles.wealthGapMessage}>{wealthGap.message}</Text>
+              <TranslatedText style={styles.wealthGapMessage}>
+                {wealthGap.message}
+              </TranslatedText>
             </View>
           </View>
         )}
@@ -481,32 +514,42 @@ const PlanScreen = ({ navigation }) => {
         {/* FIRE Calculator */}
         {fireCalculation && (
           <View style={styles.fireSection}>
-            <Text style={styles.subSectionTitle}>FIRE Calculator</Text>
+            <TranslatedText style={styles.subSectionTitle}>
+              FIRE Calculator
+            </TranslatedText>
             <View style={styles.fireCard}>
-              <Text style={styles.fireTitle}>
+              <TranslatedText style={styles.fireTitle}>
                 Financial Independence, Retire Early
-              </Text>
+              </TranslatedText>
               <View style={styles.fireItem}>
-                <Text style={styles.fireLabel}>FIRE Number (Target):</Text>
-                <Text style={styles.fireValue}>
+                <TranslatedText style={styles.fireLabel}>
+                  FIRE Number (Target):
+                </TranslatedText>
+                <TranslatedText style={styles.fireValue}>
                   {formatCurrency(fireCalculation.fireNumber)}
-                </Text>
+                </TranslatedText>
               </View>
               <View style={styles.fireItem}>
-                <Text style={styles.fireLabel}>Years to FIRE:</Text>
-                <Text style={styles.fireValue}>
+                <TranslatedText style={styles.fireLabel}>
+                  Years to FIRE:
+                </TranslatedText>
+                <TranslatedText style={styles.fireValue}>
                   {fireCalculation.yearsToFIRE === -1
                     ? "Not achievable"
                     : `${fireCalculation.yearsToFIRE} years`}
-                </Text>
+                </TranslatedText>
               </View>
               <View style={styles.fireItem}>
-                <Text style={styles.fireLabel}>Retirement Age:</Text>
-                <Text style={styles.fireValue}>
+                <TranslatedText style={styles.fireLabel}>
+                  Retirement Age:
+                </TranslatedText>
+                <TranslatedText style={styles.fireValue}>
                   {parseInt(age) + Math.round(fireCalculation.yearsToFIRE)}
-                </Text>
+                </TranslatedText>
               </View>
-              <Text style={styles.fireMessage}>{fireCalculation.message}</Text>
+              <TranslatedText style={styles.fireMessage}>
+                {fireCalculation.message}
+              </TranslatedText>
             </View>
           </View>
         )}
@@ -514,9 +557,9 @@ const PlanScreen = ({ navigation }) => {
         {/* Personalized Recommendations */}
         {recommendations && (
           <View style={styles.recommendationsSection}>
-            <Text style={styles.subSectionTitle}>
+            <TranslatedText style={styles.subSectionTitle}>
               Personalized Recommendations
-            </Text>
+            </TranslatedText>
 
             {/* Savings Rate Recommendations */}
             {recommendations.recommendations?.map((recommendation, index) => (
@@ -534,21 +577,21 @@ const PlanScreen = ({ navigation }) => {
                     },
                   ]}
                 />
-                <Text style={styles.recommendationText}>
+                <TranslatedText style={styles.recommendationText}>
                   {recommendation.message}
-                </Text>
+                </TranslatedText>
               </View>
             ))}
 
             {/* Portfolio Suggestions */}
             {recommendations.portfolioSuggestion && (
               <View style={styles.portfolioSuggestionCard}>
-                <Text style={styles.portfolioSuggestionTitle}>
+                <TranslatedText style={styles.portfolioSuggestionTitle}>
                   Goal-Based Portfolio Suggestion
-                </Text>
-                <Text style={styles.portfolioSuggestionMessage}>
+                </TranslatedText>
+                <TranslatedText style={styles.portfolioSuggestionMessage}>
                   {recommendations.portfolioSuggestion.message}
-                </Text>
+                </TranslatedText>
 
                 <View style={styles.allocationContainer}>
                   {Object.entries(
@@ -572,20 +615,22 @@ const PlanScreen = ({ navigation }) => {
                         />
                       </View>
                       <View style={styles.allocationLabelContainer}>
-                        <Text style={styles.allocationLabel}>
+                        <TranslatedText style={styles.allocationLabel}>
                           {key
                             .replace("_", " ")
                             .replace(/\b\w/g, (l) => l.toUpperCase())}
-                        </Text>
-                        <Text style={styles.allocationValue}>{value}%</Text>
+                        </TranslatedText>
+                        <TranslatedText style={styles.allocationValue}>
+                          {value}%
+                        </TranslatedText>
                       </View>
                     </View>
                   ))}
                 </View>
 
-                <Text style={styles.portfolioExplanation}>
+                <TranslatedText style={styles.portfolioExplanation}>
                   {recommendations.portfolioSuggestion.explanation}
-                </Text>
+                </TranslatedText>
               </View>
             )}
 
@@ -593,7 +638,9 @@ const PlanScreen = ({ navigation }) => {
             {recommendations.examples &&
               recommendations.examples.map((example, index) => (
                 <View key={index} style={styles.exampleCard}>
-                  <Text style={styles.exampleText}>{example.message}</Text>
+                  <TranslatedText style={styles.exampleText}>
+                    {example.message}
+                  </TranslatedText>
                 </View>
               ))}
           </View>

@@ -10,6 +10,7 @@ import { QuickPresets } from "./QuickPresets";
 import { AdvancedOptions } from "./AdvancedOptions";
 import { PSBColors } from "../utils/PSBColors";
 import { colors } from "../utils/colors";
+import TranslatedText from "./TranslatedText";
 
 const { width, height } = Dimensions.get("window");
 
@@ -45,31 +46,39 @@ export const SipCalculator: React.FC = () => {
                   color="#f59e0b"
                   style={styles.sparkleIcon}
                 />
-                <Text style={styles.headerBadgeText}>
+                <TranslatedText style={styles.headerBadgeText}>
                   Professional SIP Calculator
-                </Text>
+                </TranslatedText>
               </View>
-              <Text style={styles.title}>Build Your Wealth</Text>
-              <Text style={styles.subtitle}>
+              <TranslatedText style={styles.title}>
+                Build Your Wealth
+              </TranslatedText>
+              <TranslatedText style={styles.subtitle}>
                 Smart systematic investment planning with real-time calculations
                 and insights
-              </Text>
+              </TranslatedText>
 
               {/* Stats Row */}
               <View style={styles.statsRow}>
                 <View style={styles.statItem}>
-                  <Text style={styles.statValue}>12%</Text>
-                  <Text style={styles.statLabel}>Avg Return</Text>
+                  <TranslatedText style={styles.statValue}>12%</TranslatedText>
+                  <TranslatedText style={styles.statLabel}>
+                    Avg Return
+                  </TranslatedText>
                 </View>
                 <View style={styles.statDivider} />
                 <View style={styles.statItem}>
-                  <Text style={styles.statValue}>₹5K</Text>
-                  <Text style={styles.statLabel}>Min SIP</Text>
+                  <TranslatedText style={styles.statValue}>₹5K</TranslatedText>
+                  <TranslatedText style={styles.statLabel}>
+                    Min SIP
+                  </TranslatedText>
                 </View>
                 <View style={styles.statDivider} />
                 <View style={styles.statItem}>
-                  <Text style={styles.statValue}>10Y+</Text>
-                  <Text style={styles.statLabel}>Long Term</Text>
+                  <TranslatedText style={styles.statValue}>10Y+</TranslatedText>
+                  <TranslatedText style={styles.statLabel}>
+                    Long Term
+                  </TranslatedText>
                 </View>
               </View>
             </View>
@@ -124,7 +133,9 @@ export const SipCalculator: React.FC = () => {
           >
             <View style={styles.chartHeader}>
               <TrendingUp size={20} color="#3b82f6" />
-              <Text style={styles.chartTitle}>Investment Growth Journey</Text>
+              <TranslatedText style={styles.chartTitle}>
+                Investment Growth Journey
+              </TranslatedText>
             </View>
             <SipChart data={results.yearlyData} />
           </Animated.View>

@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { forgotPassword } from "../redux/services/operations/authServices";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
+import TranslatedText from "./TranslatedText";
 
 const ForgotPassword = ({ onBackToLogin, onOtpVerified }) => {
   const [email, setEmail] = useState("");
@@ -14,11 +21,13 @@ const ForgotPassword = ({ onBackToLogin, onOtpVerified }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Forgot Password</Text>
-      <Text style={styles.subtitle}>Enter your email to receive a reset link</Text>
+      <TranslatedText style={styles.title}>Forgot Password</TranslatedText>
+      <TranslatedText style={styles.subtitle}>
+        Enter your email to receive a reset link
+      </TranslatedText>
 
       {/* Email Input */}
-      <Text style={styles.label}>Email</Text>
+      <TranslatedText style={styles.label}>Email</TranslatedText>
       <View style={styles.inputWrapper}>
         <Ionicons name="mail-outline" size={20} color="#777" />
         <TextInput
@@ -32,7 +41,7 @@ const ForgotPassword = ({ onBackToLogin, onOtpVerified }) => {
 
       {/* Step 1: Email input and send OTP */}
       {step === 1 && (
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.button}
           onPress={async () => {
             if (!email) {
@@ -41,52 +50,63 @@ const ForgotPassword = ({ onBackToLogin, onOtpVerified }) => {
             }
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-              Toast.show({ type: "error", text1: "Enter a valid email address!" });
+              Toast.show({
+                type: "error",
+                text1: "Enter a valid email address!",
+              });
               return;
             }
-            console.log('[FORGOT PASSWORD] Dispatching forgotPassword with:', { email });
+            console.log("[FORGOT PASSWORD] Dispatching forgotPassword with:", {
+              email,
+            });
             const response = await dispatch(forgotPassword(email));
-            
+
             // Handle errors from forgotPassword
             if (response?.error) {
               const errorMessage = response.error.toLowerCase();
-              
+
               // Handle user not found error
-              if (errorMessage.includes("user not found") || errorMessage.includes("no user") || errorMessage.includes("doesn't exist")) {
+              if (
+                errorMessage.includes("user not found") ||
+                errorMessage.includes("no user") ||
+                errorMessage.includes("doesn't exist")
+              ) {
                 Toast.show({
                   type: "error",
                   text1: "User not found",
-                  text2: "Please sign up first"
+                  text2: "Please sign up first",
                 });
                 return;
               }
-              
+
               // For other errors
               Toast.show({
                 type: "error",
                 text1: "Failed to send reset link",
-                text2: response.error
+                text2: response.error,
               });
             } else {
               // Success case
               Toast.show({
                 type: "success",
                 text1: "Reset link sent",
-                text2: "Please check your email"
+                text2: "Please check your email",
               });
               setStep(2);
             }
           }}
           disabled={loading}
         >
-          <Text style={styles.buttonText}>{loading ? 'Sending...' : 'Send Reset Link'}</Text>
+          <TranslatedText style={styles.buttonText}>
+            {loading ? "Sending..." : "Send Reset Link"}
+          </TranslatedText>
         </TouchableOpacity>
       )}
 
       {/* Step 2: OTP input and verify */}
       {step === 2 && (
         <>
-          <Text style={styles.label}>Enter OTP</Text>
+          <TranslatedText style={styles.label}>Enter OTP</TranslatedText>
           <View style={styles.inputWrapper}>
             <Ionicons name="key-outline" size={20} color="#777" />
             <TextInput
@@ -97,45 +117,49 @@ const ForgotPassword = ({ onBackToLogin, onOtpVerified }) => {
               keyboardType="number-pad"
             />
           </View>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.button}
             onPress={async () => {
               if (!otp) {
                 Toast.show({ type: "error", text1: "Please enter the OTP" });
                 return;
               }
-              
+
               if (otp.length !== 4) {
                 Toast.show({ type: "error", text1: "OTP must be 4 digits" });
                 return;
               }
-              
-              console.log('[FORGOT PASSWORD] OTP entered:', otp);
-              
+
+              console.log("[FORGOT PASSWORD] OTP entered:", otp);
+
               try {
                 // In a real app, verify OTP with backend here
                 if (onOtpVerified) {
                   const response = await onOtpVerified(email, otp);
-                  
+
                   // Handle errors from OTP verification
                   if (response?.error) {
                     const errorMessage = response.error.toLowerCase();
-                    
+
                     // Handle invalid OTP
-                    if (errorMessage.includes("invalid otp") || errorMessage.includes("otp expired") || errorMessage.includes("incorrect otp")) {
+                    if (
+                      errorMessage.includes("invalid otp") ||
+                      errorMessage.includes("otp expired") ||
+                      errorMessage.includes("incorrect otp")
+                    ) {
                       Toast.show({
                         type: "error",
                         text1: "Invalid or expired OTP",
-                        text2: "Please try again or request a new OTP"
+                        text2: "Please try again or request a new OTP",
                       });
                       return;
                     }
-                    
+
                     // For other errors
                     Toast.show({
                       type: "error",
                       text1: "Verification failed",
-                      text2: response.error
+                      text2: response.error,
                     });
                   }
                 }
@@ -143,20 +167,22 @@ const ForgotPassword = ({ onBackToLogin, onOtpVerified }) => {
                 Toast.show({
                   type: "error",
                   text1: "Verification failed",
-                  text2: error.message || "Please try again"
+                  text2: error.message || "Please try again",
                 });
               }
             }}
             disabled={loading}
           >
-            <Text style={styles.buttonText}>Verify OTP</Text>
+            <TranslatedText style={styles.buttonText}>
+              Verify OTP
+            </TranslatedText>
           </TouchableOpacity>
         </>
       )}
 
       {/* Back to Login */}
       <TouchableOpacity onPress={onBackToLogin}>
-        <Text style={styles.link}>Back to Login</Text>
+        <TranslatedText style={styles.link}>Back to Login</TranslatedText>
       </TouchableOpacity>
     </View>
   );

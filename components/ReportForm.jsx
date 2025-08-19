@@ -21,6 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ensurePermission } from "../utils/permissions";
 import { openSettings, RESULTS } from "react-native-permissions";
 // import SecureTextInput from "./SecureTextInput";
+import TranslatedText from "./TranslatedText";
 
 const SCAM_TYPES = [
   { label: "Phishing Attack", value: "phishing" },
@@ -57,13 +58,13 @@ const AnimatedTouchable = ({ onPress, style, children }) => {
   );
 };
 
-const ReportForm: React.FC = () => {
+const ReportForm = () => {
   const [type, setType] = useState("");
   const [description, setDescription] = useState("");
   const [contactInfo, setContactInfo] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
-  const [predictions, setPredictions] = useState<any[]>([]);
+  const [predictions, setPredictions] = useState([]);
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
 
   const apiKey = process.env.GOOGLE_MAPS_KEY;
@@ -83,7 +84,7 @@ const ReportForm: React.FC = () => {
     })();
   }, []);
 
-  const fetchPredictions = async (text: string) => {
+  const fetchPredictions = async (text) => {
     setAddress(text);
     if (text.length < 3) {
       setPredictions([]);
@@ -100,7 +101,7 @@ const ReportForm: React.FC = () => {
     }
   };
 
-  const selectPrediction = async (placeId: string, description: string) => {
+  const selectPrediction = async (placeId, description) => {
     setAddress(description);
     setPredictions([]);
     try {
@@ -111,7 +112,7 @@ const ReportForm: React.FC = () => {
       const loc = res.data.result.geometry.location;
       setLocation({ latitude: loc.lat, longitude: loc.lng });
 
-      const cityComp = res.data.result.address_components.find((c: any) =>
+      const cityComp = res.data.result.address_components.find((c) =>
         c.types.includes("locality")
       );
       setCity(cityComp ? cityComp.long_name : "");
@@ -169,7 +170,7 @@ const ReportForm: React.FC = () => {
       if (res.data.results.length > 0) {
         const addressData = res.data.results[0];
         setAddress(addressData.formatted_address);
-        const cityComp = addressData.address_components.find((c: any) =>
+        const cityComp = addressData.address_components.find((c) =>
           c.types.includes("locality")
         );
         setCity(cityComp ? cityComp.long_name : "");
@@ -219,7 +220,7 @@ const ReportForm: React.FC = () => {
       setDescription("");
       setContactInfo("");
       handleReset();
-      navigation.navigate("Map" as never);
+      navigation.navigate("Map");
     } catch (error) {
       console.error(error);
       Alert.alert("Error", "Failed to submit report");
@@ -229,10 +230,10 @@ const ReportForm: React.FC = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.headingWrapper}>
-        <Text style={styles.heading}>Report a Scam</Text>
+        <TranslatedText style={styles.heading}>Report a Scam</TranslatedText>
       </View>
 
-      <Text style={styles.label}>Scam Type</Text>
+      <TranslatedText style={styles.label}>Scam Type</TranslatedText>
       <Picker
         selectedValue={type}
         onValueChange={(itemValue) => setType(itemValue)}
@@ -244,7 +245,7 @@ const ReportForm: React.FC = () => {
         ))}
       </Picker>
 
-      <Text style={styles.label}>Description</Text>
+      <TranslatedText style={styles.label}>Description</TranslatedText>
       <TextInput
         style={styles.input}
         multiline
@@ -253,7 +254,7 @@ const ReportForm: React.FC = () => {
         onChangeText={setDescription}
       />
 
-      <Text style={styles.label}>Your Contact Info</Text>
+      <TranslatedText style={styles.label}>Your Contact Info</TranslatedText>
       <TextInput
         style={styles.input}
         placeholder="Phone or Email"
@@ -261,7 +262,7 @@ const ReportForm: React.FC = () => {
         onChangeText={setContactInfo}
       />
 
-      <Text style={styles.label}>Address</Text>
+      <TranslatedText style={styles.label}>Address</TranslatedText>
       <View style={styles.addressContainer}>
         <TextInput
           style={styles.inputAddress}
@@ -285,7 +286,9 @@ const ReportForm: React.FC = () => {
               style={styles.predictionItem}
               onPress={() => selectPrediction(item.place_id, item.description)}
             >
-              <Text>{item.description}</Text>
+              <TranslatedText style={{ fontSize: 16 }}>
+                {item.description}
+              </TranslatedText>
             </TouchableOpacity>
           )}
         />
@@ -293,12 +296,18 @@ const ReportForm: React.FC = () => {
 
       <AnimatedTouchable style={styles.detectBtn} onPress={useCurrentLocation}>
         <Ionicons name="locate" size={20} color="white" />
-        <Text style={styles.detectBtnText}> Detect My Location</Text>
+        <TranslatedText style={styles.detectBtnText}>
+          {" "}
+          Detect My Location
+        </TranslatedText>
       </AnimatedTouchable>
 
       <AnimatedTouchable style={styles.submitBtn} onPress={handleSubmit}>
         <FontAwesome5 name="paper-plane" size={18} color="white" />
-        <Text style={styles.submitText}> Submit Report</Text>
+        <TranslatedText style={styles.submitText}>
+          {" "}
+          Submit Report
+        </TranslatedText>
       </AnimatedTouchable>
     </ScrollView>
   );

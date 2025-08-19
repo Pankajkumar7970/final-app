@@ -16,6 +16,7 @@ import {
   TriangleAlert as AlertTriangle,
   Eye,
 } from "lucide-react-native";
+import TranslatedText from "./TranslatedText";
 
 interface SMSSimulationProps {
   onNext: () => void;
@@ -33,18 +34,20 @@ const SMSSimulation = ({ onNext }: SMSSimulationProps) => {
         <View style={styles.phone}>
           {/* Status Bar */}
           <View style={styles.statusBar}>
-            <Text style={styles.time}>9:41</Text>
+            <TranslatedText style={styles.time}>9:41</TranslatedText>
             <View style={styles.statusIcons}>
               <Wifi size={12} color="#000" strokeWidth={2} />
-              <Text style={styles.signal}>●●●</Text>
+              <TranslatedText style={styles.signal}>●●●</TranslatedText>
               <Battery size={12} color="#000" strokeWidth={2} />
-              <Text style={styles.battery}>100%</Text>
+              <TranslatedText style={styles.battery}>100%</TranslatedText>
             </View>
           </View>
 
           {/* Messages Header */}
           <View style={styles.messagesHeader}>
-            <Text style={styles.messagesTitle}>Messages</Text>
+            <TranslatedText style={styles.messagesTitle}>
+              Messages
+            </TranslatedText>
           </View>
 
           {/* Message Thread */}
@@ -55,21 +58,27 @@ const SMSSimulation = ({ onNext }: SMSSimulationProps) => {
               </View>
               <View style={styles.messageContent}>
                 <View style={styles.messageHeader}>
-                  <Text style={styles.senderName}>ABC-Alert</Text>
-                  <Text style={styles.phoneNumber}>+91-98765xxxxx</Text>
+                  <TranslatedText style={styles.senderName}>
+                    ABC-Alert
+                  </TranslatedText>
+                  <TranslatedText style={styles.phoneNumber}>
+                    +91-98765xxxxx
+                  </TranslatedText>
                 </View>
                 <View style={styles.messageBubble}>
-                  <Text style={styles.messageText}>
+                  <TranslatedText style={styles.messageText}>
                     [ABC-Alert]: Dear Customer, we have temporarily locked your
                     account due to unusual login attempts.
                     {"\n\n"}
                     Verify immediately at: http://abcverify-alerts.online
                     {"\n\n"}- ABC Bank Security Team
-                  </Text>
+                  </TranslatedText>
                 </View>
                 <View style={styles.messageTime}>
                   <Clock size={12} color="#999" strokeWidth={2} />
-                  <Text style={styles.timeText}>2 minutes ago</Text>
+                  <TranslatedText style={styles.timeText}>
+                    2 minutes ago
+                  </TranslatedText>
                 </View>
               </View>
             </View>
@@ -80,12 +89,14 @@ const SMSSimulation = ({ onNext }: SMSSimulationProps) => {
             <View style={styles.overlayHeader}>
               <View style={styles.simulationBadge}>
                 <AlertTriangle size={16} color="#FFFFFF" strokeWidth={2} />
-                <Text style={styles.simulationBadgeText}>SIMULATION</Text>
+                <TranslatedText style={styles.simulationBadgeText}>
+                  SIMULATION
+                </TranslatedText>
               </View>
             </View>
-            <Text style={styles.overlayDescription}>
+            <TranslatedText style={styles.overlayDescription}>
               This is a fake SMS designed to demonstrate phishing tactics.
-            </Text>
+            </TranslatedText>
 
             {!showDetails && (
               <TouchableOpacity
@@ -93,9 +104,9 @@ const SMSSimulation = ({ onNext }: SMSSimulationProps) => {
                 onPress={() => setShowDetails(true)}
               >
                 <Eye size={16} color="#374151" strokeWidth={2} />
-                <Text style={styles.detailsButtonText}>
+                <TranslatedText style={styles.detailsButtonText}>
                   What makes this suspicious?
-                </Text>
+                </TranslatedText>
               </TouchableOpacity>
             )}
 
@@ -103,41 +114,43 @@ const SMSSimulation = ({ onNext }: SMSSimulationProps) => {
               <View style={styles.detailsCard}>
                 <View style={styles.detailsHeader}>
                   <AlertTriangle size={20} color="#DC2626" strokeWidth={2} />
-                  <Text style={styles.detailsTitle}>Red Flags Detected</Text>
+                  <TranslatedText style={styles.detailsTitle}>
+                    Red Flags Detected
+                  </TranslatedText>
                 </View>
                 <View style={styles.flagsList}>
                   <View style={styles.flagItem}>
                     <View style={styles.flagDot} />
-                    <Text style={styles.flagText}>
+                    <TranslatedText style={styles.flagText}>
                       Suspicious URL (not official Bank domain)
-                    </Text>
+                    </TranslatedText>
                   </View>
                   <View style={styles.flagItem}>
                     <View style={styles.flagDot} />
-                    <Text style={styles.flagText}>
+                    <TranslatedText style={styles.flagText}>
                       Creates urgency and panic
-                    </Text>
+                    </TranslatedText>
                   </View>
                   <View style={styles.flagItem}>
                     <View style={styles.flagDot} />
-                    <Text style={styles.flagText}>
+                    <TranslatedText style={styles.flagText}>
                       Asks to "verify details" via link
-                    </Text>
+                    </TranslatedText>
                   </View>
                   <View style={styles.flagItem}>
                     <View style={styles.flagDot} />
-                    <Text style={styles.flagText}>
+                    <TranslatedText style={styles.flagText}>
                       Generic greeting "Dear Customer"
-                    </Text>
+                    </TranslatedText>
                   </View>
                 </View>
               </View>
             )}
 
             <TouchableOpacity style={styles.nextButton} onPress={onNext}>
-              <Text style={styles.nextButtonText}>
+              <TranslatedText style={styles.nextButtonText}>
                 Click the Suspicious Link (Safe Simulation)
-              </Text>
+              </TranslatedText>
             </TouchableOpacity>
           </View>
         </View>

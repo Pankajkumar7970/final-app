@@ -1,17 +1,22 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import TranslatedText from "./TranslatedText";
 
 const HomePage = ({ onLogin, onLogout, isLoggedIn }) => (
   <View style={styles.container}>
-    <Text style={styles.heading}>Welcome to FinEduGuard!  👋</Text>
-    <Text style={styles.subheading}>Your account is {isLoggedIn ? "active" : "not logged in"}.</Text>
+    <TranslatedText style={styles.heading}>
+      Welcome to FinEduGuard! 👋
+    </TranslatedText>
+    <TranslatedText style={styles.subheading}>
+      Your account is {isLoggedIn ? "active" : "not logged in"}.
+    </TranslatedText>
     {!isLoggedIn ? (
       <TouchableOpacity style={styles.button} onPress={onLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+        <TranslatedText style={styles.buttonText}>Login</TranslatedText>
       </TouchableOpacity>
     ) : (
       <TouchableOpacity style={styles.button} onPress={onLogout}>
-        <Text style={styles.buttonText}>Logout</Text>
+        <TranslatedText style={styles.buttonText}>Logout</TranslatedText>
       </TouchableOpacity>
     )}
   </View>

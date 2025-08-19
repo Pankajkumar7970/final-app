@@ -17,6 +17,7 @@ import {
   Percent,
 } from "lucide-react-native";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -119,11 +120,13 @@ const LoanEmiCalculator = () => {
       <View style={styles.header}>
         <View style={styles.titleContainer}>
           <CreditCard size={32} color={PSBColors.primary.darkGreen} />
-          <Text style={styles.title}>Loan EMI Calculator</Text>
+          <TranslatedText style={styles.title}>
+            Loan EMI Calculator
+          </TranslatedText>
         </View>
-        <Text style={styles.subtitle}>
+        <TranslatedText style={styles.subtitle}>
           Calculate monthly EMI and visualize principal vs interest breakdown
-        </Text>
+        </TranslatedText>
       </View>
 
       <View style={styles.content}>
@@ -131,11 +134,15 @@ const LoanEmiCalculator = () => {
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             {/* <DollarSign size={20} color="#0066cc" /> */}
-            <Text style={styles.cardTitle}>Enter Loan Details</Text>
+            <TranslatedText style={styles.cardTitle}>
+              Enter Loan Details
+            </TranslatedText>
           </View>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Loan Amount (₹)</Text>
+            <TranslatedText style={styles.label}>
+              Loan Amount (₹)
+            </TranslatedText>
             <TextInput
               style={[styles.input, errors.loanAmount && styles.inputError]}
               placeholder="Enter loan amount"
@@ -144,14 +151,18 @@ const LoanEmiCalculator = () => {
               keyboardType="numeric"
             />
             {errors.loanAmount ? (
-              <Text style={styles.errorText}>{errors.loanAmount}</Text>
+              <TranslatedText style={styles.errorText}>
+                {errors.loanAmount}
+              </TranslatedText>
             ) : null}
           </View>
 
           <View style={styles.inputContainer}>
             <View style={styles.labelContainer}>
               <Percent size={16} color="#666666" />
-              <Text style={styles.label}>Annual Interest Rate (%)</Text>
+              <TranslatedText style={styles.label}>
+                Annual Interest Rate (%)
+              </TranslatedText>
             </View>
             <TextInput
               style={[styles.input, errors.annualRate && styles.inputError]}
@@ -161,14 +172,18 @@ const LoanEmiCalculator = () => {
               keyboardType="numeric"
             />
             {errors.annualRate ? (
-              <Text style={styles.errorText}>{errors.annualRate}</Text>
+              <TranslatedText style={styles.errorText}>
+                {errors.annualRate}
+              </TranslatedText>
             ) : null}
           </View>
 
           <View style={styles.inputContainer}>
             <View style={styles.labelContainer}>
               <Calendar size={16} color="#666666" />
-              <Text style={styles.label}>Loan Tenure (Months)</Text>
+              <TranslatedText style={styles.label}>
+                Loan Tenure (Months)
+              </TranslatedText>
             </View>
             <TextInput
               style={[styles.input, errors.tenure && styles.inputError]}
@@ -178,7 +193,9 @@ const LoanEmiCalculator = () => {
               keyboardType="numeric"
             />
             {errors.tenure ? (
-              <Text style={styles.errorText}>{errors.tenure}</Text>
+              <TranslatedText style={styles.errorText}>
+                {errors.tenure}
+              </TranslatedText>
             ) : null}
           </View>
 
@@ -192,11 +209,15 @@ const LoanEmiCalculator = () => {
               disabled={!isFormValid}
             >
               <Calculator size={16} color="#ffffff" />
-              <Text style={styles.calculateButtonText}>Calculate EMI</Text>
+              <TranslatedText style={styles.calculateButtonText}>
+                Calculate EMI
+              </TranslatedText>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.resetButton} onPress={reset}>
-              <Text style={styles.resetButtonText}>Reset</Text>
+              <TranslatedText style={styles.resetButtonText}>
+                Reset
+              </TranslatedText>
             </TouchableOpacity>
           </View>
         </View>
@@ -206,41 +227,55 @@ const LoanEmiCalculator = () => {
           <View style={styles.card}>
             <View style={styles.cardHeader}>
               <CreditCard size={20} color="#10b981" />
-              <Text style={styles.cardTitle}>EMI Calculation Results</Text>
+              <TranslatedText style={styles.cardTitle}>
+                EMI Calculation Results
+              </TranslatedText>
             </View>
             <View style={styles.resultContainer}>
               <View style={[styles.resultItem, styles.emiItem]}>
-                <Text style={styles.resultLabel}>Monthly EMI</Text>
-                <Text style={[styles.resultValue, styles.emiValue]}>
+                <TranslatedText style={styles.resultLabel}>
+                  Monthly EMI
+                </TranslatedText>
+                <TranslatedText style={[styles.resultValue, styles.emiValue]}>
                   {formatCurrency(result.emi)}
-                </Text>
+                </TranslatedText>
               </View>
               <View style={styles.resultItem}>
-                <Text style={styles.resultLabel}>Total Payment</Text>
-                <Text style={styles.resultValue}>
+                <TranslatedText style={styles.resultLabel}>
+                  Total Payment
+                </TranslatedText>
+                <TranslatedText style={styles.resultValue}>
                   {formatCurrency(result.totalPayment)}
-                </Text>
+                </TranslatedText>
               </View>
               <View style={[styles.resultItem, styles.interestItem]}>
-                <Text style={styles.resultLabel}>Total Interest</Text>
-                <Text style={[styles.resultValue, styles.interestValue]}>
+                <TranslatedText style={styles.resultLabel}>
+                  Total Interest
+                </TranslatedText>
+                <TranslatedText
+                  style={[styles.resultValue, styles.interestValue]}
+                >
                   {formatCurrency(result.totalInterest)}
-                </Text>
+                </TranslatedText>
               </View>
               <View style={styles.detailsContainer}>
-                <Text style={styles.detailText}>
+                <TranslatedText style={styles.detailText}>
                   Principal: {formatCurrency(parseFloat(loanAmount))}
-                </Text>
-                <Text style={styles.detailText}>
+                </TranslatedText>
+                <TranslatedText style={styles.detailText}>
                   Interest Rate: {annualRate}% per annum
-                </Text>
-                <Text style={styles.detailText}>Tenure: {tenure} months</Text>
+                </TranslatedText>
+                <TranslatedText style={styles.detailText}>
+                  Tenure: {tenure} months
+                </TranslatedText>
               </View>
             </View>
 
             {/* Horizontal Bar Chart for Principal vs Interest */}
             <View style={styles.chartCard}>
-              <Text style={styles.chartTitle}>Principal vs Interest</Text>
+              <TranslatedText style={styles.chartTitle}>
+                Principal vs Interest
+              </TranslatedText>
               <View
                 style={{
                   width: Math.min(screenWidth - 64, 320),

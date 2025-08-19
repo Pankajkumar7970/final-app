@@ -17,6 +17,7 @@ import {
   Award,
 } from "lucide-react-native";
 import Markdown from "react-native-markdown-display";
+import TranslatedText from "./TranslatedText";
 // import { Lesson } from "../types/lesson";
 
 const { width } = Dimensions.get("window");
@@ -150,34 +151,44 @@ export const LessonViewer = ({
         <View style={styles.header}>
           <TouchableOpacity style={styles.backButton} onPress={onBack}>
             <ArrowLeft size={20} color={colors.text} />
-            <Text style={styles.backButtonText}>Back to Course</Text>
+            <TranslatedText style={styles.backButtonText}>
+              Back to Course
+            </TranslatedText>
           </TouchableOpacity>
 
           <View style={styles.headerBadges}>
             <View style={styles.badge}>
               <Clock size={16} color={colors.textSecondary} />
-              <Text style={styles.badgeText}>{lesson.duration} min read</Text>
+              <TranslatedText style={styles.badgeText}>
+                {lesson.duration} min read
+              </TranslatedText>
             </View>
 
             <View style={styles.badge}>
               <BookOpen size={16} color={colors.textSecondary} />
-              <Text style={styles.badgeText}>Lesson {lesson.order}</Text>
+              <TranslatedText style={styles.badgeText}>
+                Lesson {lesson.order}
+              </TranslatedText>
             </View>
 
             <View
               style={[styles.badge, { backgroundColor: colors.accent + "15" }]}
             >
               <Award size={16} color={colors.accent} />
-              <Text style={[styles.badgeText, { color: colors.accent }]}>
+              <TranslatedText
+                style={[styles.badgeText, { color: colors.accent }]}
+              >
                 Expert Content
-              </Text>
+              </TranslatedText>
             </View>
           </View>
 
           {/* {isCompleted && ( */}
           <View style={styles.completedBadge}>
             <CheckCircle size={16} color={colors.white} />
-            <Text style={styles.completedBadgeText}>Completed</Text>
+            <TranslatedText style={styles.completedBadgeText}>
+              Completed
+            </TranslatedText>
           </View>
           {/* )} */}
         </View>
@@ -185,8 +196,12 @@ export const LessonViewer = ({
         {/* Progress Indicator */}
         <View style={styles.progressContainer}>
           <View style={styles.progressHeader}>
-            <Text style={styles.progressLabel}>Lesson Progress</Text>
-            <Text style={styles.progressStep}>Step {lesson.order}</Text>
+            <TranslatedText style={styles.progressLabel}>
+              Lesson Progress
+            </TranslatedText>
+            <TranslatedText style={styles.progressStep}>
+              Step {lesson.order}
+            </TranslatedText>
           </View>
           <View style={styles.progressBar}>
             <View
@@ -212,10 +227,12 @@ export const LessonViewer = ({
               />
               <View style={styles.imageOverlay}>
                 <View style={styles.imageContent}>
-                  <Text style={styles.imageTitle}>{lesson.title}</Text>
-                  <Text style={styles.imageDescription}>
+                  <TranslatedText style={styles.imageTitle}>
+                    {lesson.title}
+                  </TranslatedText>
+                  <TranslatedText style={styles.imageDescription}>
                     {lesson.description}
-                  </Text>
+                  </TranslatedText>
                 </View>
               </View>
             </View>
@@ -224,14 +241,18 @@ export const LessonViewer = ({
           <View style={styles.titleContainer}>
             {!lesson.imageUrl && (
               <>
-                <Text style={styles.title}>{lesson.title}</Text>
-                <Text style={styles.description}>{lesson.description}</Text>
+                <TranslatedText style={styles.title}>
+                  {lesson.title}
+                </TranslatedText>
+                <TranslatedText style={styles.description}>
+                  {lesson.description}
+                </TranslatedText>
               </>
             )}
           </View>
 
           <View style={styles.markdownContainer}>
-            <Markdown style={markdownStyles as any}>{lesson.content}</Markdown>
+            <Markdown style={markdownStyles}>{lesson.content}</Markdown>
           </View>
 
           {/* Key Takeaways */}
@@ -240,14 +261,20 @@ export const LessonViewer = ({
               <View style={styles.takeawaysContainer}>
                 <View style={styles.takeawaysHeader}>
                   <Award size={24} color={colors.primary} />
-                  <Text style={styles.takeawaysTitle}>Key Takeaways</Text>
+                  <TranslatedText style={styles.takeawaysTitle}>
+                    Key Takeaways
+                  </TranslatedText>
                 </View>
                 {lesson.keyTakeaways.map((takeaway, index) => (
                   <View key={index} style={styles.takeawayItem}>
                     <View style={styles.takeawayNumber}>
-                      <Text style={styles.takeawayNumberText}>{index + 1}</Text>
+                      <TranslatedText style={styles.takeawayNumberText}>
+                        {index + 1}
+                      </TranslatedText>
                     </View>
-                    <Text style={styles.takeawayText}>{takeaway}</Text>
+                    <TranslatedText style={styles.takeawayText}>
+                      {takeaway}
+                    </TranslatedText>
                   </View>
                 ))}
               </View>
@@ -258,7 +285,9 @@ export const LessonViewer = ({
         {/* Action Button */}
         <View style={styles.actionContainer}>
           {/* {!isCompleted && ( */}
-          <Text style={styles.actionHint}>Click complete to move forward.</Text>
+          <TranslatedText style={styles.actionHint}>
+            Click complete to move forward.
+          </TranslatedText>
           {/* )} */}
           <TouchableOpacity
             style={[styles.actionButton, styles.completedButton]}
@@ -276,7 +305,9 @@ export const LessonViewer = ({
             ) : ( */}
             <>
               <Target size={20} color={colors.white} />
-              <Text style={styles.actionButtonText}>Mark as Complete</Text>
+              <TranslatedText style={styles.actionButtonText}>
+                Mark as Complete
+              </TranslatedText>
             </>
             {/* )} */}
           </TouchableOpacity>

@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TranslatedText from "./TranslatedText";
 
 const SecurityTips = ({ onRestart, loading }) => {
   const tips = [
@@ -66,9 +67,13 @@ const SecurityTips = ({ onRestart, loading }) => {
           <View style={styles.headerIcon}>
             <Ionicons name="shield-checkmark" size={32} color="#FFF" />
           </View>
-          <Text style={styles.title}>How to Stay Protected</Text>
+          <TranslatedText style={styles.title}>
+            How to Stay Protected
+          </TranslatedText>
           <View style={styles.badge}>
-            <Text style={styles.badgeText}>Your Security Toolkit</Text>
+            <TranslatedText style={styles.badgeText}>
+              Your Security Toolkit
+            </TranslatedText>
           </View>
         </View>
 
@@ -77,13 +82,19 @@ const SecurityTips = ({ onRestart, loading }) => {
             <View key={index} style={styles.tipCard}>
               <View style={styles.tipHeader}>
                 <View style={styles.tipIcon}>
-                  <Ionicons name={tip.icon as any} size={24} color="#3B82F6" />
+                  <Ionicons name={tip.icon} size={24} color="#3B82F6" />
                 </View>
-                <Text style={styles.tipTitle}>{tip.title}</Text>
+                <TranslatedText style={styles.tipTitle}>
+                  {tip.title}
+                </TranslatedText>
               </View>
-              <Text style={styles.tipDescription}>{tip.description}</Text>
+              <TranslatedText style={styles.tipDescription}>
+                {tip.description}
+              </TranslatedText>
               <View style={styles.tipExample}>
-                <Text style={styles.tipExampleText}>{tip.example}</Text>
+                <TranslatedText style={styles.tipExampleText}>
+                  {tip.example}
+                </TranslatedText>
               </View>
             </View>
           ))}
@@ -92,49 +103,54 @@ const SecurityTips = ({ onRestart, loading }) => {
         <View style={styles.checklistCard}>
           <View style={styles.checklistHeader}>
             <Ionicons name="checkmark-circle" size={20} color="#10B981" />
-            <Text style={styles.checklistTitle}>Prevention Checklist</Text>
+            <TranslatedText style={styles.checklistTitle}>
+              Prevention Checklist
+            </TranslatedText>
           </View>
-          <Text style={styles.checklistSubtitle}>
+          <TranslatedText style={styles.checklistSubtitle}>
             Follow these steps to protect yourself
-          </Text>
+          </TranslatedText>
           <View style={styles.checklistItems}>
             {preventionSteps.map((step, index) => (
               <View key={index} style={styles.checklistItem}>
                 <Ionicons name="checkmark-circle" size={16} color="#10B981" />
-                <Text style={styles.checklistItemText}>{step}</Text>
+                <TranslatedText style={styles.checklistItemText}>
+                  {step}
+                </TranslatedText>
               </View>
             ))}
           </View>
         </View>
 
         <View style={styles.reminderCard}>
-          <Text style={styles.reminderTitle}>
+          <TranslatedText style={styles.reminderTitle}>
             Remember: You Are the First Line of Defense
-          </Text>
-          <Text style={styles.reminderDescription}>
+          </TranslatedText>
+          <TranslatedText style={styles.reminderDescription}>
             Technology can help, but your awareness and caution are the most
             important factors in staying safe online. When in doubt, always:
-          </Text>
+          </TranslatedText>
           <View style={styles.reminderSteps}>
-            <Text style={styles.reminderStep}>
-              🛑 <Text style={styles.bold}>Stop</Text> - Don't act on impulse
-            </Text>
-            <Text style={styles.reminderStep}>
-              🤔 <Text style={styles.bold}>Think</Text> - Is this request
-              legitimate?
-            </Text>
-            <Text style={styles.reminderStep}>
-              📞 <Text style={styles.bold}>Verify</Text> - Contact your bank
-              directly using official numbers
-            </Text>
+            <TranslatedText style={styles.reminderStep}>
+              🛑 <TranslatedText style={styles.bold}>Stop</TranslatedText> -
+              Don't act on impulse
+            </TranslatedText>
+            <TranslatedText style={styles.reminderStep}>
+              🤔 <TranslatedText style={styles.bold}>Think</TranslatedText> - Is
+              this request legitimate?
+            </TranslatedText>
+            <TranslatedText style={styles.reminderStep}>
+              📞 <TranslatedText style={styles.bold}>Verify</TranslatedText> -
+              Contact your bank directly using official numbers
+            </TranslatedText>
           </View>
         </View>
 
         <View style={styles.congratulations}>
-          <Text style={styles.congratulationsText}>
+          <TranslatedText style={styles.congratulationsText}>
             🎓 Congratulations! You've completed the security awareness
             simulation.
-          </Text>
+          </TranslatedText>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -146,7 +162,9 @@ const SecurityTips = ({ onRestart, loading }) => {
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={styles.restartButtonText}>Go to Home</Text>
+              <TranslatedText style={styles.restartButtonText}>
+                Go to Home
+              </TranslatedText>
             )}
           </TouchableOpacity>
           {/* <TouchableOpacity style={styles.reportButton} onPress={handleReportCrime}>

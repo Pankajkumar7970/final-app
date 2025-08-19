@@ -12,19 +12,15 @@ import {
 } from "lucide-react-native";
 import API from "../api/api";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 // import { Quiz, getUserProgress } from "../data/quizData";
 
-interface QuizCardProps {
-  quiz;
-  onPress: () => void;
-}
-
-const QuizCard: React.FC<QuizCardProps> = ({ quiz, onPress }) => {
+const QuizCard = ({ quiz, onPress }) => {
   // const isCompleted = progress[quiz.id]?.completed || false;
   // const score = progress[quiz.id]?.score || 0;
   // const attempts = progress[quiz.id]?.attempts || 0;
-  const [completedQuizzes, setCompletedQuizzes] = React.useState<string[]>([]);
-  const [score, setScore] = React.useState<number>(0);
+  const [completedQuizzes, setCompletedQuizzes] = React.useState([]);
+  const [score, setScore] = React.useState < number > 0;
 
   useEffect(() => {
     // Load completed quizzes from local storage or server
@@ -53,7 +49,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, onPress }) => {
 
   const CategoryIcon = quiz.category === "fraud" ? Shield : DollarSign;
 
-  const getDifficultyConfig = (difficulty: string) => {
+  const getDifficultyConfig = (difficulty) => {
     switch (difficulty) {
       case "beginner":
         return {
@@ -89,7 +85,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, onPress }) => {
   const difficultyConfig = getDifficultyConfig(quiz.difficulty);
   const DifficultyIcon = difficultyConfig.icon;
 
-  const getScoreColor = (score: number) => {
+  const getScoreColor = (score) => {
     if (score >= 4) return "#10b981";
     if (score >= 3) return "#f59e0b";
     return "#ef4444";
@@ -125,7 +121,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, onPress }) => {
                 : styles.financialBadge,
             ]}
           >
-            <Text
+            <TranslatedText
               style={[
                 styles.categoryText,
                 quiz.category === "fraud"
@@ -136,7 +132,7 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, onPress }) => {
               {quiz.category === "fraud"
                 ? "Fraud Protection"
                 : "Financial Mastery"}
-            </Text>
+            </TranslatedText>
           </View>
         </View>
 
@@ -149,7 +145,9 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, onPress }) => {
               ]}
             >
               <CheckCircle size={14} color="#ffffff" />
-              <Text style={styles.scoreText}>{score}/5</Text>
+              <TranslatedText style={styles.scoreText}>
+                {score}/5
+              </TranslatedText>
             </View>
           </View>
         )}
@@ -157,8 +155,10 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, onPress }) => {
 
       {/* Content Section */}
       <View style={styles.content}>
-        <Text style={styles.title}>{quiz.title}</Text>
-        <Text style={styles.description}>{quiz.description}</Text>
+        <TranslatedText style={styles.title}>{quiz.title}</TranslatedText>
+        <TranslatedText style={styles.description}>
+          {quiz.description}
+        </TranslatedText>
       </View>
 
       {/* Meta Information */}
@@ -170,29 +170,37 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, onPress }) => {
           ]}
         >
           <DifficultyIcon size={12} color={difficultyConfig.color} />
-          <Text
+          <TranslatedText
             style={[styles.difficultyText, { color: difficultyConfig.color }]}
           >
             {quiz.difficulty.charAt(0).toUpperCase() + quiz.difficulty.slice(1)}
-          </Text>
+          </TranslatedText>
         </View>
 
         <View style={styles.timeContainer}>
           <Clock size={12} color="#6b7280" />
-          <Text style={styles.timeText}>{quiz.estimatedTime} min</Text>
+          <TranslatedText style={styles.timeText}>
+            {quiz.estimatedTime} min
+          </TranslatedText>
         </View>
       </View>
 
       {/* Footer Section */}
       <View style={styles.footer}>
         <View style={styles.footerInfo}>
-          <Text style={styles.questionCount}>5 Questions</Text>
+          <TranslatedText style={styles.questionCount}>
+            5 Questions
+          </TranslatedText>
           {isCompleted ? (
-            <Text style={[styles.statusText, { color: getScoreColor(score) }]}>
+            <TranslatedText
+              style={[styles.statusText, { color: getScoreColor(score) }]}
+            >
               Best: {score}/5 ({Math.round((score / 5) * 100)}%)
-            </Text>
+            </TranslatedText>
           ) : (
-            <Text style={styles.statusText}>Ready to start</Text>
+            <TranslatedText style={styles.statusText}>
+              Ready to start
+            </TranslatedText>
           )}
         </View>
 
@@ -205,12 +213,16 @@ const QuizCard: React.FC<QuizCardProps> = ({ quiz, onPress }) => {
           {isCompleted ? (
             <>
               <Trophy size={14} color="#6366f1" />
-              <Text style={styles.retakeButtonText}>Retake</Text>
+              <TranslatedText style={styles.retakeButtonText}>
+                Retake
+              </TranslatedText>
             </>
           ) : (
             <>
               <Zap size={14} color="#ffffff" />
-              <Text style={styles.startButtonText}>Start</Text>
+              <TranslatedText style={styles.startButtonText}>
+                Start
+              </TranslatedText>
             </>
           )}
         </View>

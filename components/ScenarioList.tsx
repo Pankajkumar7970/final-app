@@ -25,6 +25,7 @@ import { apiCall } from "../utils/api";
 import API from "../api/api";
 import Loader from "./Loader";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 const { width } = Dimensions.get("window");
 
@@ -140,35 +141,43 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
         <ScrollView contentContainerStyle={styles.scrollContent}>
           {/* Header */}
           <View style={styles.header}>
-            <Text style={styles.title}>Financial Decision Scenarios</Text>
-            <Text style={styles.subtitle}>
+            <TranslatedText style={styles.title}>
+              Financial Decision Scenarios
+            </TranslatedText>
+            <TranslatedText style={styles.subtitle}>
               Practice real-world financial decisions in a safe environment
-            </Text>
+            </TranslatedText>
 
             <View style={styles.statsContainer}>
               <View style={styles.statItem}>
                 <Trophy size={20} color="#f59e0b" />
-                <Text style={styles.statValue}>
+                <TranslatedText style={styles.statValue}>
                   {completedScenarios.length}
-                </Text>
-                <Text style={styles.statLabel}>Completed</Text>
+                </TranslatedText>
+                <TranslatedText style={styles.statLabel}>
+                  Completed
+                </TranslatedText>
               </View>
               <View style={styles.statDivider} />
               <View style={styles.statItem}>
                 <Target size={20} color="#3b82f6" />
-                <Text style={styles.statValue}>{scenarios.length}</Text>
-                <Text style={styles.statLabel}>Total</Text>
+                <TranslatedText style={styles.statValue}>
+                  {scenarios.length}
+                </TranslatedText>
+                <TranslatedText style={styles.statLabel}>Total</TranslatedText>
               </View>
               <View style={styles.statDivider} />
               <View style={styles.statItem}>
                 <Brain size={20} color="#10b981" />
-                <Text style={styles.statValue}>
+                <TranslatedText style={styles.statValue}>
                   {Math.round(
                     (completedScenarios.length / scenarios.length) * 100
                   )}
                   %
-                </Text>
-                <Text style={styles.statLabel}>Progress</Text>
+                </TranslatedText>
+                <TranslatedText style={styles.statLabel}>
+                  Progress
+                </TranslatedText>
               </View>
             </View>
           </View>
@@ -176,7 +185,9 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
           {/* Filters */}
           <View style={styles.filtersContainer}>
             <View style={styles.filterSection}>
-              <Text style={styles.filterTitle}>Category</Text>
+              <TranslatedText style={styles.filterTitle}>
+                Category
+              </TranslatedText>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={styles.filterButtons}>
                   {categories.map((category) => {
@@ -199,7 +210,7 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
                               : "rgba(0,0,0,0.5)"
                           }
                         />
-                        <Text
+                        <TranslatedText
                           style={[
                             styles.filterButtonText,
                             selectedCategory === category.id &&
@@ -207,7 +218,7 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
                           ]}
                         >
                           {category.label}
-                        </Text>
+                        </TranslatedText>
                       </TouchableOpacity>
                     );
                   })}
@@ -216,7 +227,9 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
             </View>
 
             <View style={styles.filterSection}>
-              <Text style={styles.filterTitle}>Difficulty</Text>
+              <TranslatedText style={styles.filterTitle}>
+                Difficulty
+              </TranslatedText>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={styles.filterButtons}>
                   {difficulties.map((difficulty) => (
@@ -229,7 +242,7 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
                       ]}
                       onPress={() => setSelectedDifficulty(difficulty.id)}
                     >
-                      <Text
+                      <TranslatedText
                         style={[
                           styles.filterButtonText,
                           selectedDifficulty === difficulty.id &&
@@ -237,7 +250,7 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
                         ]}
                       >
                         {difficulty.label}
-                      </Text>
+                      </TranslatedText>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -247,10 +260,10 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
 
           {/* Scenarios List */}
           <View style={styles.scenariosContainer}>
-            <Text style={styles.scenariosTitle}>
+            <TranslatedText style={styles.scenariosTitle}>
               {scenarios.length} Scenario
               {scenarios.length !== 1 ? "s" : ""} Available
-            </Text>
+            </TranslatedText>
 
             {scenarios.map((scenario) => {
               const CategoryIcon = getCategoryIcon(scenario.category);
@@ -283,9 +296,9 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
                         />
                       </View>
                       <View style={styles.scenarioInfo}>
-                        <Text style={styles.scenarioTitle}>
+                        <TranslatedText style={styles.scenarioTitle}>
                           {scenario.title}
-                        </Text>
+                        </TranslatedText>
                         <Text
                           style={styles.scenarioDescription}
                           numberOfLines={2}
@@ -314,26 +327,26 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
                           },
                         ]}
                       >
-                        <Text style={styles.difficultyText}>
+                        <TranslatedText style={styles.difficultyText}>
                           {scenario.difficulty.charAt(0).toUpperCase() +
                             scenario.difficulty.slice(1)}
-                        </Text>
+                        </TranslatedText>
                       </View>
                     </View>
 
                     {scenario.timeLimit && (
                       <View style={styles.metaItem}>
                         <Clock size={14} color="#94a3b8" />
-                        <Text style={styles.metaText}>
+                        <TranslatedText style={styles.metaText}>
                           {scenario.timeLimit}s
-                        </Text>
+                        </TranslatedText>
                       </View>
                     )}
 
                     <View style={styles.metaItem}>
-                      <Text style={styles.choicesCount}>
+                      <TranslatedText style={styles.choicesCount}>
                         {scenario.choices.length} choices
-                      </Text>
+                      </TranslatedText>
                     </View>
                   </View>
 
@@ -344,9 +357,9 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
 
                     <View style={styles.playButton}>
                       <Play size={16} color={PSBColors.primary.darkGreen} />
-                      <Text style={styles.playButtonText}>
+                      <TranslatedText style={styles.playButtonText}>
                         {completed ? "Play Again" : "Start Scenario"}
-                      </Text>
+                      </TranslatedText>
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -357,10 +370,12 @@ export const ScenarioList: React.FC<ScenarioListProps> = ({
           {scenarios.length === 0 && (
             <View style={styles.emptyState}>
               <Filter size={48} color="#6b7280" />
-              <Text style={styles.emptyTitle}>No Scenarios Found</Text>
-              <Text style={styles.emptyDescription}>
+              <TranslatedText style={styles.emptyTitle}>
+                No Scenarios Found
+              </TranslatedText>
+              <TranslatedText style={styles.emptyDescription}>
                 Try adjusting your filters to see more scenarios
-              </Text>
+              </TranslatedText>
             </View>
           )}
         </ScrollView>

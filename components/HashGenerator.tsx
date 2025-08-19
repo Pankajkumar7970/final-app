@@ -13,6 +13,7 @@ import * as FileSystem from "expo-file-system";
 import * as Clipboard from "expo-clipboard";
 import { PSBColors } from "../utils/PSBColors";
 import { colors } from "../utils/colors";
+import TranslatedText from "./TranslatedText";
 
 interface FileInfo {
   uri: string;
@@ -101,8 +102,10 @@ export const HashGenerator = ({
           <Hash size={20} color={PSBColors.primary.green} />
         </View>
         <View>
-          <Text style={styles.title}>Document Hash</Text>
-          <Text style={styles.subtitle}>SHA-256 cryptographic hash</Text>
+          <TranslatedText style={styles.title}>Document Hash</TranslatedText>
+          <TranslatedText style={styles.subtitle}>
+            SHA-256 cryptographic hash
+          </TranslatedText>
         </View>
       </View>
 
@@ -111,7 +114,9 @@ export const HashGenerator = ({
         <View style={styles.fileInfoItem}>
           <FileText size={16} color="#6b7280" />
           <View style={styles.fileInfoText}>
-            <Text style={styles.fileInfoLabel}>Filename</Text>
+            <TranslatedText style={styles.fileInfoLabel}>
+              Filename
+            </TranslatedText>
             <Text style={styles.fileInfoValue} numberOfLines={1}>
               {file.name}
             </Text>
@@ -121,18 +126,22 @@ export const HashGenerator = ({
         <View style={styles.fileInfoItem}>
           <HardDrive size={16} color="#6b7280" />
           <View style={styles.fileInfoText}>
-            <Text style={styles.fileInfoLabel}>File Size</Text>
-            <Text style={styles.fileInfoValue}>
+            <TranslatedText style={styles.fileInfoLabel}>
+              File Size
+            </TranslatedText>
+            <TranslatedText style={styles.fileInfoValue}>
               {formatFileSize(file.size)}
-            </Text>
+            </TranslatedText>
           </View>
         </View>
 
         <View style={styles.fileInfoItem}>
           <Calendar size={16} color="#6b7280" />
           <View style={styles.fileInfoText}>
-            <Text style={styles.fileInfoLabel}>Type</Text>
-            <Text style={styles.fileInfoValue}>{file.type}</Text>
+            <TranslatedText style={styles.fileInfoLabel}>Type</TranslatedText>
+            <TranslatedText style={styles.fileInfoValue}>
+              {file.type}
+            </TranslatedText>
           </View>
         </View>
       </View>
@@ -140,14 +149,16 @@ export const HashGenerator = ({
       {/* Hash Display */}
       <View style={styles.hashSection}>
         <View style={styles.hashHeader}>
-          <Text style={styles.hashLabel}>Generated Hash</Text>
+          <TranslatedText style={styles.hashLabel}>
+            Generated Hash
+          </TranslatedText>
           <View
             style={[
               styles.badge,
               isGenerating ? styles.badgeSecondary : styles.badgeSuccess,
             ]}
           >
-            <Text
+            <TranslatedText
               style={[
                 styles.badgeText,
                 isGenerating
@@ -156,7 +167,7 @@ export const HashGenerator = ({
               ]}
             >
               {isGenerating ? "Generating..." : "SHA-256"}
-            </Text>
+            </TranslatedText>
           </View>
         </View>
 

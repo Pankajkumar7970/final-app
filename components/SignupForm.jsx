@@ -38,6 +38,7 @@ import {
   statusCodes,
 } from "@react-native-google-signin/google-signin";
 import auth from "@react-native-firebase/auth";
+import TranslatedText from "./TranslatedText";
 
 export default function SignupScreen({ onSignupSuccess }) {
   const dispatch = useDispatch();
@@ -215,10 +216,10 @@ export default function SignupScreen({ onSignupSuccess }) {
                   resizeMode="contain"
                 />
               </View>
-              <Text style={styles.title}>Join PSB</Text>
-              <Text style={styles.subtitle}>
+              <TranslatedText style={styles.title}>Join PSB</TranslatedText>
+              <TranslatedText style={styles.subtitle}>
                 Create your account to get started
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.formSection}>

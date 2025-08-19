@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Svg, { Circle, G } from "react-native-svg";
+import TranslatedText from "./TranslatedText";
 
 interface PieChartProps {
   data: Array<{
@@ -61,8 +62,10 @@ const PieChart: React.FC<PieChartProps> = ({
 
       {/* Center text */}
       <View style={[styles.centerText, { width: size, height: size }]}>
-        <Text style={styles.totalLabel}>Total Value</Text>
-        <Text style={styles.totalValue}>₹{total.toLocaleString("en-IN")}</Text>
+        <TranslatedText style={styles.totalLabel}>Total Value</TranslatedText>
+        <TranslatedText style={styles.totalValue}>
+          ₹{total.toLocaleString("en-IN")}
+        </TranslatedText>
       </View>
     </View>
   );

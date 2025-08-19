@@ -17,6 +17,7 @@ import {
   RESULTS,
   Permission,
 } from "react-native-permissions";
+import TranslatedText from "./TranslatedText";
 
 interface FileInfo {
   uri: string;
@@ -155,13 +156,15 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
           </View>
 
           <View style={styles.textContainer}>
-            <Text style={styles.title}>Upload Document</Text>
-            <Text style={styles.subtitle}>
+            <TranslatedText style={styles.title}>
+              Upload Document
+            </TranslatedText>
+            <TranslatedText style={styles.subtitle}>
               Tap to browse and select your file
-            </Text>
-            <Text style={styles.supportedTypes}>
+            </TranslatedText>
+            <TranslatedText style={styles.supportedTypes}>
               Supports PDF, DOCX, DOC, JPG, PNG, GIF, TXT (max 50MB)
-            </Text>
+            </TranslatedText>
           </View>
 
           <TouchableOpacity
@@ -170,14 +173,14 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
             disabled={isProcessing}
           >
             <FileText size={16} color={isProcessing ? "#9ca3af" : "#374151"} />
-            <Text
+            <TranslatedText
               style={[
                 styles.buttonText,
                 isProcessing && styles.buttonTextDisabled,
               ]}
             >
               Choose File
-            </Text>
+            </TranslatedText>
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -185,7 +188,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
       {error && (
         <View style={styles.errorContainer}>
           <AlertCircle size={16} color="#ef4444" />
-          <Text style={styles.errorText}>{error}</Text>
+          <TranslatedText style={styles.errorText}>{error}</TranslatedText>
         </View>
       )}
     </View>

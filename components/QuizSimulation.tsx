@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TranslatedText from "./TranslatedText";
 
 interface QuizSimulationProps {
   onComplete: (score: number) => void;
@@ -130,13 +131,19 @@ const QuizSimulation = ({ onComplete }: QuizSimulationProps) => {
               <Ionicons name="trophy" size={32} color="#FFF" />
             </View>
 
-            <Text style={styles.resultTitle}>Quiz Complete!</Text>
+            <TranslatedText style={styles.resultTitle}>
+              Quiz Complete!
+            </TranslatedText>
 
             <View style={styles.scoreContainer}>
-              <Text style={[styles.scoreText, { color: getScoreColor(score) }]}>
+              <TranslatedText
+                style={[styles.scoreText, { color: getScoreColor(score) }]}
+              >
                 {score}/5
-              </Text>
-              <Text style={styles.scoreMessage}>{getScoreMessage(score)}</Text>
+              </TranslatedText>
+              <TranslatedText style={styles.scoreMessage}>
+                {getScoreMessage(score)}
+              </TranslatedText>
             </View>
 
             <View style={styles.progressContainer}>
@@ -153,9 +160,9 @@ const QuizSimulation = ({ onComplete }: QuizSimulationProps) => {
               </View>
             </View>
 
-            <Text style={styles.redirectText}>
+            <TranslatedText style={styles.redirectText}>
               Redirecting to security tips in a moment...
-            </Text>
+            </TranslatedText>
           </View>
         </View>
       </SafeAreaView>
@@ -168,11 +175,13 @@ const QuizSimulation = ({ onComplete }: QuizSimulationProps) => {
         <View style={styles.header}>
           <View style={styles.headerInfo}>
             <View style={styles.badge}>
-              <Text style={styles.badgeText}>Security Awareness Quiz</Text>
+              <TranslatedText style={styles.badgeText}>
+                Security Awareness Quiz
+              </TranslatedText>
             </View>
-            <Text style={styles.questionCounter}>
+            <TranslatedText style={styles.questionCounter}>
               Question {currentQuestion + 1} of {questions.length}
-            </Text>
+            </TranslatedText>
           </View>
           <View style={styles.progressContainer}>
             <View style={styles.progressBar}>
@@ -191,9 +200,9 @@ const QuizSimulation = ({ onComplete }: QuizSimulationProps) => {
         </View>
 
         <View style={styles.questionCard}>
-          <Text style={styles.questionText}>
+          <TranslatedText style={styles.questionText}>
             {questions[currentQuestion].question}
-          </Text>
+          </TranslatedText>
 
           <View style={styles.optionsContainer}>
             {questions[currentQuestion].options.map((option, index) => (
@@ -202,19 +211,21 @@ const QuizSimulation = ({ onComplete }: QuizSimulationProps) => {
                 style={styles.optionButton}
                 onPress={() => handleAnswer(index)}
               >
-                <Text style={styles.optionLetter}>
+                <TranslatedText style={styles.optionLetter}>
                   {String.fromCharCode(65 + index)}.
-                </Text>
-                <Text style={styles.optionText}>{option}</Text>
+                </TranslatedText>
+                <TranslatedText style={styles.optionText}>
+                  {option}
+                </TranslatedText>
               </TouchableOpacity>
             ))}
           </View>
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>
+          <TranslatedText style={styles.footerText}>
             Take your time and choose the safest option
-          </Text>
+          </TranslatedText>
         </View>
       </ScrollView>
     </SafeAreaView>

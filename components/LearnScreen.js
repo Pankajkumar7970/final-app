@@ -21,6 +21,7 @@ import {
 } from "lucide-react-native";
 import api from "../api/financePlannerApi";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 const LearnScreen = () => {
   const [learningContent, setLearningContent] = useState([]);
@@ -92,14 +93,14 @@ const LearnScreen = () => {
           ]}
           onPress={() => setSelectedCategory(category)}
         >
-          <Text
+          <TranslatedText
             style={[
               styles.categoryButtonText,
               selectedCategory === category && styles.categoryButtonTextActive,
             ]}
           >
             {category}
-          </Text>
+          </TranslatedText>
         </TouchableOpacity>
       ))}
     </ScrollView>
@@ -119,23 +120,35 @@ const LearnScreen = () => {
           <View style={styles.learningTitleContainer}>
             <IconComponent size={20} color={PSBColors.primary.darkGreen} />
             <View style={styles.learningTitleText}>
-              <Text style={styles.learningTitle}>{item.title}</Text>
-              <Text style={styles.learningCategory}>{item.category}</Text>
+              <TranslatedText style={styles.learningTitle}>
+                {item.title}
+              </TranslatedText>
+              <TranslatedText style={styles.learningCategory}>
+                {item.category}
+              </TranslatedText>
             </View>
           </View>
           <ChevronIcon size={20} color="#6B7280" />
         </TouchableOpacity>
 
-        <Text style={styles.learningSummary}>{item.summary}</Text>
-        <Text style={styles.learningContent}>{item.content}</Text>
+        <TranslatedText style={styles.learningSummary}>
+          {item.summary}
+        </TranslatedText>
+        <TranslatedText style={styles.learningContent}>
+          {item.content}
+        </TranslatedText>
 
         {isExpanded && (
           <View style={styles.expandedContent}>
             <View style={styles.learnMoreHeader}>
               <Lightbulb size={16} color="#F59E0B" />
-              <Text style={styles.learnMoreTitle}>Learn More</Text>
+              <TranslatedText style={styles.learnMoreTitle}>
+                Learn More
+              </TranslatedText>
             </View>
-            <Text style={styles.learnMoreContent}>{item.learnMore}</Text>
+            <TranslatedText style={styles.learnMoreContent}>
+              {item.learnMore}
+            </TranslatedText>
           </View>
         )}
       </View>
@@ -147,7 +160,9 @@ const LearnScreen = () => {
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={PSBColors.primary.darkGreen} />
-          <Text style={styles.loadingText}>Loading educational content...</Text>
+          <TranslatedText style={styles.loadingText}>
+            Loading educational content...
+          </TranslatedText>
         </View>
       </SafeAreaView>
     );
@@ -157,7 +172,7 @@ const LearnScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <BookOpen size={24} color={PSBColors.primary.darkGreen} />
-        <Text style={styles.headerTitle}>Learn & Grow</Text>
+        <TranslatedText style={styles.headerTitle}>Learn & Grow</TranslatedText>
       </View>
 
       {renderCategoryFilter()}

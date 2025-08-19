@@ -29,26 +29,17 @@ import { apiCall } from "../utils/api";
 import API from "../api/api";
 import Loader from "./Loader";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 const { width } = Dimensions.get("window");
 
-interface ScenarioSimulatorProps {
-  scenarioId?: string;
-  onComplete;
-  onExit?: () => void;
-}
-
-export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
-  scenarioId,
-  onComplete,
-  onExit,
-}) => {
+export const ScenarioSimulator = ({ scenarioId, onComplete, onExit }) => {
   const [currentScenario, setCurrentScenario] = useState(null);
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [showResult, setShowResult] = useState(false);
-  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [timeLeft, setTimeLeft] = (useState < number) | (null > null);
   const [timeSpent, setTimeSpent] = useState(0);
-  const [startTime, setStartTime] = useState<Date | null>(null);
+  const [startTime, setStartTime] = (useState < Date) | (null > null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -133,7 +124,7 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
     }
   }, [selectedChoice]);
 
-  const getDifficultyColor = (difficulty: string) => {
+  const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
       case "beginner":
         return "#10b981";
@@ -146,7 +137,7 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
     }
   };
 
-  const getCategoryIcon = (category: string) => {
+  const getCategoryIcon = (category) => {
     switch (category) {
       case "fraud-detection":
         return <AlertTriangle size={20} color="#ef4444" />;
@@ -178,13 +169,17 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
           <AlertTriangle size={48} color="#ef4444" />
-          <Text style={styles.errorTitle}>Scenario Not Found</Text>
-          <Text style={styles.errorDescription}>
+          <TranslatedText style={styles.errorTitle}>
+            Scenario Not Found
+          </TranslatedText>
+          <TranslatedText style={styles.errorDescription}>
             The requested scenario could not be loaded.
-          </Text>
+          </TranslatedText>
           {onExit && (
             <TouchableOpacity style={styles.exitButton} onPress={onExit}>
-              <Text style={styles.exitButtonText}>Go Back</Text>
+              <TranslatedText style={styles.exitButtonText}>
+                Go Back
+              </TranslatedText>
             </TouchableOpacity>
           )}
         </View>
@@ -221,7 +216,7 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
                   <XCircle size={32} color="#ffffff" />
                 )}
               </View>
-              <Text
+              <TranslatedText
                 style={[
                   styles.resultTitle,
                   { color: selectedChoice.isCorrect ? "#166534" : "#dc2626" },
@@ -230,54 +225,66 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
                 {selectedChoice.isCorrect
                   ? "Great Decision!"
                   : "Learning Opportunity"}
-              </Text>
+              </TranslatedText>
               <View style={styles.scoreContainer}>
-                <Text style={styles.scoreText}>
+                <TranslatedText style={styles.scoreText}>
                   {selectedChoice.points} /{" "}
                   {Math.max(...currentScenario.choices.map((c) => c.points))}{" "}
                   points
-                </Text>
+                </TranslatedText>
               </View>
             </View>
 
             <View style={styles.resultContent}>
               <View style={styles.choiceSection}>
-                <Text style={styles.sectionTitle}>Your Choice:</Text>
-                <Text style={styles.choiceText}>{selectedChoice.text}</Text>
+                <TranslatedText style={styles.sectionTitle}>
+                  Your Choice:
+                </TranslatedText>
+                <TranslatedText style={styles.choiceText}>
+                  {selectedChoice.text}
+                </TranslatedText>
               </View>
 
               <View style={styles.consequenceSection}>
-                <Text style={styles.sectionTitle}>What Happened:</Text>
-                <Text style={styles.consequenceText}>
+                <TranslatedText style={styles.sectionTitle}>
+                  What Happened:
+                </TranslatedText>
+                <TranslatedText style={styles.consequenceText}>
                   {selectedChoice.consequence}
-                </Text>
+                </TranslatedText>
               </View>
 
               <View style={styles.explanationSection}>
-                <Text style={styles.sectionTitle}>Why This Matters:</Text>
-                <Text style={styles.explanationText}>
+                <TranslatedText style={styles.sectionTitle}>
+                  Why This Matters:
+                </TranslatedText>
+                <TranslatedText style={styles.explanationText}>
                   {selectedChoice.explanation}
-                </Text>
+                </TranslatedText>
               </View>
 
               <View style={styles.learningSection}>
-                <Text style={styles.sectionTitle}>Learning Objective:</Text>
-                <Text style={styles.learningText}>
+                <TranslatedText style={styles.sectionTitle}>
+                  Learning Objective:
+                </TranslatedText>
+                <TranslatedText style={styles.learningText}>
                   {currentScenario.learningObjective}
-                </Text>
+                </TranslatedText>
               </View>
 
               {!selectedChoice.isCorrect && (
                 <View style={styles.betterChoiceSection}>
-                  <Text style={styles.sectionTitle}>Better Approach:</Text>
+                  <TranslatedText style={styles.sectionTitle}>
+                    Better Approach:
+                  </TranslatedText>
                   {currentScenario.choices
                     .filter((c) => c.isCorrect)
                     .map((choice, index) => (
                       <View key={choice.id} style={styles.betterChoice}>
                         <CheckCircle size={16} color="#10b981" />
-                        <Text style={styles.betterChoiceText}>
+                        <TranslatedText style={styles.betterChoiceText}>
                           {choice.text}
-                        </Text>
+                        </TranslatedText>
                       </View>
                     ))}
                 </View>
@@ -290,7 +297,9 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
                 onPress={handleRestart}
               >
                 <RotateCcw size={20} color="#6b7280" />
-                <Text style={styles.restartButtonText}>Try Again</Text>
+                <TranslatedText style={styles.restartButtonText}>
+                  Try Again
+                </TranslatedText>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -298,7 +307,9 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
                 onPress={() => router.push("/pages/ScenarioHub")}
               >
                 <Trophy size={20} color="#ffffff" />
-                <Text style={styles.completeButtonText}>Complete</Text>
+                <TranslatedText style={styles.completeButtonText}>
+                  Complete
+                </TranslatedText>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -316,9 +327,9 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
             <View style={styles.headerTop}>
               <View style={styles.categoryBadge}>
                 {getCategoryIcon(currentScenario.category)}
-                <Text style={styles.categoryText}>
+                <TranslatedText style={styles.categoryText}>
                   {currentScenario.category.replace("-", " ").toUpperCase()}
-                </Text>
+                </TranslatedText>
               </View>
 
               <View
@@ -331,21 +342,23 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
                   },
                 ]}
               >
-                <Text style={styles.difficultyText}>
+                <TranslatedText style={styles.difficultyText}>
                   {currentScenario.difficulty.toUpperCase()}
-                </Text>
+                </TranslatedText>
               </View>
             </View>
 
-            <Text style={styles.scenarioTitle}>{currentScenario.title}</Text>
-            <Text style={styles.scenarioDescription}>
+            <TranslatedText style={styles.scenarioTitle}>
+              {currentScenario.title}
+            </TranslatedText>
+            <TranslatedText style={styles.scenarioDescription}>
               {currentScenario.description}
-            </Text>
+            </TranslatedText>
 
             {timeLeft !== null && (
               <View style={styles.timerContainer}>
                 <Clock size={16} color="#f59e0b" />
-                <Text
+                <TranslatedText
                   style={[
                     styles.timerText,
                     timeLeft <= 10 && styles.timerWarning,
@@ -353,22 +366,26 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
                 >
                   {Math.floor(timeLeft / 60)}:
                   {(timeLeft % 60).toString().padStart(2, "0")}
-                </Text>
+                </TranslatedText>
               </View>
             )}
           </View>
 
           {/* Situation */}
           <View style={styles.situationCard}>
-            <Text style={styles.situationTitle}>The Situation</Text>
-            <Text style={styles.situationText}>
+            <TranslatedText style={styles.situationTitle}>
+              The Situation
+            </TranslatedText>
+            <TranslatedText style={styles.situationText}>
               {currentScenario.situation}
-            </Text>
+            </TranslatedText>
           </View>
 
           {/* Choices */}
           <View style={styles.choicesContainer}>
-            <Text style={styles.choicesTitle}>What would you do?</Text>
+            <TranslatedText style={styles.choicesTitle}>
+              What would you do?
+            </TranslatedText>
             {currentScenario.choices.map((choice, index) => (
               <TouchableOpacity
                 key={choice.id}
@@ -378,9 +395,13 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
               >
                 <View style={styles.choiceContent}>
                   <View style={styles.choiceNumber}>
-                    <Text style={styles.choiceNumberText}>{index + 1}</Text>
+                    <TTranslatedTextext style={styles.choiceNumberText}>
+                      {index + 1}
+                    </TTranslatedTextext>
                   </View>
-                  <Text style={styles.choiceButtonText}>{choice.text}</Text>
+                  <TranslatedText style={styles.choiceButtonText}>
+                    {choice.text}
+                  </TranslatedText>
                   <ArrowRight size={20} color="#6b7280" />
                 </View>
               </TouchableOpacity>
@@ -391,10 +412,12 @@ export const ScenarioSimulator: React.FC<ScenarioSimulatorProps> = ({
           <View style={styles.objectiveCard}>
             <Brain size={20} color="#3b82f6" />
             <View style={styles.objectiveContent}>
-              <Text style={styles.objectiveTitle}>Learning Goal</Text>
-              <Text style={styles.objectiveText}>
+              <TranslatedText style={styles.objectiveTitle}>
+                Learning Goal
+              </TranslatedText>
+              <TranslatedText style={styles.objectiveText}>
                 {currentScenario.learningObjective}
-              </Text>
+              </TranslatedText>
             </View>
           </View>
         </ScrollView>

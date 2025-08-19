@@ -12,6 +12,7 @@ import {
 } from "lucide-react-native";
 import { formatCurrency, SipInputs } from "../hooks/useSipCalculator";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 interface ResultsCardProps {
   totalInvested: number;
@@ -36,10 +37,12 @@ export const ResultsCard: React.FC<ResultsCardProps> = ({
     return (
       <View style={styles.invalidContainer}>
         <AlertCircle size={48} color="#f59e0b" />
-        <Text style={styles.invalidTitle}>Invalid Inputs</Text>
-        <Text style={styles.invalidSubtitle}>
+        <TranslatedText style={styles.invalidTitle}>
+          Invalid Inputs
+        </TranslatedText>
+        <TranslatedText style={styles.invalidSubtitle}>
           Please correct the errors above to see your SIP calculation results
-        </Text>
+        </TranslatedText>
       </View>
     );
   }
@@ -62,44 +65,58 @@ export const ResultsCard: React.FC<ResultsCardProps> = ({
             <Target size={24} color="#ffffff" />
           </View>
           <View style={styles.heroTitleContainer}>
-            <Text style={styles.heroTitle}>Final Maturity Value</Text>
-            <Text style={styles.heroSubtitle}>
+            <TranslatedText style={styles.heroTitle}>
+              Final Maturity Value
+            </TranslatedText>
+            <TranslatedText style={styles.heroSubtitle}>
               After {inputs.investmentDuration} years
-            </Text>
+            </TranslatedText>
           </View>
         </View>
 
-        <Text style={styles.heroAmount}>{formatCurrency(maturityValue)}</Text>
+        <TranslatedText style={styles.heroAmount}>
+          {formatCurrency(maturityValue)}
+        </TranslatedText>
 
         <View style={styles.heroStats}>
           <View style={styles.heroStat}>
             <Percent size={16} color="rgba(255, 255, 255, 0.8)" />
-            <Text style={styles.heroStatValue}>{totalReturn.toFixed(1)}%</Text>
-            <Text style={styles.heroStatLabel}>Total Return</Text>
+            <TranslatedText style={styles.heroStatValue}>
+              {totalReturn.toFixed(1)}%
+            </TranslatedText>
+            <TranslatedText style={styles.heroStatLabel}>
+              Total Return
+            </TranslatedText>
           </View>
           <View style={styles.heroStatDivider} />
           <View style={styles.heroStat}>
             <Calendar size={16} color="rgba(255, 255, 255, 0.8)" />
-            <Text style={styles.heroStatValue}>
+            <TranslatedText style={styles.heroStatValue}>
               {inputs.investmentDuration}Y
-            </Text>
-            <Text style={styles.heroStatLabel}>Duration</Text>
+            </TranslatedText>
+            <TranslatedText style={styles.heroStatLabel}>
+              Duration
+            </TranslatedText>
           </View>
           <View style={styles.heroStatDivider} />
           <View style={styles.heroStat}>
             <Award size={16} color="rgba(255, 255, 255, 0.8)" />
-            <Text style={styles.heroStatValue}>{inputs.annualReturnRate}%</Text>
-            <Text style={styles.heroStatLabel}>CAGR</Text>
+            <TranslatedText style={styles.heroStatValue}>
+              {inputs.annualReturnRate}%
+            </TranslatedText>
+            <TranslatedText style={styles.heroStatLabel}>CAGR</TranslatedText>
           </View>
         </View>
 
         {/* Enhanced Progress Bar */}
         <View style={styles.progressContainer}>
           <View style={styles.progressHeader}>
-            <Text style={styles.progressTitle}>Investment Breakdown</Text>
-            <Text style={styles.progressValue}>
+            <TranslatedText style={styles.progressTitle}>
+              Investment Breakdown
+            </TranslatedText>
+            <TranslatedText style={styles.progressValue}>
               {returnsPercentage.toFixed(1)}% Returns
-            </Text>
+            </TranslatedText>
           </View>
           <View style={styles.progressBarContainer}>
             <View style={styles.progressBar}>
@@ -127,13 +144,17 @@ export const ResultsCard: React.FC<ResultsCardProps> = ({
                   { backgroundColor: PSBColors.primary.gold },
                 ]}
               />
-              <Text style={styles.progressLabel}>Your Investment</Text>
+              <TranslatedText style={styles.progressLabel}>
+                Your Investment
+              </TranslatedText>
             </View>
             <View style={styles.progressLabelItem}>
               <View
                 style={[styles.progressDot, { backgroundColor: "#10b981" }]}
               />
-              <Text style={styles.progressLabel}>Market Returns</Text>
+              <TranslatedText style={styles.progressLabel}>
+                Market Returns
+              </TranslatedText>
             </View>
           </View>
         </View>
@@ -151,15 +172,17 @@ export const ResultsCard: React.FC<ResultsCardProps> = ({
             >
               <PiggyBank size={20} color="#3b82f6" />
             </View>
-            <Text style={styles.breakdownLabel}>Total Invested</Text>
+            <TranslatedText style={styles.breakdownLabel}>
+              Total Invested
+            </TranslatedText>
           </View>
-          <Text style={styles.breakdownValue}>
+          <TranslatedText style={styles.breakdownValue}>
             {formatCurrency(totalInvested)}
-          </Text>
-          <Text style={styles.breakdownSubtext}>
+          </TranslatedText>
+          <TranslatedText style={styles.breakdownSubtext}>
             ₹{monthlyInvestment.toLocaleString()} ×{" "}
             {inputs.investmentDuration * 12} months
-          </Text>
+          </TranslatedText>
         </Animated.View>
 
         <Animated.View
@@ -172,17 +195,19 @@ export const ResultsCard: React.FC<ResultsCardProps> = ({
             >
               <TrendingUp size={20} color="#10b981" />
             </View>
-            <Text style={styles.breakdownLabel}>Wealth Generated</Text>
+            <TranslatedText style={styles.breakdownLabel}>
+              Wealth Generated
+            </TranslatedText>
           </View>
-          <Text style={[styles.breakdownValue, { color: "#10b981" }]}>
+          <TranslatedText style={[styles.breakdownValue, { color: "#10b981" }]}>
             {formatCurrency(totalInterest)}
-          </Text>
+          </TranslatedText>
           {totalInterest > totalInvested && (
             <View style={styles.gainContainer}>
               <View style={styles.gainBadge}>
-                <Text style={styles.gainBadgeText}>
+                <TranslatedText style={styles.gainBadgeText}>
                   {((totalInterest / totalInvested) * 100).toFixed(0)}% Gain
-                </Text>
+                </TranslatedText>
               </View>
             </View>
           )}
@@ -194,28 +219,30 @@ export const ResultsCard: React.FC<ResultsCardProps> = ({
         entering={FadeInRight.delay(800).duration(600)}
         style={styles.summaryCard}
       >
-        <Text style={styles.summaryTitle}>💡 Investment Insight</Text>
-        <Text style={styles.summaryText}>
+        <TranslatedText style={styles.summaryTitle}>
+          💡 Investment Insight
+        </TranslatedText>
+        <TranslatedText style={styles.summaryText}>
           Your disciplined monthly investment of{" "}
-          <Text style={styles.summaryHighlight}>
+          <TranslatedText style={styles.summaryHighlight}>
             {formatCurrency(monthlyInvestment)}
-          </Text>{" "}
+          </TranslatedText>{" "}
           will compound over {inputs.investmentDuration} years to create{" "}
-          <Text style={styles.summaryHighlight}>
+          <TranslatedText style={styles.summaryHighlight}>
             {formatCurrency(maturityValue)}
-          </Text>{" "}
+          </TranslatedText>{" "}
           in wealth, generating{" "}
-          <Text style={styles.summaryHighlight}>
+          <TranslatedText style={styles.summaryHighlight}>
             {formatCurrency(totalInterest)}
-          </Text>{" "}
+          </TranslatedText>{" "}
           in returns through the power of compounding.
-        </Text>
+        </TranslatedText>
 
         <View style={styles.tipContainer}>
-          <Text style={styles.tipText}>
+          <TranslatedText style={styles.tipText}>
             🚀 Pro Tip: Starting early and staying consistent are the keys to
             building substantial wealth through SIP investments.
-          </Text>
+          </TranslatedText>
         </View>
       </Animated.View>
     </View>

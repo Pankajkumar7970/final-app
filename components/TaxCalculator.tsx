@@ -14,6 +14,7 @@ import { BarChart, PieChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 import TaxChart from "./TaxChart";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 interface TaxCalculation {
   grossIncome: number;
@@ -282,10 +283,12 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
   return (
     <ScrollView style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Tax Calculator</Text>
+        <TranslatedText style={styles.cardTitle}>Tax Calculator</TranslatedText>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Annual Income (₹)</Text>
+          <TranslatedText style={styles.label}>
+            Annual Income (₹)
+          </TranslatedText>
           <TextInput
             style={styles.inputLarge}
             value={income}
@@ -297,7 +300,7 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Employment Type</Text>
+          <TranslatedText style={styles.label}>Employment Type</TranslatedText>
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={employmentType}
@@ -313,7 +316,7 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Age Group</Text>
+          <TranslatedText style={styles.label}>Age Group</TranslatedText>
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={ageGroup}
@@ -335,7 +338,9 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
 
         <View style={styles.row}>
           <View style={[styles.halfInput, styles.leftInput]}>
-            <Text style={styles.label}>80C Investments (₹)</Text>
+            <TranslatedText style={styles.label}>
+              80C Investments (₹)
+            </TranslatedText>
             <TextInput
               style={styles.input}
               value={deductions80C.toString()}
@@ -346,7 +351,9 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
             />
           </View>
           <View style={styles.halfInput}>
-            <Text style={styles.label}>80D Health Insurance (₹)</Text>
+            <TranslatedText style={styles.label}>
+              80D Health Insurance (₹)
+            </TranslatedText>
             <TextInput
               style={styles.input}
               value={deductions80D.toString()}
@@ -360,7 +367,9 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
 
         <View style={styles.row}>
           <View style={[styles.halfInput, styles.leftInput]}>
-            <Text style={styles.label}>HRA Exemption (₹)</Text>
+            <TranslatedText style={styles.label}>
+              HRA Exemption (₹)
+            </TranslatedText>
             <TextInput
               style={styles.input}
               value={hraExemption.toString()}
@@ -371,7 +380,9 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
             />
           </View>
           <View style={styles.halfInput}>
-            <Text style={styles.label}>Home Loan Interest (₹)</Text>
+            <TranslatedText style={styles.label}>
+              Home Loan Interest (₹)
+            </TranslatedText>
             <TextInput
               style={styles.input}
               value={homeLoanInterest.toString()}
@@ -385,7 +396,9 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
 
         <View style={styles.row}>
           <View style={[styles.halfInput, styles.leftInput]}>
-            <Text style={styles.label}>Education Loan Interest (₹)</Text>
+            <TranslatedText style={styles.label}>
+              Education Loan Interest (₹)
+            </TranslatedText>
             <TextInput
               style={styles.input}
               value={educationLoanInterest.toString()}
@@ -398,7 +411,9 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
             />
           </View>
           <View style={styles.halfInput}>
-            <Text style={styles.label}>80G Donations (₹)</Text>
+            <TranslatedText style={styles.label}>
+              80G Donations (₹)
+            </TranslatedText>
             <TextInput
               style={styles.input}
               value={deductions80G.toString()}
@@ -415,20 +430,24 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
             style={styles.primaryButton}
             onPress={handleCalculate}
           >
-            <Text style={styles.primaryButtonText}>Calculate Tax</Text>
+            <TranslatedText style={styles.primaryButtonText}>
+              Calculate Tax
+            </TranslatedText>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.secondaryButton}
             onPress={handleReset}
           >
-            <Text style={styles.secondaryButtonText}>Reset</Text>
+            <TranslatedText style={styles.secondaryButtonText}>
+              Reset
+            </TranslatedText>
           </TouchableOpacity>
         </View>
 
         {/* Bar Graph Comparison */}
         {isCalculated && taxResult && (
           <View style={{ marginTop: 24, marginBottom: 8 }}>
-            <Text
+            <TranslatedText
               style={{
                 fontSize: 16,
                 fontWeight: "bold",
@@ -438,7 +457,7 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
               }}
             >
               Tax Comparison (Bar Graph)
-            </Text>
+            </TranslatedText>
             <BarChart
               data={chartData}
               width={chartWidth}
@@ -469,7 +488,9 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
 
         {isCalculated && taxResult && (
           <View style={styles.resultsContainer}>
-            <Text style={styles.resultsTitle}>Tax Calculation Results</Text>
+            <TranslatedText style={styles.resultsTitle}>
+              Tax Calculation Results
+            </TranslatedText>
 
             {/* Tab Navigation for Results */}
             <View style={styles.resultsTabContainer}>
@@ -482,7 +503,7 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                 ]}
                 onPress={() => setActiveResultTab("taxBreakdown")}
               >
-                <Text
+                <TranslatedText
                   style={[
                     styles.resultsTabText,
                     activeResultTab === "taxBreakdown"
@@ -491,7 +512,7 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                   ]}
                 >
                   Tax Breakdown
-                </Text>
+                </TranslatedText>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[
@@ -502,7 +523,7 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                 ]}
                 onPress={() => setActiveResultTab("deductions")}
               >
-                <Text
+                <TranslatedText
                   style={[
                     styles.resultsTabText,
                     activeResultTab === "deductions"
@@ -511,7 +532,7 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                   ]}
                 >
                   Deductions
-                </Text>
+                </TranslatedText>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[
@@ -522,7 +543,7 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                 ]}
                 onPress={() => setActiveResultTab("yearComparison")}
               >
-                <Text
+                <TranslatedText
                   style={[
                     styles.resultsTabText,
                     activeResultTab === "yearComparison"
@@ -531,7 +552,7 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                   ]}
                 >
                   Year Comparison
-                </Text>
+                </TranslatedText>
               </TouchableOpacity>
             </View>
 
@@ -547,14 +568,14 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                     ]}
                     onPress={() => setRegime("old")}
                   >
-                    <Text
+                    <TranslatedText
                       style={[
                         styles.regimeTabText,
                         regime === "old" ? styles.activeRegimeTabText : {},
                       ]}
                     >
                       Old Regime
-                    </Text>
+                    </TranslatedText>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[
@@ -563,14 +584,14 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                     ]}
                     onPress={() => setRegime("new")}
                   >
-                    <Text
+                    <TranslatedText
                       style={[
                         styles.regimeTabText,
                         regime === "new" ? styles.activeRegimeTabText : {},
                       ]}
                     >
                       New Regime
-                    </Text>
+                    </TranslatedText>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[
@@ -579,7 +600,7 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                     ]}
                     onPress={() => setRegime("comparison")}
                   >
-                    <Text
+                    <TranslatedText
                       style={[
                         styles.regimeTabText,
                         regime === "comparison"
@@ -588,14 +609,16 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                       ]}
                     >
                       Comparison
-                    </Text>
+                    </TranslatedText>
                   </TouchableOpacity>
                 </View>
 
                 {/* Tax Distribution and Summary */}
                 {regime !== "comparison" && (
                   <View style={styles.taxDistributionFullContainer}>
-                    <Text style={styles.sectionTitle}>Tax Distribution</Text>
+                    <TranslatedText style={styles.sectionTitle}>
+                      Tax Distribution
+                    </TranslatedText>
 
                     {/* Pie Chart */}
                     <PieChart
@@ -644,42 +667,46 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                     <View style={styles.chartSummaryContainer}>
                       <View style={styles.summaryItem}>
                         <View style={styles.summaryDot} />
-                        <Text style={styles.summaryLabel}>Income Tax</Text>
-                        <Text style={styles.summaryValue}>
+                        <TranslatedText style={styles.summaryLabel}>
+                          Income Tax
+                        </TranslatedText>
+                        <TranslatedText style={styles.summaryValue}>
                           ₹
                           {(regime === "old"
                             ? taxResult.old.incomeTax
                             : taxResult.new.incomeTax
                           ).toLocaleString()}
-                        </Text>
+                        </TranslatedText>
                       </View>
 
                       <View style={styles.summaryItem}>
                         <View style={[styles.summaryDot, styles.cessDot]} />
-                        <Text style={styles.summaryLabel}>
+                        <TranslatedText style={styles.summaryLabel}>
                           Health & Education Cess
-                        </Text>
-                        <Text style={styles.summaryValue}>
+                        </TranslatedText>
+                        <TranslatedText style={styles.summaryValue}>
                           ₹
                           {(regime === "old"
                             ? taxResult.old.cess
                             : taxResult.new.cess
                           ).toLocaleString()}
-                        </Text>
+                        </TranslatedText>
                       </View>
 
                       <View style={styles.summaryItem}>
                         <View
                           style={[styles.summaryDot, styles.netIncomeDot]}
                         />
-                        <Text style={styles.summaryLabel}>Net Income</Text>
-                        <Text style={styles.summaryValue}>
+                        <TranslatedText style={styles.summaryLabel}>
+                          Net Income
+                        </TranslatedText>
+                        <TranslatedText style={styles.summaryValue}>
                           ₹
                           {(regime === "old"
                             ? taxResult.old.netIncome
                             : taxResult.new.netIncome
                           ).toLocaleString()}
-                        </Text>
+                        </TranslatedText>
                       </View>
                     </View>
                   </View>
@@ -688,60 +715,68 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                 {/* Old Regime Breakdown */}
                 {regime === "old" && (
                   <View style={styles.breakdownContainer}>
-                    <Text style={styles.breakdownTitle}>
+                    <TranslatedText style={styles.breakdownTitle}>
                       Old Regime Breakdown
-                    </Text>
+                    </TranslatedText>
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabel}>Gross Income:</Text>
-                      <Text style={styles.breakdownValue}>
+                      <TranslatedText style={styles.breakdownLabel}>
+                        Gross Income:
+                      </TranslatedText>
+                      <TranslatedText style={styles.breakdownValue}>
                         ₹{taxResult.old.grossIncome.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabel}>
+                      <TranslatedText style={styles.breakdownLabel}>
                         Total Deductions:
-                      </Text>
-                      <Text
+                      </TranslatedText>
+                      <TranslatedText
                         style={[styles.breakdownValue, styles.deductionText]}
                       >
                         -₹{taxResult.old.totalDeductions.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
 
                     <View style={styles.breakdownDivider} />
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabel}>Taxable Income:</Text>
-                      <Text style={styles.breakdownValue}>
+                      <TranslatedText style={styles.breakdownLabel}>
+                        Taxable Income:
+                      </TranslatedText>
+                      <TranslatedText style={styles.breakdownValue}>
                         ₹{taxResult.old.taxableIncome.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabel}>Income Tax:</Text>
-                      <Text style={styles.breakdownValue}>
+                      <TranslatedText style={styles.breakdownLabel}>
+                        Income Tax:
+                      </TranslatedText>
+                      <TranslatedText style={styles.breakdownValue}>
                         ₹{taxResult.old.incomeTax.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabel}>
+                      <TranslatedText style={styles.breakdownLabel}>
                         Health & Education Cess (4%):
-                      </Text>
-                      <Text style={styles.breakdownValue}>
+                      </TranslatedText>
+                      <TranslatedText style={styles.breakdownValue}>
                         ₹{taxResult.old.cess.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
 
                     <View style={styles.breakdownDivider} />
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabelBold}>Total Tax:</Text>
-                      <Text style={styles.breakdownValueBold}>
+                      <TranslatedText style={styles.breakdownLabelBold}>
+                        Total Tax:
+                      </TranslatedText>
+                      <TranslatedText style={styles.breakdownValueBold}>
                         ₹{taxResult.old.totalTax.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
                   </View>
                 )}
@@ -749,60 +784,68 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                 {/* New Regime Breakdown */}
                 {regime === "new" && (
                   <View style={styles.breakdownContainer}>
-                    <Text style={styles.breakdownTitle}>
+                    <TranslatedText style={styles.breakdownTitle}>
                       New Regime Breakdown
-                    </Text>
+                    </TranslatedText>
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabel}>Gross Income:</Text>
-                      <Text style={styles.breakdownValue}>
+                      <TranslatedText style={styles.breakdownLabel}>
+                        Gross Income:
+                      </TranslatedText>
+                      <TranslatedText style={styles.breakdownValue}>
                         ₹{taxResult.new.grossIncome.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabel}>
+                      <TranslatedText style={styles.breakdownLabel}>
                         Standard Deduction:
-                      </Text>
-                      <Text
+                      </TranslatedText>
+                      <TranslatedText
                         style={[styles.breakdownValue, styles.deductionText]}
                       >
                         -₹{taxResult.new.totalDeductions.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
 
                     <View style={styles.breakdownDivider} />
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabel}>Taxable Income:</Text>
-                      <Text style={styles.breakdownValue}>
+                      <TranslatedText style={styles.breakdownLabel}>
+                        Taxable Income:
+                      </TranslatedText>
+                      <TranslatedText style={styles.breakdownValue}>
                         ₹{taxResult.new.taxableIncome.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabel}>Income Tax:</Text>
-                      <Text style={styles.breakdownValue}>
+                      <TranslatedText style={styles.breakdownLabel}>
+                        Income Tax:
+                      </TranslatedText>
+                      <TranslatedText style={styles.breakdownValue}>
                         ₹{taxResult.new.incomeTax.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabel}>
+                      <TranslatedText style={styles.breakdownLabel}>
                         Health & Education Cess (4%):
-                      </Text>
-                      <Text style={styles.breakdownValue}>
+                      </TranslatedText>
+                      <TranslatedText style={styles.breakdownValue}>
                         ₹{taxResult.new.cess.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
 
                     <View style={styles.breakdownDivider} />
 
                     <View style={styles.breakdownRow}>
-                      <Text style={styles.breakdownLabelBold}>Total Tax:</Text>
-                      <Text style={styles.breakdownValueBold}>
+                      <TranslatedText style={styles.breakdownLabelBold}>
+                        Total Tax:
+                      </TranslatedText>
+                      <TranslatedText style={styles.breakdownValueBold}>
                         ₹{taxResult.new.totalTax.toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
                   </View>
                 )}
@@ -812,23 +855,27 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                   <>
                     <View style={styles.comparisonRow}>
                       <View style={styles.regimeCard}>
-                        <Text style={styles.regimeTitle}>Old Regime</Text>
-                        <Text style={styles.taxAmount}>
+                        <TranslatedText style={styles.regimeTitle}>
+                          Old Regime
+                        </TranslatedText>
+                        <TranslatedText style={styles.taxAmount}>
                           ₹{taxResult.old.totalTax.toLocaleString()}
-                        </Text>
-                        <Text style={styles.netIncome}>
+                        </TranslatedText>
+                        <TranslatedText style={styles.netIncome}>
                           Net: ₹{taxResult.old.netIncome.toLocaleString()}
-                        </Text>
+                        </TranslatedText>
                       </View>
 
                       <View style={styles.regimeCard}>
-                        <Text style={styles.regimeTitle}>New Regime</Text>
-                        <Text style={styles.taxAmount}>
+                        <TranslatedText style={styles.regimeTitle}>
+                          New Regime
+                        </TranslatedText>
+                        <TranslatedText style={styles.taxAmount}>
                           ₹{taxResult.new.totalTax.toLocaleString()}
-                        </Text>
-                        <Text style={styles.netIncome}>
+                        </TranslatedText>
+                        <TranslatedText style={styles.netIncome}>
                           Net: ₹{taxResult.new.netIncome.toLocaleString()}
-                        </Text>
+                        </TranslatedText>
                       </View>
                     </View>
 
@@ -843,15 +890,15 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                         },
                       ]}
                     >
-                      <Text style={styles.recommendationTitle}>
+                      <TranslatedText style={styles.recommendationTitle}>
                         {taxResult.recommendedRegime} Saves You
-                      </Text>
-                      <Text style={styles.savingsAmount}>
+                      </TranslatedText>
+                      <TranslatedText style={styles.savingsAmount}>
                         ₹{Math.abs(taxResult.savings).toLocaleString()}
-                      </Text>
-                      <Text style={styles.recommendationText}>
+                      </TranslatedText>
+                      <TranslatedText style={styles.recommendationText}>
                         Recommended: {taxResult.recommendedRegime}
-                      </Text>
+                      </TranslatedText>
                     </View>
 
                     {/* Bar Chart for Tax Comparison */}
@@ -899,12 +946,12 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
               <View style={styles.deductionsList}>
                 {/* Section 80C */}
                 <View style={styles.deductionItem}>
-                  <Text style={styles.deductionTitle}>
+                  <TranslatedText style={styles.deductionTitle}>
                     Section 80C Investments
-                  </Text>
-                  <Text style={styles.deductionAmount}>
+                  </TranslatedText>
+                  <TranslatedText style={styles.deductionAmount}>
                     ₹{deductions80C.toLocaleString()}
-                  </Text>
+                  </TranslatedText>
                   <View style={styles.deductionProgress}>
                     <View
                       style={[
@@ -915,17 +962,19 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                       ]}
                     />
                   </View>
-                  <Text style={styles.deductionLimit}>Limit: ₹1,50,000</Text>
+                  <TranslatedText style={styles.deductionLimit}>
+                    Limit: ₹1,50,000
+                  </TranslatedText>
                 </View>
 
                 {/* Section 80D */}
                 <View style={styles.deductionItem}>
-                  <Text style={styles.deductionTitle}>
+                  <TranslatedText style={styles.deductionTitle}>
                     Health Insurance (80D)
-                  </Text>
-                  <Text style={styles.deductionAmount}>
+                  </TranslatedText>
+                  <TranslatedText style={styles.deductionAmount}>
                     ₹{deductions80D.toLocaleString()}
-                  </Text>
+                  </TranslatedText>
                   <View style={styles.deductionProgress}>
                     <View
                       style={[
@@ -936,15 +985,19 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                       ]}
                     />
                   </View>
-                  <Text style={styles.deductionLimit}>Limit: ₹50,000</Text>
+                  <TranslatedText style={styles.deductionLimit}>
+                    Limit: ₹50,000
+                  </TranslatedText>
                 </View>
 
                 {/* Home Loan Interest */}
                 <View style={styles.deductionItem}>
-                  <Text style={styles.deductionTitle}>Home Loan Interest</Text>
-                  <Text style={styles.deductionAmount}>
+                  <TranslatedText style={styles.deductionTitle}>
+                    Home Loan Interest
+                  </TranslatedText>
+                  <TranslatedText style={styles.deductionAmount}>
                     ₹{homeLoanInterest.toLocaleString()}
-                  </Text>
+                  </TranslatedText>
                   <View style={styles.deductionProgress}>
                     <View
                       style={[
@@ -955,16 +1008,18 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                       ]}
                     />
                   </View>
-                  <Text style={styles.deductionLimit}>Limit: ₹2,00,000</Text>
+                  <TranslatedText style={styles.deductionLimit}>
+                    Limit: ₹2,00,000
+                  </TranslatedText>
                 </View>
 
                 <View style={styles.totalDeductionsContainer}>
-                  <Text style={styles.totalDeductionsLabel}>
+                  <TranslatedText style={styles.totalDeductionsLabel}>
                     Total Deductions (Old Regime):
-                  </Text>
-                  <Text style={styles.totalDeductionsValue}>
+                  </TranslatedText>
+                  <TranslatedText style={styles.totalDeductionsValue}>
                     ₹{taxResult.old.totalDeductions.toLocaleString()}
-                  </Text>
+                  </TranslatedText>
                 </View>
               </View>
             )}
@@ -972,23 +1027,23 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
             {/* Year Comparison Tab */}
             {activeResultTab === "yearComparison" && (
               <View style={styles.yearComparisonContainer}>
-                <Text style={styles.sectionTitle}>
+                <TranslatedText style={styles.sectionTitle}>
                   Monthly Tax Distribution
-                </Text>
+                </TranslatedText>
 
                 {/* Monthly breakdown */}
                 <View style={styles.monthlyBreakdownContainer}>
-                  <Text style={styles.monthlyBreakdownTitle}>
+                  <TranslatedText style={styles.monthlyBreakdownTitle}>
                     Monthly Tax Breakdown
-                  </Text>
+                  </TranslatedText>
 
                   <View style={styles.monthlyBreakdownHeader}>
-                    <Text style={styles.monthlyBreakdownHeaderMonth}>
+                    <TranslatedText style={styles.monthlyBreakdownHeaderMonth}>
                       Month
-                    </Text>
-                    <Text style={styles.monthlyBreakdownHeaderTax}>
+                    </TranslatedText>
+                    <TranslatedText style={styles.monthlyBreakdownHeaderTax}>
                       Tax Amount
-                    </Text>
+                    </TranslatedText>
                   </View>
 
                   {/* Sample monthly data */}
@@ -1001,12 +1056,12 @@ const TaxCalculator: React.FC<TaxCalculatorProps> = ({
                     { month: "June", tax: taxResult.old.totalTax / 12 },
                   ].map((item, index) => (
                     <View key={index} style={styles.monthlyBreakdownRow}>
-                      <Text style={styles.monthlyBreakdownMonth}>
+                      <TranslatedText style={styles.monthlyBreakdownMonth}>
                         {item.month}
-                      </Text>
-                      <Text style={styles.monthlyBreakdownTax}>
+                      </TranslatedText>
+                      <TranslatedText style={styles.monthlyBreakdownTax}>
                         ₹{Math.round(item.tax).toLocaleString()}
-                      </Text>
+                      </TranslatedText>
                     </View>
                   ))}
                 </View>

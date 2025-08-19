@@ -1,6 +1,7 @@
 import React, { JSX } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Svg, { Circle, Line, Text as SvgText } from "react-native-svg";
+import TranslatedText from "./TranslatedText";
 // import { Investor } from '../store/ponziStore';
 
 interface Investor {
@@ -122,10 +123,10 @@ export const PonziTreeVisualization: React.FC<PonziTreeVisualizationProps> = ({
           isFounder
             ? "#8b5cf6"
             : isProfitable
-            ? "#22c55e"
-            : isCollapsed
-            ? "#ef4444"
-            : "#f59e0b"
+              ? "#22c55e"
+              : isCollapsed
+                ? "#ef4444"
+                : "#f59e0b"
         }
         stroke="white"
         strokeWidth={1}
@@ -176,8 +177,10 @@ export const PonziTreeVisualization: React.FC<PonziTreeVisualizationProps> = ({
   if (!tree) {
     return (
       <View style={styles.emptyContainer}>
-        <Text style={styles.emptyIcon}>🌳</Text>
-        <Text style={styles.emptyText}>No investors to display</Text>
+        <TranslatedText style={styles.emptyIcon}>🌳</TranslatedText>
+        <TranslatedText style={styles.emptyText}>
+          No investors to display
+        </TranslatedText>
       </View>
     );
   }
@@ -214,9 +217,9 @@ export const PonziTreeVisualization: React.FC<PonziTreeVisualizationProps> = ({
           <View style={styles.pyramidContent}>
             {pyramidLevels.map((level, levelIndex) => (
               <View key={levelIndex} style={styles.pyramidLevel}>
-                <Text style={styles.levelLabel}>
+                <TranslatedText style={styles.levelLabel}>
                   Level {levelIndex} ({level.length} investors)
-                </Text>
+                </TranslatedText>
                 <View style={styles.levelNodes}>
                   {level.slice(0, 10).map((investor) => (
                     <View
@@ -228,17 +231,21 @@ export const PonziTreeVisualization: React.FC<PonziTreeVisualizationProps> = ({
                             investor.netProfit > 0
                               ? "#22c55e"
                               : isCollapsed
-                              ? "#ef4444"
-                              : "#f59e0b",
+                                ? "#ef4444"
+                                : "#f59e0b",
                         },
                       ]}
                     >
-                      <Text style={styles.nodeText}>{investor.id}</Text>
+                      <TranslatedText style={styles.nodeText}>
+                        {investor.id}
+                      </TranslatedText>
                     </View>
                   ))}
                   {level.length > 10 && (
                     <View style={[styles.pyramidNode, styles.moreNode]}>
-                      <Text style={styles.nodeText}>+{level.length - 10}</Text>
+                      <TranslatedText style={styles.nodeText}>
+                        +{level.length - 10}
+                      </TranslatedText>
                     </View>
                   )}
                 </View>

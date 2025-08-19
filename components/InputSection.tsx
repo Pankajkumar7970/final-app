@@ -23,6 +23,7 @@ import {
   Clock,
 } from "lucide-react-native";
 import { SipInputs, formatCurrency } from "../hooks/useSipCalculator";
+import TranslatedText from "./TranslatedText";
 
 interface InputSectionProps {
   inputs: SipInputs;
@@ -52,7 +53,9 @@ export const InputSection: React.FC<InputSectionProps> = ({
     <View style={styles.container}>
       <View style={styles.header}>
         <TrendingUp size={20} color="#1e40af" />
-        <Text style={styles.headerText}>Investment Parameters</Text>
+        <TranslatedText style={styles.headerText}>
+          Investment Parameters
+        </TranslatedText>
       </View>
 
       {/* Monthly Investment */}
@@ -127,7 +130,7 @@ export const InputSection: React.FC<InputSectionProps> = ({
 
         <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
           <RotateCcw size={18} color="#64748b" />
-          <Text style={styles.resetButtonText}>Reset</Text>
+          <TranslatedText style={styles.resetButtonText}>Reset</TranslatedText>
         </TouchableOpacity>
       </View>
     </View>
@@ -179,7 +182,7 @@ const InputField: React.FC<InputFieldProps> = ({
     <View style={styles.inputGroup}>
       <View style={styles.labelRow}>
         {icon}
-        <Text style={styles.label}>{label}</Text>
+        <TranslatedText style={styles.label}>{label}</TranslatedText>
       </View>
 
       <Animated.View style={animatedStyle}>

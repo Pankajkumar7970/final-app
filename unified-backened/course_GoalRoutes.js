@@ -708,7 +708,7 @@ module.exports = (app) => {
 
   app.post("/api/scenarios/:id/submit", authenticateToken, async (req, res) => {
     try {
-      const { choiceId, timeSpent, points } = req.body;
+      const { choiceId, timeSpent } = req.body;
       const scenarioId = req.params.id;
       let Exp;
       console.log(req.user.id);
@@ -728,6 +728,7 @@ module.exports = (app) => {
       const selectedChoice = scenario.choices.find(
         (choice) => choice.id === choiceId
       );
+      const points = selectedChoice.points;
 
       const oldProgress = await UserProgress.find({
         type: "scenario",

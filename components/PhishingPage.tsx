@@ -19,6 +19,7 @@ import {
   EyeOff,
   TriangleAlert as AlertTriangle,
 } from "lucide-react-native";
+import TranslatedText from "./TranslatedText";
 
 interface PhishingPageProps {
   onSubmit: (data: {
@@ -55,11 +56,13 @@ const PhishingPage = ({ onSubmit }: PhishingPageProps) => {
       <View style={styles.warningBanner}>
         <View style={styles.warningHeader}>
           <AlertTriangle size={20} color="#FFFFFF" strokeWidth={2} />
-          <Text style={styles.warningBadgeText}>EDUCATIONAL SIMULATION</Text>
+          <TranslatedText style={styles.warningBadgeText}>
+            EDUCATIONAL SIMULATION
+          </TranslatedText>
         </View>
-        <Text style={styles.warningText}>
+        <TranslatedText style={styles.warningText}>
           This is a FAKE banking page for learning purposes only
-        </Text>
+        </TranslatedText>
       </View>
 
       {/* Punjab and Sind Bank Header */}
@@ -69,13 +72,19 @@ const PhishingPage = ({ onSubmit }: PhishingPageProps) => {
             <Shield size={32} color="#10B981" strokeWidth={2} />
           </View>
           <View style={styles.bankInfo}>
-            <Text style={styles.bankName}>ABC Bank of India</Text>
-            <Text style={styles.bankSubtitle}>Personal Net Banking</Text>
+            <TranslatedText style={styles.bankName}>
+              ABC Bank of India
+            </TranslatedText>
+            <TranslatedText style={styles.bankSubtitle}>
+              Personal Net Banking
+            </TranslatedText>
           </View>
         </View>
         <View style={styles.secureIndicator}>
           <Lock size={16} color="#FFF" strokeWidth={2} />
-          <Text style={styles.secureText}>secure.abc.bank.in</Text>
+          <TranslatedText style={styles.secureText}>
+            secure.abc.bank.in
+          </TranslatedText>
         </View>
       </View>
 
@@ -85,15 +94,19 @@ const PhishingPage = ({ onSubmit }: PhishingPageProps) => {
       >
         <View style={styles.formContainer}>
           <View style={styles.formHeader}>
-            <Text style={styles.formTitle}>Account Verification Required</Text>
-            <Text style={styles.formSubtitle}>
+            <TranslatedText style={styles.formTitle}>
+              Account Verification Required
+            </TranslatedText>
+            <TranslatedText style={styles.formSubtitle}>
               Please verify your details to secure your ABC Bank account
-            </Text>
+            </TranslatedText>
           </View>
 
           <View style={styles.form}>
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Account Number</Text>
+              <TranslatedText style={styles.label}>
+                Account Number
+              </TranslatedText>
               <View style={styles.inputContainer}>
                 <User
                   size={20}
@@ -113,7 +126,9 @@ const PhishingPage = ({ onSubmit }: PhishingPageProps) => {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Debit Card Number</Text>
+              <TranslatedText style={styles.label}>
+                Debit Card Number
+              </TranslatedText>
               <View style={styles.inputContainer}>
                 <CreditCard
                   size={20}
@@ -134,7 +149,7 @@ const PhishingPage = ({ onSubmit }: PhishingPageProps) => {
 
             <View style={styles.inputRow}>
               <View style={[styles.inputGroup, styles.inputHalf]}>
-                <Text style={styles.label}>CVV</Text>
+                <TranslatedText style={styles.label}>CVV</TranslatedText>
                 <View style={styles.inputContainer}>
                   <Lock
                     size={20}
@@ -153,7 +168,7 @@ const PhishingPage = ({ onSubmit }: PhishingPageProps) => {
                 </View>
               </View>
               <View style={[styles.inputGroup, styles.inputHalf]}>
-                <Text style={styles.label}>OTP</Text>
+                <TranslatedText style={styles.label}>OTP</TranslatedText>
                 <View style={styles.inputContainer}>
                   <Lock
                     size={20}
@@ -174,7 +189,9 @@ const PhishingPage = ({ onSubmit }: PhishingPageProps) => {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Mobile Number</Text>
+              <TranslatedText style={styles.label}>
+                Mobile Number
+              </TranslatedText>
               <View style={styles.inputContainer}>
                 <Phone
                   size={20}
@@ -194,7 +211,9 @@ const PhishingPage = ({ onSubmit }: PhishingPageProps) => {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Net Banking Username</Text>
+              <TranslatedText style={styles.label}>
+                Net Banking Username
+              </TranslatedText>
               <View style={styles.inputContainer}>
                 <User
                   size={20}
@@ -214,7 +233,9 @@ const PhishingPage = ({ onSubmit }: PhishingPageProps) => {
             </View>
 
             <View style={styles.inputGroup}>
-              <Text style={styles.label}>Net Banking Password</Text>
+              <TranslatedText style={styles.label}>
+                Net Banking Password
+              </TranslatedText>
               <View style={styles.inputContainer}>
                 <Lock
                   size={20}
@@ -248,15 +269,19 @@ const PhishingPage = ({ onSubmit }: PhishingPageProps) => {
               style={styles.submitButton}
               onPress={handleSubmit}
             >
-              <Text style={styles.submitButtonText}>Verify Account</Text>
+              <TranslatedText style={styles.submitButtonText}>
+                Verify Account
+              </TranslatedText>
             </TouchableOpacity>
           </View>
 
           <View style={styles.customerCare}>
-            <Text style={styles.customerCareText}>
+            <TranslatedText style={styles.customerCareText}>
               Customer Care:{" "}
-              <Text style={styles.customerCareNumber}>1800-xx-23xx</Text>
-            </Text>
+              <TranslatedText style={styles.customerCareNumber}>
+                1800-xx-23xx
+              </TranslatedText>
+            </TranslatedText>
           </View>
         </View>
       </ScrollView>
@@ -265,12 +290,14 @@ const PhishingPage = ({ onSubmit }: PhishingPageProps) => {
       <View style={styles.educationalNotice}>
         <View style={styles.noticeHeader}>
           <AlertTriangle size={20} color="#F59E0B" strokeWidth={2} />
-          <Text style={styles.noticeBadgeText}>Educational Notice</Text>
+          <TranslatedText style={styles.noticeBadgeText}>
+            Educational Notice
+          </TranslatedText>
         </View>
-        <Text style={styles.noticeText}>
+        <TranslatedText style={styles.noticeText}>
           This is a FAKE Bank page. Real banks never ask for credentials via
           email/SMS links.
-        </Text>
+        </TranslatedText>
       </View>
     </SafeAreaView>
   );

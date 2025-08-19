@@ -19,6 +19,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/Card";
+import TranslatedText from "./TranslatedText";
 
 const features = [
   {
@@ -82,11 +83,13 @@ export function SecurityFeatures() {
     <View style={styles.container}>
       <View style={styles.content}>
         <Animated.View entering={FadeInUp.delay(100)} style={styles.header}>
-          <Text style={styles.title}>Enterprise-Grade Security</Text>
-          <Text style={styles.subtitle}>
+          <TranslatedText style={styles.title}>
+            Enterprise-Grade Security
+          </TranslatedText>
+          <TranslatedText style={styles.subtitle}>
             Powered by cutting-edge AI and real-time threat intelligence to
             provide unmatched protection against sophisticated cyber threats
-          </Text>
+          </TranslatedText>
         </Animated.View>
 
         <Animated.View
@@ -103,8 +106,12 @@ export function SecurityFeatures() {
                 <View style={styles.statIconContainer}>
                   <Ionicons name={stat.icon as any} size={24} color="#10b981" />
                 </View>
-                <Text style={styles.statNumber}>{stat.number}</Text>
-                <Text style={styles.statLabel}>{stat.label}</Text>
+                <TranslatedText style={styles.statNumber}>
+                  {stat.number}
+                </TranslatedText>
+                <TranslatedText style={styles.statLabel}>
+                  {stat.label}
+                </TranslatedText>
               </Animated.View>
             ))}
           </View>

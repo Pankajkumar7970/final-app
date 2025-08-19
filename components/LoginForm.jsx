@@ -29,6 +29,7 @@ import {
   loginOrCreateWithSocial,
 } from "../redux/services/operations/authServices";
 import { LoginManager, AccessToken, Profile } from "react-native-fbsdk-next";
+import TranslatedText from "./TranslatedText";
 
 const width = Dimensions.get("window").width;
 
@@ -205,8 +206,10 @@ export default function LoginScreen({
             <View style={styles.iconContainer}>
               <LogIn size={32} color={colors.primary.green} />
             </View>
-            <Text style={styles.title}>Welcome Back</Text>
-            <Text style={styles.subtitle}>Sign in to your account</Text>
+            <TranslatedText style={styles.title}>Welcome Back</TranslatedText>
+            <TranslatedText style={styles.subtitle}>
+              Sign in to your account
+            </TranslatedText>
           </View>
 
           <View style={styles.formSection}>
@@ -233,7 +236,9 @@ export default function LoginScreen({
 
             <TouchableOpacity style={styles.forgotPasswordContainer}>
               <Link href="/(auth)/forgot-password" asChild>
-                <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                <TranslatedText style={styles.forgotPasswordText}>
+                  Forgot Password?
+                </TranslatedText>
               </Link>
             </TouchableOpacity>
 
@@ -252,7 +257,7 @@ export default function LoginScreen({
                   width: "30px",
                 }}
               ></View>
-              <Text style={styles.orText}>Or</Text>
+              <TranslatedText style={styles.orText}>Or</TranslatedText>
               <View
                 style={{
                   flex: 1,
@@ -272,12 +277,12 @@ export default function LoginScreen({
             />
           </View>
           <View style={styles.footerSection}>
-            <Text style={styles.footerText}>
+            <TranslatedText style={styles.footerText}>
               Don't have an account?{" "}
               <Link href="/(auth)/signup" asChild>
-                <Text style={styles.linkText}>Sign Up</Text>
+                <TranslatedText style={styles.linkText}>Sign Up</TranslatedText>
               </Link>
-            </Text>
+            </TranslatedText>
           </View>
         </View>
       </ScrollView>

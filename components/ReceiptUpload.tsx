@@ -10,7 +10,7 @@ import {
 import { Upload, FileText, ChevronDown } from "lucide-react-native";
 import * as DocumentPicker from "expo-document-picker";
 import { PSBColors } from "../utils/PSBColors";
-
+import TranslatedText from "./TranslatedText";
 const ReceiptUpload = () => {
   const [files, setFiles] = useState<any[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -96,10 +96,12 @@ const ReceiptUpload = () => {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.title}>Smart Receipt Scanner</Text>
-        <Text style={styles.subtitle}>
+        <TranslatedText style={styles.title}>
+          Smart Receipt Scanner
+        </TranslatedText>
+        <TranslatedText style={styles.subtitle}>
           Upload receipts for automatic tax deduction extraction using OCR
-        </Text>
+        </TranslatedText>
 
         <TouchableOpacity
           style={styles.uploadArea}
@@ -107,14 +109,14 @@ const ReceiptUpload = () => {
           disabled={isProcessing}
         >
           <Upload size={48} color={PSBColors.primary.darkGreen} />
-          <Text style={styles.uploadText}>
+          <TranslatedText style={styles.uploadText}>
             {files.length > 0
               ? `${files.length} file(s) selected`
               : "Choose receipt files"}
-          </Text>
-          <Text style={styles.uploadSubtext}>
+          </TranslatedText>
+          <TranslatedText style={styles.uploadSubtext}>
             Supports JPG, PNG, PDF up to 5MB
-          </Text>
+          </TranslatedText>
         </TouchableOpacity>
 
         {files.length > 0 && (
@@ -125,16 +127,20 @@ const ReceiptUpload = () => {
                   <View style={styles.fileItem}>
                     <FileText size={20} color="#6c757d" />
                     <View style={styles.fileInfo}>
-                      <Text style={styles.fileName}>{file.name}</Text>
+                      <TranslatedText style={styles.fileName}>
+                        {file.name}
+                      </TranslatedText>
                     </View>
-                    <Text style={styles.amountText}>
+                    <TranslatedText style={styles.amountText}>
                       {getExtractedAmount(file.name)}
-                    </Text>
+                    </TranslatedText>
                     <TouchableOpacity
                       style={styles.confirmButton}
                       onPress={() => handleConfirm(index)}
                     >
-                      <Text style={styles.confirmButtonText}>Confirm</Text>
+                      <TranslatedText style={styles.confirmButtonText}>
+                        Confirm
+                      </TranslatedText>
                     </TouchableOpacity>
                   </View>
 
@@ -143,18 +149,18 @@ const ReceiptUpload = () => {
                       style={styles.categoryDropdown}
                       onPress={() => toggleCategoryDropdown(index)}
                     >
-                      <Text style={styles.categoryText}>
+                      <TranslatedText style={styles.categoryText}>
                         {selectedCategories[index] || "Select Category"}
-                      </Text>
+                      </TranslatedText>
                       <ChevronDown size={16} color="#6c757d" />
                     </TouchableOpacity>
 
                     {showCategoryDropdown[index] && (
                       <View style={styles.dropdownMenu}>
                         <View style={styles.dropdownHeader}>
-                          <Text style={styles.dropdownHeaderText}>
+                          <TranslatedText style={styles.dropdownHeaderText}>
                             Select Category
-                          </Text>
+                          </TranslatedText>
                         </View>
                         {categories.map((category, catIndex) => (
                           <TouchableOpacity
@@ -164,9 +170,9 @@ const ReceiptUpload = () => {
                               handleCategorySelect(index, category)
                             }
                           >
-                            <Text style={styles.dropdownItemText}>
+                            <TranslatedText style={styles.dropdownItemText}>
                               {category}
-                            </Text>
+                            </TranslatedText>
                           </TouchableOpacity>
                         ))}
                       </View>
@@ -174,7 +180,9 @@ const ReceiptUpload = () => {
                   </View>
 
                   {isProcessing && (
-                    <Text style={styles.processingText}>Processing...</Text>
+                    <TranslatedText style={styles.processingText}>
+                      Processing...
+                    </TranslatedText>
                   )}
                 </View>
               ))}
@@ -183,14 +191,28 @@ const ReceiptUpload = () => {
         )}
 
         <View style={styles.supportedDocs}>
-          <Text style={styles.supportedTitle}>Supported Documents:</Text>
+          <TranslatedText style={styles.supportedTitle}>
+            Supported Documents:
+          </TranslatedText>
           <View style={styles.docGrid}>
-            <Text style={styles.docItem}>• LIC/Insurance receipts</Text>
-            <Text style={styles.docItem}>• Health insurance bills</Text>
-            <Text style={styles.docItem}>• ELSS investment receipts</Text>
-            <Text style={styles.docItem}>• Donation receipts</Text>
-            <Text style={styles.docItem}>• School fee receipts</Text>
-            <Text style={styles.docItem}>• Home loan statements</Text>
+            <TranslatedText style={styles.docItem}>
+              • LIC/Insurance receipts
+            </TranslatedText>
+            <TranslatedText style={styles.docItem}>
+              • Health insurance bills
+            </TranslatedText>
+            <TranslatedText style={styles.docItem}>
+              • ELSS investment receipts
+            </TranslatedText>
+            <TranslatedText style={styles.docItem}>
+              • Donation receipts
+            </TranslatedText>
+            <TranslatedText style={styles.docItem}>
+              • School fee receipts
+            </TranslatedText>
+            <TranslatedText style={styles.docItem}>
+              • Home loan statements
+            </TranslatedText>
           </View>
         </View>
       </View>

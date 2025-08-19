@@ -6,6 +6,7 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native";
+import TranslatedText from "./TranslatedText";
 import * as ExpoLocation from "expo-location";
 import Icon from "react-native-vector-icons/Feather";
 import { RESULTS, openSettings } from "react-native-permissions";
@@ -82,9 +83,9 @@ const GeolocationButton = ({ onLocationFound, disabled = false }) => {
       ) : (
         <Icon name="map-pin" size={16} color="#0070BA" />
       )}
-      <Text style={styles.buttonText}>
+      <TranslatedText style={styles.buttonText}>
         {isGettingLocation ? "Getting..." : "Use My Location"}
-      </Text>
+      </TranslatedText>
     </TouchableOpacity>
   );
 };

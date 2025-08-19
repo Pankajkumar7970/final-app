@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import Animated, { FadeInUp, FadeInDown } from "react-native-reanimated";
 import { formatCurrency } from "../hooks/useSipCalculator";
-
+import TranslatedText from "./TranslatedText";
 interface SipChartProps {
   data: Array<{
     year: number;
@@ -34,11 +34,15 @@ export const SipChart: React.FC<SipChartProps> = ({ data }) => {
       >
         <View style={styles.legendItem}>
           <View style={[styles.legendColor, { backgroundColor: "#3b82f6" }]} />
-          <Text style={styles.legendText}>Principal Amount</Text>
+          <TranslatedText style={styles.legendText}>
+            Principal Amount
+          </TranslatedText>
         </View>
         <View style={styles.legendItem}>
           <View style={[styles.legendColor, { backgroundColor: "#10b981" }]} />
-          <Text style={styles.legendText}>Compound Returns</Text>
+          <TranslatedText style={styles.legendText}>
+            Compound Returns
+          </TranslatedText>
         </View>
       </Animated.View>
 
@@ -58,9 +62,9 @@ export const SipChart: React.FC<SipChartProps> = ({ data }) => {
             <View style={styles.yAxis}>
               {[1, 0.75, 0.5, 0.25, 0].map((ratio, index) => (
                 <View key={index} style={styles.yAxisItem}>
-                  <Text style={styles.yAxisLabel}>
+                  <TranslatedText style={styles.yAxisLabel}>
                     {formatCurrency(maxValue * ratio)}
-                  </Text>
+                  </TranslatedText>
                   <View style={styles.gridLine} />
                 </View>
               ))}
@@ -110,14 +114,14 @@ export const SipChart: React.FC<SipChartProps> = ({ data }) => {
 
                       {/* Year Label */}
 
-                      <Text
+                      <TranslatedText
                         style={[
                           styles.barLabel,
                           index === data.length - 1 && styles.currentYearLabel,
                         ]}
                       >
                         Y{item.year}
-                      </Text>
+                      </TranslatedText>
                     </Animated.View>
                   )
                 );
@@ -134,11 +138,13 @@ export const SipChart: React.FC<SipChartProps> = ({ data }) => {
           style={styles.tooltip}
         >
           <View style={styles.tooltipHeader}>
-            <Text style={styles.tooltipTitle}>Final Year Summary</Text>
+            <TranslatedText style={styles.tooltipTitle}>
+              Final Year Summary
+            </TranslatedText>
             <View style={styles.tooltipBadge}>
-              <Text style={styles.tooltipBadgeText}>
+              <TranslatedText style={styles.tooltipBadgeText}>
                 Year {data[data.length - 1].year}
-              </Text>
+              </TranslatedText>
             </View>
           </View>
 
@@ -148,11 +154,13 @@ export const SipChart: React.FC<SipChartProps> = ({ data }) => {
                 <View
                   style={[styles.tooltipDot, { backgroundColor: "#3b82f6" }]}
                 />
-                <Text style={styles.tooltipLabel}>Total Invested</Text>
+                <TranslatedText style={styles.tooltipLabel}>
+                  Total Invested
+                </TranslatedText>
               </View>
-              <Text style={styles.tooltipValue}>
+              <TranslatedText style={styles.tooltipValue}>
                 {formatCurrency(data[data.length - 1].invested)}
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.tooltipRow}>
@@ -160,20 +168,26 @@ export const SipChart: React.FC<SipChartProps> = ({ data }) => {
                 <View
                   style={[styles.tooltipDot, { backgroundColor: "#10b981" }]}
                 />
-                <Text style={styles.tooltipLabel}>Returns Generated</Text>
+                <TranslatedText style={styles.tooltipLabel}>
+                  Returns Generated
+                </TranslatedText>
               </View>
-              <Text style={[styles.tooltipValue, { color: "#10b981" }]}>
+              <TranslatedText
+                style={[styles.tooltipValue, { color: "#10b981" }]}
+              >
                 {formatCurrency(data[data.length - 1].interest)}
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.tooltipDivider} />
 
             <View style={styles.tooltipRow}>
-              <Text style={styles.tooltipTotalLabel}>Final Maturity Value</Text>
-              <Text style={styles.tooltipTotal}>
+              <TranslatedText style={styles.tooltipTotalLabel}>
+                Final Maturity Value
+              </TranslatedText>
+              <TranslatedText style={styles.tooltipTotal}>
                 {formatCurrency(data[data.length - 1].total)}
-              </Text>
+              </TranslatedText>
             </View>
           </View>
         </Animated.View>

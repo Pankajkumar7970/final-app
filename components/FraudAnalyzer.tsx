@@ -33,6 +33,7 @@ import { Progress } from "./ui/Progress";
 import { Alert as CustomAlert, AlertTitle, AlertDescription } from "./ui/Alert";
 import { LoadingSpinner } from "./ui/LoadingSpinner";
 import API from "../api/api";
+import TranslatedText from "./TranslatedText";
 
 interface AnalysisResult {
   score: number;
@@ -355,14 +356,14 @@ export function FraudAnalyzer() {
                 </View>
                 {/* Show summary reasons (first 1-2) as a paragraph */}
                 {summaryReasons.length > 0 && (
-                  <Text
+                  <TranslatedText
                     style={[
                       styles.resultDescription,
                       { marginBottom: 4, color: "#f59e0b" },
                     ]}
                   >
                     {summaryReasons.join(" ")}
-                  </Text>
+                  </TranslatedText>
                 )}
               </View>
             </View>
@@ -374,7 +375,7 @@ export function FraudAnalyzer() {
                 minWidth: 70,
               }}
             >
-              <Text
+              <TranslatedText
                 style={{
                   fontSize: 48,
                   fontWeight: "bold",
@@ -383,12 +384,12 @@ export function FraudAnalyzer() {
                 }}
               >
                 {result.score}
-              </Text>
-              <Text
+              </TranslatedText>
+              <TranslatedText
                 style={{ fontSize: 16, color: scoreColor, fontWeight: "600" }}
               >
                 / 100
-              </Text>
+              </TranslatedText>
             </View>
           </Animated.View>
         </CardHeader>
@@ -401,18 +402,20 @@ export function FraudAnalyzer() {
             >
               <View style={styles.flagsHeader}>
                 <Ionicons name="warning" size={20} color="#f59e0b" />
-                <Text style={styles.flagsTitle}>Security Issues Detected</Text>
+                <TranslatedText style={styles.flagsTitle}>
+                  Security Issues Detected
+                </TranslatedText>
               </View>
               {/* Show all reasons as bullet points */}
               {result.reason && result.reason.length > 0 && (
                 <View style={{ marginBottom: 8 }}>
                   {result.reason.map((msg, idx) => (
-                    <Text
+                    <TranslatedText
                       key={idx}
                       style={[styles.flagDescription, { color: "#f59e0b" }]}
                     >
                       • {msg}
-                    </Text>
+                    </TranslatedText>
                   ))}
                 </View>
               )}
@@ -438,12 +441,14 @@ export function FraudAnalyzer() {
                         {scan.message}
                       </Badge>
                       <View style={styles.flagContent}>
-                        <Text style={styles.flagType}>{scan.url}</Text>
-                        <Text style={styles.flagDescription}>
+                        <TranslatedText style={styles.flagType}>
+                          {scan.url}
+                        </TranslatedText>
+                        <TranslatedText style={styles.flagDescription}>
                           VirusTotal Score: {scan.virustotal_score}
-                        </Text>
+                        </TranslatedText>
                         {scan.virustotal_score >= 7 && (
-                          <Text
+                          <TranslatedText
                             style={[
                               styles.flagRecommendation,
                               { color: "#ef4444" },
@@ -451,17 +456,17 @@ export function FraudAnalyzer() {
                           >
                             This URL is considered dangerous because it has a
                             high VirusTotal score.
-                          </Text>
+                          </TranslatedText>
                         )}
                       </View>
                     </Animated.View>
                   ))}
                 </View>
               ) : (
-                <Text style={styles.flagDescription}>
+                <TranslatedText style={styles.flagDescription}>
                   Potential security issues detected. Please review the input
                   carefully.
-                </Text>
+                </TranslatedText>
               )}
             </Animated.View>
           ) : (
@@ -470,12 +475,12 @@ export function FraudAnalyzer() {
               style={styles.noFlags}
             >
               <Ionicons name="checkmark-circle" size={24} color="#10b981" />
-              <Text style={styles.noFlagsText}>
+              <TranslatedText style={styles.noFlagsText}>
                 No security issues detected
-              </Text>
-              <Text style={styles.noFlagsSubtext}>
+              </TranslatedText>
+              <TranslatedText style={styles.noFlagsSubtext}>
                 This appears to be legitimate and safe
-              </Text>
+              </TranslatedText>
             </Animated.View>
           )}
           <Animated.View
@@ -484,11 +489,11 @@ export function FraudAnalyzer() {
           >
             {/* Copy button with no border, show 'Copied' if copied */}
             {copied ? (
-              <Text
+              <TranslatedText
                 style={{ color: "#10b981", fontWeight: "bold", fontSize: 14 }}
               >
                 Copied
-              </Text>
+              </TranslatedText>
             ) : (
               <TouchableOpacity
                 onPress={() => copyToClipboard(JSON.stringify(result, null, 2))}
@@ -506,19 +511,19 @@ export function FraudAnalyzer() {
                 activeOpacity={0.7}
               >
                 <Ionicons name="copy" size={16} color="#9ca3af" />
-                <Text
+                <TranslatedText
                   style={[
                     styles.actionButtonText,
                     { fontSize: 14, marginLeft: 2 },
                   ]}
                 >
                   Copy
-                </Text>
+                </TranslatedText>
               </TouchableOpacity>
             )}
-            <Text style={styles.timestamp}>
+            <TranslatedText style={styles.timestamp}>
               Analyzed: {result.timestamp.toLocaleTimeString()}
-            </Text>
+            </TranslatedText>
           </Animated.View>
         </CardContent>
       </Card>
@@ -531,10 +536,12 @@ export function FraudAnalyzer() {
         <Card style={styles.historyCard}>
           <CardContent style={styles.emptyHistory}>
             <Ionicons name="time" size={48} color="#6b7280" />
-            <Text style={styles.emptyHistoryText}>No analysis history yet</Text>
-            <Text style={styles.emptyHistorySubtext}>
+            <TranslatedText style={styles.emptyHistoryText}>
+              No analysis history yet
+            </TranslatedText>
+            <TranslatedText style={styles.emptyHistorySubtext}>
               Your recent analyses will appear here
-            </Text>
+            </TranslatedText>
           </CardContent>
         </Card>
       );
@@ -569,25 +576,25 @@ export function FraudAnalyzer() {
                       color={getScoreColor(item.result.verdict)}
                     />
                     <View style={styles.historyItemText}>
-                      <Text style={styles.historyItemTitle}>
+                      <TranslatedText style={styles.historyItemTitle}>
                         {item.type === "email"
                           ? "Email Analysis"
                           : "Website Analysis"}
-                      </Text>
+                      </TranslatedText>
                       <Text style={styles.historyItemContent} numberOfLines={1}>
                         {item.content}
                       </Text>
                     </View>
                   </View>
                   <View style={styles.historyItemRight}>
-                    <Text
+                    <TranslatedText
                       style={[
                         styles.historyScore,
                         { color: getScoreColor(item.result.verdict) },
                       ]}
                     >
                       {item.result.score}
-                    </Text>
+                    </TranslatedText>
                     <Badge
                       variant={getBadgeVariant(item.result.verdict)}
                       style={styles.historyBadge}
@@ -623,7 +630,7 @@ export function FraudAnalyzer() {
                 width: "90%",
               }}
             >
-              <Text
+              <TranslatedText
                 style={{
                   fontSize: 18,
                   fontWeight: "bold",
@@ -632,10 +639,10 @@ export function FraudAnalyzer() {
                 }}
               >
                 Detection Details
-              </Text>
+              </TranslatedText>
               {selectedHistory && (
                 <>
-                  <Text
+                  <TranslatedText
                     style={{
                       color: "#9ca3af",
                       marginBottom: 8,
@@ -643,11 +650,13 @@ export function FraudAnalyzer() {
                     }}
                   >
                     Full Content:
-                  </Text>
-                  <Text style={{ color: "#f9fafb", marginBottom: 16 }}>
+                  </TranslatedText>
+                  <TranslatedText
+                    style={{ color: "#f9fafb", marginBottom: 16 }}
+                  >
                     {selectedHistory.content}
-                  </Text>
-                  <Text
+                  </TranslatedText>
+                  <TranslatedText
                     style={{
                       color: "#9ca3af",
                       marginBottom: 8,
@@ -655,21 +664,21 @@ export function FraudAnalyzer() {
                     }}
                   >
                     Detected Issues:
-                  </Text>
+                  </TranslatedText>
                   {selectedHistory.result.reason &&
                   selectedHistory.result.reason.length > 0 ? (
                     selectedHistory.result.reason.map((msg, idx) => (
-                      <Text
+                      <TranslatedText
                         key={idx}
                         style={{ color: "#f59e0b", marginBottom: 4 }}
                       >
                         • {msg}
-                      </Text>
+                      </TranslatedText>
                     ))
                   ) : (
-                    <Text style={{ color: "#10b981" }}>
+                    <TranslatedText style={{ color: "#10b981" }}>
                       No suspicious activity detected.
-                    </Text>
+                    </TranslatedText>
                   )}
                 </>
               )}
@@ -677,11 +686,11 @@ export function FraudAnalyzer() {
                 onPress={() => setModalVisible(false)}
                 style={{ marginTop: 20, alignSelf: "center" }}
               >
-                <Text
+                <TranslatedText
                   style={{ color: "#10b981", fontWeight: "bold", fontSize: 16 }}
                 >
                   Close
-                </Text>
+                </TranslatedText>
               </TouchableOpacity>
             </View>
           </View>
@@ -734,28 +743,32 @@ export function FraudAnalyzer() {
             <View style={styles.logoContainer}>
               <Ionicons name="shield-checkmark" size={36} color="#10b981" />
             </View>
-            <Text style={styles.title}>PhishEye Pro</Text>
+            <TranslatedText style={styles.title}>PhishEye Pro</TranslatedText>
           </View>
-          <Text style={styles.subtitle}>
+          <TranslatedText style={styles.subtitle}>
             Advanced AI-powered fraud detection and security analysis. Protect
             yourself from phishing, scams, and malicious websites with real-time
             threat intelligence.
-          </Text>
+          </TranslatedText>
 
           <View style={styles.statsContainer}>
             <View style={styles.statItem}>
-              <Text style={styles.statNumber}>99.9%</Text>
-              <Text style={styles.statLabel}>Accuracy</Text>
+              <TranslatedText style={styles.statNumber}>99.9%</TranslatedText>
+              <TranslatedText style={styles.statLabel}>Accuracy</TranslatedText>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
-              <Text style={styles.statNumber}>24/7</Text>
-              <Text style={styles.statLabel}>Protection</Text>
+              <TranslatedText style={styles.statNumber}>24/7</TranslatedText>
+              <TranslatedText style={styles.statLabel}>
+                Protection
+              </TranslatedText>
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
-              <Text style={styles.statNumber}>Real-time</Text>
-              <Text style={styles.statLabel}>Analysis</Text>
+              <TranslatedText style={styles.statNumber}>
+                Real-time
+              </TranslatedText>
+              <TranslatedText style={styles.statLabel}>Analysis</TranslatedText>
             </View>
           </View>
         </Animated.View>
@@ -774,14 +787,14 @@ export function FraudAnalyzer() {
                   color={activeTab === "email" ? "#10b981" : "#9ca3af"}
                   style={{ marginRight: 16 }}
                 />
-                <Text
+                <TranslatedText
                   style={[
                     styles.tabText,
                     { color: activeTab === "email" ? "#10b981" : "#9ca3af" },
                   ]}
                 >
                   Email
-                </Text>
+                </TranslatedText>
               </TabsTrigger>
               <TabsTrigger value="website" style={styles.tabTrigger}>
                 <Ionicons
@@ -789,14 +802,14 @@ export function FraudAnalyzer() {
                   size={18}
                   color={activeTab === "website" ? "#10b981" : "#9ca3af"}
                 />
-                <Text
+                <TranslatedText
                   style={[
                     styles.tabText,
                     { color: activeTab === "website" ? "#10b981" : "#9ca3af" },
                   ]}
                 >
                   Website
-                </Text>
+                </TranslatedText>
               </TabsTrigger>
               <TabsTrigger value="history" style={styles.tabTrigger}>
                 <Ionicons
@@ -804,14 +817,14 @@ export function FraudAnalyzer() {
                   size={18}
                   color={activeTab === "history" ? "#10b981" : "#9ca3af"}
                 />
-                <Text
+                <TranslatedText
                   style={[
                     styles.tabText,
                     { color: activeTab === "history" ? "#10b981" : "#9ca3af" },
                   ]}
                 >
                   History
-                </Text>
+                </TranslatedText>
               </TabsTrigger>
             </TabsList>
 
@@ -846,9 +859,9 @@ export function FraudAnalyzer() {
                     <Animated.View entering={FadeInUp} style={styles.analyzing}>
                       <View style={styles.analyzingHeader}>
                         <LoadingSpinner size={20} color="#10b981" />
-                        <Text style={styles.analyzingText}>
+                        <TranslatedText style={styles.analyzingText}>
                           Analyzing email content with AI threat detection...
-                        </Text>
+                        </TranslatedText>
                       </View>
                       <Progress
                         value={progress}
@@ -861,9 +874,9 @@ export function FraudAnalyzer() {
                         }
                         style={styles.progress}
                       />
-                      <Text style={styles.progressText}>
+                      <TranslatedText style={styles.progressText}>
                         {progress}% Complete
-                      </Text>
+                      </TranslatedText>
                     </Animated.View>
                   )}
 
@@ -914,10 +927,10 @@ export function FraudAnalyzer() {
                     <Animated.View entering={FadeInUp} style={styles.analyzing}>
                       <View style={styles.analyzingHeader}>
                         <LoadingSpinner size={20} color="#10b981" />
-                        <Text style={styles.analyzingText}>
+                        <TranslatedText style={styles.analyzingText}>
                           Scanning domain reputation and security
                           certificates...
-                        </Text>
+                        </TranslatedText>
                       </View>
                       <Progress
                         value={progress}
@@ -930,9 +943,9 @@ export function FraudAnalyzer() {
                         }
                         style={styles.progress}
                       />
-                      <Text style={styles.progressText}>
+                      <TranslatedText style={styles.progressText}>
                         {progress}% Complete
-                      </Text>
+                      </TranslatedText>
                     </Animated.View>
                   )}
 

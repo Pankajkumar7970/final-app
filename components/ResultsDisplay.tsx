@@ -18,6 +18,7 @@ import { CalculationResult } from "./Calculator";
 import { formatCurrency } from "../utils/formatters";
 import PieChart from "./PieChart";
 import ProgressBar from "./ProgressBar";
+import TranslatedText from "./TranslatedText";
 
 const { width } = Dimensions.get("window");
 
@@ -36,7 +37,9 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
     return (
       <View style={styles.container}>
         <View style={styles.loadingContainer}>
-          <Text style={styles.loadingText}>Calculating...</Text>
+          <TranslatedText style={styles.loadingText}>
+            Calculating...
+          </TranslatedText>
         </View>
       </View>
     );
@@ -47,10 +50,12 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       <View style={styles.container}>
         <View style={styles.emptyContainer}>
           <TrendingUp size={48} color="#9ca3af" />
-          <Text style={styles.emptyTitle}>Investment Results</Text>
-          <Text style={styles.emptyDescription}>
+          <TranslatedText style={styles.emptyTitle}>
+            Investment Results
+          </TranslatedText>
+          <TranslatedText style={styles.emptyDescription}>
             Enter your investment details and calculate to see results
-          </Text>
+          </TranslatedText>
         </View>
       </View>
     );
@@ -72,16 +77,16 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   const SummaryCard = ({ title, value, icon, color }: any) => (
     <Animated.View style={[styles.summaryCard, { borderLeftColor: color }]}>
       <View style={styles.summaryCardHeader}>
-        <Text style={styles.summaryCardTitle}>{title}</Text>
+        <TranslatedText style={styles.summaryCardTitle}>{title}</TranslatedText>
         <View
           style={[styles.summaryCardIcon, { backgroundColor: color + "20" }]}
         >
           {icon}
         </View>
       </View>
-      <Text style={[styles.summaryCardValue, { color }]}>
+      <TranslatedText style={[styles.summaryCardValue, { color }]}>
         {formatCurrency(value)}
-      </Text>
+      </TranslatedText>
     </Animated.View>
   );
 
@@ -115,10 +120,12 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>{getCalculatorTitle()} Results</Text>
-        <Text style={styles.subtitle}>
+        <TranslatedText style={styles.title}>
+          {getCalculatorTitle()} Results
+        </TranslatedText>
+        <TranslatedText style={styles.subtitle}>
           Detailed breakdown of your investment returns
-        </Text>
+        </TranslatedText>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -148,7 +155,9 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         <View style={styles.visualContainer}>
           <View style={styles.visualHeader}>
             <PieChartIcon size={20} color="#3b82f6" />
-            <Text style={styles.visualTitle}>Investment Breakdown</Text>
+            <TranslatedText style={styles.visualTitle}>
+              Investment Breakdown
+            </TranslatedText>
           </View>
 
           <View style={styles.chartContainer}>
@@ -159,23 +168,23 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
                 <View
                   style={[styles.legendDot, { backgroundColor: "#3b82f6" }]}
                 />
-                <Text style={styles.legendText}>
+                <TranslatedText style={styles.legendText}>
                   Principal ({principalPercentage.toFixed(0)}%)
-                </Text>
-                <Text style={styles.legendValue}>
+                </TranslatedText>
+                <TranslatedText style={styles.legendValue}>
                   {formatCurrency(results.totalInvested)}
-                </Text>
+                </TranslatedText>
               </View>
               <View style={styles.legendItem}>
                 <View
                   style={[styles.legendDot, { backgroundColor: "#10b981" }]}
                 />
-                <Text style={styles.legendText}>
+                <TranslatedText style={styles.legendText}>
                   Interest ({interestPercentage.toFixed(0)}%)
-                </Text>
-                <Text style={styles.legendValue}>
+                </TranslatedText>
+                <TranslatedText style={styles.legendValue}>
                   {formatCurrency(results.interestEarned)}
-                </Text>
+                </TranslatedText>
               </View>
             </View>
           </View>
@@ -185,7 +194,9 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
         <View style={styles.progressContainer}>
           <View style={styles.progressHeader}>
             <BarChart3 size={20} color="#3b82f6" />
-            <Text style={styles.progressTitle}>Investment Analysis</Text>
+            <TranslatedText style={styles.progressTitle}>
+              Investment Analysis
+            </TranslatedText>
           </View>
 
           <ProgressBar
@@ -215,35 +226,45 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
 
         {/* Key Metrics */}
         <View style={styles.metricsContainer}>
-          <Text style={styles.metricsTitle}>Key Metrics</Text>
+          <TranslatedText style={styles.metricsTitle}>
+            Key Metrics
+          </TranslatedText>
 
           <View style={styles.metricRow}>
-            <Text style={styles.metricLabel}>Return Rate</Text>
-            <Text style={[styles.metricValue, { color: "#10b981" }]}>
+            <TranslatedText style={styles.metricLabel}>
+              Return Rate
+            </TranslatedText>
+            <TranslatedText style={[styles.metricValue, { color: "#10b981" }]}>
               {returnPercentage}%
-            </Text>
+            </TranslatedText>
           </View>
 
           <View style={styles.metricRow}>
-            <Text style={styles.metricLabel}>Total Return</Text>
-            <Text style={styles.metricValue}>
+            <TranslatedText style={styles.metricLabel}>
+              Total Return
+            </TranslatedText>
+            <TranslatedText style={styles.metricValue}>
               {formatCurrency(results.interestEarned)}
-            </Text>
+            </TranslatedText>
           </View>
 
           <View style={styles.metricRow}>
-            <Text style={styles.metricLabel}>Growth Multiple</Text>
-            <Text style={[styles.metricValue, { color: "#3b82f6" }]}>
+            <TranslatedText style={styles.metricLabel}>
+              Growth Multiple
+            </TranslatedText>
+            <TranslatedText style={[styles.metricValue, { color: "#3b82f6" }]}>
               {growthMultiple}x
-            </Text>
+            </TranslatedText>
           </View>
 
           {calculatorType === "sip" && results.monthlyData && (
             <View style={styles.metricRow}>
-              <Text style={styles.metricLabel}>Investment Period</Text>
-              <Text style={styles.metricValue}>
+              <TranslatedText style={styles.metricLabel}>
+                Investment Period
+              </TranslatedText>
+              <TranslatedText style={styles.metricValue}>
                 {results.monthlyData.length} months
-              </Text>
+              </TranslatedText>
             </View>
           )}
         </View>

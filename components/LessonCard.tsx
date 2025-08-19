@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Play, CheckCircle, Clock, BookOpen } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { isLessonCompleted } from "../data/lessonsData";
+import TranslatedText from "./TranslatedText";
 
 interface Lesson {
   id: string;
@@ -63,7 +64,9 @@ const LessonCard: React.FC<LessonCardProps> = ({ lesson, onStart }) => {
         <View style={styles.metaContainer}>
           <View style={styles.metaItem}>
             <Clock size={16} color="#6b7280" />
-            <Text style={styles.metaText}>{lesson.duration}</Text>
+            <TranslatedText style={styles.metaText}>
+              {lesson.duration}
+            </TranslatedText>
           </View>
           <View style={styles.metaItem}>
             <BookOpen size={16} color="#6b7280" />
@@ -73,7 +76,9 @@ const LessonCard: React.FC<LessonCardProps> = ({ lesson, onStart }) => {
                 { backgroundColor: getDifficultyColor(lesson.difficulty) },
               ]}
             >
-              <Text style={styles.badgeText}>{lesson.difficulty}</Text>
+              <TranslatedText style={styles.badgeText}>
+                {lesson.difficulty}
+              </TranslatedText>
             </View>
           </View>
         </View>
@@ -88,9 +93,9 @@ const LessonCard: React.FC<LessonCardProps> = ({ lesson, onStart }) => {
             style={styles.buttonGradient}
           >
             <Play size={16} color="white" style={{ marginRight: 8 }} />
-            <Text style={styles.buttonText}>
+            <TranslatedText style={styles.buttonText}>
               {isCompleted ? "Review Lesson" : "Start Lesson"}
-            </Text>
+            </TranslatedText>
           </LinearGradient>
         </TouchableOpacity>
       </LinearGradient>

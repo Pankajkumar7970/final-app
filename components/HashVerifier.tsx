@@ -12,6 +12,7 @@ import API from "../api/api"; // adjust path if needed
 import { useDocumentStorage } from "../hooks/useDocumentStorage";
 import { PSBColors } from "../utils/PSBColors";
 import { colors } from "../utils/colors";
+import TranslatedText from "./TranslatedText";
 
 async function verifyDocument(data: any) {
   const res = await API.post("/verify", data);
@@ -125,15 +126,19 @@ export const HashVerifier = ({
           <Search size={20} color={PSBColors.primary.green} />
         </View>
         <View>
-          <Text style={styles.title}>Hash Verification</Text>
-          <Text style={styles.subtitle}>
+          <TranslatedText style={styles.title}>
+            Hash Verification
+          </TranslatedText>
+          <TranslatedText style={styles.subtitle}>
             Check if a hash exists in your vault
-          </Text>
+          </TranslatedText>
         </View>
       </View>
 
       <View style={styles.inputSection}>
-        <Text style={styles.inputLabel}>Enter Known Hash</Text>
+        <TranslatedText style={styles.inputLabel}>
+          Enter Known Hash
+        </TranslatedText>
         <TextInput
           style={styles.textInput}
           placeholder="Paste the known SHA-256 hash here to verify against..."
@@ -156,12 +161,16 @@ export const HashVerifier = ({
         {isVerifying ? (
           <View style={styles.loadingContainer}>
             <View style={styles.spinner} />
-            <Text style={styles.buttonText}>Verifying...</Text>
+            <TranslatedText style={styles.buttonText}>
+              Verifying...
+            </TranslatedText>
           </View>
         ) : (
           <>
             <Search size={16} color="white" />
-            <Text style={styles.buttonText}>Verify Hash</Text>
+            <TranslatedText style={styles.buttonText}>
+              Verify Hash
+            </TranslatedText>
           </>
         )}
       </TouchableOpacity>
@@ -184,7 +193,7 @@ export const HashVerifier = ({
 
             <View style={styles.resultContent}>
               <View style={styles.resultTitleRow}>
-                <Text
+                <TranslatedText
                   style={[
                     styles.resultTitle,
                     verificationResult.isMatch
@@ -195,7 +204,7 @@ export const HashVerifier = ({
                   {verificationResult.isMatch
                     ? "Hash Verified"
                     : "Hash Mismatch"}
-                </Text>
+                </TranslatedText>
 
                 <View
                   style={[
@@ -205,7 +214,7 @@ export const HashVerifier = ({
                       : styles.errorBadge,
                   ]}
                 >
-                  <Text
+                  <TranslatedText
                     style={[
                       styles.badgeText,
                       verificationResult.isMatch
@@ -214,11 +223,11 @@ export const HashVerifier = ({
                     ]}
                   >
                     {verificationResult.isMatch ? "MATCH" : "NO MATCH"}
-                  </Text>
+                  </TranslatedText>
                 </View>
               </View>
 
-              <Text
+              <TranslatedText
                 style={[
                   styles.resultDescription,
                   verificationResult.isMatch
@@ -229,15 +238,15 @@ export const HashVerifier = ({
                 {verificationResult.isMatch
                   ? "The document hash matches the provided hash. Document is authentic."
                   : "The document hash does not match. Document may have been tampered with."}
-              </Text>
+              </TranslatedText>
 
               {verificationResult.savedDocument && (
-                <Text style={styles.documentInfo}>
+                <TranslatedText style={styles.documentInfo}>
                   Matched against document saved on{" "}
                   {new Date(
                     verificationResult.savedDocument.timestamp
                   ).toLocaleDateString()}
-                </Text>
+                </TranslatedText>
               )}
             </View>
           </View>
@@ -248,13 +257,15 @@ export const HashVerifier = ({
         verificationResult.isMatch &&
         verificationResult.savedDocument && (
           <View style={styles.documentDetails}>
-            <Text style={styles.documentDetailTitle}>File Details:</Text>
-            <Text style={styles.documentDetailText}>
+            <TranslatedText style={styles.documentDetailTitle}>
+              File Details:
+            </TranslatedText>
+            <TranslatedText style={styles.documentDetailText}>
               Name: {verificationResult.savedDocument.filename}
-            </Text>
-            <Text style={styles.documentDetailText}>
+            </TranslatedText>
+            <TranslatedText style={styles.documentDetailText}>
               Size: {verificationResult.savedDocument.size} bytes
-            </Text>
+            </TranslatedText>
           </View>
         )}
     </View>

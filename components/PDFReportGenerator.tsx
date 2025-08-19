@@ -4,6 +4,7 @@ import { Download, FileText } from "lucide-react-native";
 import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 interface TaxData {
   income: number;
@@ -142,10 +143,12 @@ const PDFReportGenerator: React.FC<PDFReportGeneratorProps> = ({ taxData }) => {
           <View style={styles.titleContainer}>
             <FileText size={20} color="#333" />
             <View style={styles.titleText}>
-              <Text style={styles.title}>Tax Report Summary</Text>
-              <Text style={styles.subtitle}>
+              <TranslatedText style={styles.title}>
+                Tax Report Summary
+              </TranslatedText>
+              <TranslatedText style={styles.subtitle}>
                 Generate comprehensive PDF report
-              </Text>
+              </TranslatedText>
             </View>
           </View>
           {taxData.income > 0 && (
@@ -155,42 +158,52 @@ const PDFReportGenerator: React.FC<PDFReportGeneratorProps> = ({ taxData }) => {
               disabled={isGenerating}
             >
               <Download size={16} color="#fff" />
-              <Text style={styles.buttonText}>
+              <TranslatedText style={styles.buttonText}>
                 {isGenerating ? "Generating..." : "Download PDF"}
-              </Text>
+              </TranslatedText>
             </TouchableOpacity>
           )}
         </View>
 
         <View style={styles.summaryGrid}>
           <View style={styles.summaryItem}>
-            <Text style={styles.summaryLabel}>Annual Income</Text>
-            <Text style={styles.summaryValue}>
+            <TranslatedText style={styles.summaryLabel}>
+              Annual Income
+            </TranslatedText>
+            <TranslatedText style={styles.summaryValue}>
               ₹{taxData.income.toLocaleString()}
-            </Text>
+            </TranslatedText>
           </View>
           <View style={styles.summaryItem}>
-            <Text style={styles.summaryLabel}>Total Deductions</Text>
-            <Text style={styles.summaryValue}>
+            <TranslatedText style={styles.summaryLabel}>
+              Total Deductions
+            </TranslatedText>
+            <TranslatedText style={styles.summaryValue}>
               ₹
               {Object.values(taxData.deductions)
                 .reduce((a, b) => a + b, 0)
                 .toLocaleString()}
-            </Text>
+            </TranslatedText>
           </View>
           {taxData.income > 0 && (
             <>
               <View style={styles.summaryItem}>
-                <Text style={styles.summaryLabel}>Recommended Regime</Text>
-                <Text style={styles.summaryValue}>
+                <TranslatedText style={styles.summaryLabel}>
+                  Recommended Regime
+                </TranslatedText>
+                <TranslatedText style={styles.summaryValue}>
                   {taxData.recommendation}
-                </Text>
+                </TranslatedText>
               </View>
               <View style={styles.summaryItem}>
-                <Text style={styles.summaryLabel}>Tax Savings</Text>
-                <Text style={[styles.summaryValue, { color: "#28a745" }]}>
+                <TranslatedText style={styles.summaryLabel}>
+                  Tax Savings
+                </TranslatedText>
+                <TranslatedText
+                  style={[styles.summaryValue, { color: "#28a745" }]}
+                >
                   ₹{Math.abs(taxData.savings).toLocaleString()}
-                </Text>
+                </TranslatedText>
               </View>
             </>
           )}
@@ -199,33 +212,45 @@ const PDFReportGenerator: React.FC<PDFReportGeneratorProps> = ({ taxData }) => {
         <View style={styles.separator} />
 
         <View style={styles.includesSection}>
-          <Text style={styles.includesTitle}>Report will include:</Text>
+          <TranslatedText style={styles.includesTitle}>
+            Report will include:
+          </TranslatedText>
           <View style={styles.includesGrid}>
             <View style={styles.includeItem}>
               <View style={styles.bullet} />
-              <Text style={styles.includeText}>Complete income breakdown</Text>
+              <TranslatedText style={styles.includeText}>
+                Complete income breakdown
+              </TranslatedText>
             </View>
             <View style={styles.includeItem}>
               <View style={styles.bullet} />
-              <Text style={styles.includeText}>Deduction analysis</Text>
+              <TranslatedText style={styles.includeText}>
+                Deduction analysis
+              </TranslatedText>
             </View>
             <View style={styles.includeItem}>
               <View style={styles.bullet} />
-              <Text style={styles.includeText}>Tax regime comparison</Text>
+              <TranslatedText style={styles.includeText}>
+                Tax regime comparison
+              </TranslatedText>
             </View>
             <View style={styles.includeItem}>
               <View style={styles.bullet} />
-              <Text style={styles.includeText}>
+              <TranslatedText style={styles.includeText}>
                 Personalized recommendations
-              </Text>
+              </TranslatedText>
             </View>
             <View style={styles.includeItem}>
               <View style={styles.bullet} />
-              <Text style={styles.includeText}>Tax saving strategies</Text>
+              <TranslatedText style={styles.includeText}>
+                Tax saving strategies
+              </TranslatedText>
             </View>
             <View style={styles.includeItem}>
               <View style={styles.bullet} />
-              <Text style={styles.includeText}>Next year planning tips</Text>
+              <TranslatedText style={styles.includeText}>
+                Next year planning tips
+              </TranslatedText>
             </View>
           </View>
         </View>

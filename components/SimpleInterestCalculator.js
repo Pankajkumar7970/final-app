@@ -11,6 +11,7 @@ import {
 import { LineChart } from "react-native-chart-kit";
 import { Calculator, TrendingUp, Calendar, Percent } from "lucide-react-native";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -96,18 +97,24 @@ const SimpleInterestCalculator = () => {
       <View style={styles.header}>
         <View style={styles.titleContainer}>
           <Calculator size={32} color={PSBColors.primary.darkGreen} />
-          <Text style={styles.title}>Simple Interest Calculator</Text>
+          <TranslatedText style={styles.title}>
+            Simple Interest Calculator
+          </TranslatedText>
         </View>
-        <Text style={styles.subtitle}>
+        <TranslatedText style={styles.subtitle}>
           Calculate simple interest and visualize total amount growth
-        </Text>
+        </TranslatedText>
       </View>
 
       {/* Input Section */}
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Enter Loan Details</Text>
+        <TranslatedText style={styles.cardTitle}>
+          Enter Loan Details
+        </TranslatedText>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Principal Amount (₹)</Text>
+          <TranslatedText style={styles.label}>
+            Principal Amount (₹)
+          </TranslatedText>
           <TextInput
             style={[styles.input, errors.principal && styles.inputError]}
             placeholder="Enter principal amount"
@@ -116,14 +123,18 @@ const SimpleInterestCalculator = () => {
             keyboardType="numeric"
           />
           {errors.principal ? (
-            <Text style={styles.errorText}>{errors.principal}</Text>
+            <TranslatedText style={styles.errorText}>
+              {errors.principal}
+            </TranslatedText>
           ) : null}
         </View>
 
         <View style={styles.inputContainer}>
           <View style={styles.labelContainer}>
             <Percent size={16} color="#666" />
-            <Text style={styles.label}>Annual Interest Rate (%)</Text>
+            <TranslatedText style={styles.label}>
+              Annual Interest Rate (%)
+            </TranslatedText>
           </View>
           <TextInput
             style={[styles.input, errors.rate && styles.inputError]}
@@ -133,14 +144,18 @@ const SimpleInterestCalculator = () => {
             keyboardType="numeric"
           />
           {errors.rate ? (
-            <Text style={styles.errorText}>{errors.rate}</Text>
+            <TranslatedText style={styles.errorText}>
+              {errors.rate}
+            </TranslatedText>
           ) : null}
         </View>
 
         <View style={styles.inputContainer}>
           <View style={styles.labelContainer}>
             <Calendar size={16} color="#666" />
-            <Text style={styles.label}>Time Period (Years)</Text>
+            <TranslatedText style={styles.label}>
+              Time Period (Years)
+            </TranslatedText>
           </View>
           <TextInput
             style={[styles.input, errors.time && styles.inputError]}
@@ -150,7 +165,9 @@ const SimpleInterestCalculator = () => {
             keyboardType="numeric"
           />
           {errors.time ? (
-            <Text style={styles.errorText}>{errors.time}</Text>
+            <TranslatedText style={styles.errorText}>
+              {errors.time}
+            </TranslatedText>
           ) : null}
         </View>
 
@@ -164,10 +181,14 @@ const SimpleInterestCalculator = () => {
             disabled={!isFormValid}
           >
             <Calculator size={16} color="#fff" />
-            <Text style={styles.calculateButtonText}>Calculate</Text>
+            <TranslatedText style={styles.calculateButtonText}>
+              Calculate
+            </TranslatedText>
           </TouchableOpacity>
           <TouchableOpacity style={styles.resetButton} onPress={reset}>
-            <Text style={styles.resetButtonText}>Reset</Text>
+            <TranslatedText style={styles.resetButtonText}>
+              Reset
+            </TranslatedText>
           </TouchableOpacity>
         </View>
       </View>
@@ -177,20 +198,28 @@ const SimpleInterestCalculator = () => {
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <TrendingUp size={20} color="#10b981" />
-            <Text style={styles.cardTitle}>Calculation Results</Text>
+            <TranslatedText style={styles.cardTitle}>
+              Calculation Results
+            </TranslatedText>
           </View>
           <View style={styles.resultContainer}>
             <View style={styles.resultItem}>
-              <Text style={styles.resultLabel}>Simple Interest</Text>
-              <Text style={styles.resultValue}>
+              <TranslatedText style={styles.resultLabel}>
+                Simple Interest
+              </TranslatedText>
+              <TranslatedText style={styles.resultValue}>
                 {formatCurrency(result.simpleInterest)}
-              </Text>
+              </TranslatedText>
             </View>
             <View style={[styles.resultItem, styles.totalAmountItem]}>
-              <Text style={styles.resultLabel}>Total Amount</Text>
-              <Text style={[styles.resultValue, styles.totalAmountValue]}>
+              <TranslatedText style={styles.resultLabel}>
+                Total Amount
+              </TranslatedText>
+              <TranslatedText
+                style={[styles.resultValue, styles.totalAmountValue]}
+              >
                 {formatCurrency(result.totalAmount)}
-              </Text>
+              </TranslatedText>
             </View>
           </View>
 

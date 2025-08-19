@@ -803,37 +803,31 @@ module.exports = (app) => {
 
       let oldProgress;
       let progress;
+      let xp;
 
       console.log("🎮 Entered SIMULATOR branch");
-
-      progress = {
-        userId: req.user.id,
-        simulatorId: id,
-        type: "simulator",
-        experiencePoints: 50,
-        status: "completed",
-        completedAt: new Date(),
-      };
-
       oldProgress = await UserProgress.find({
         type: "simulator",
         simulatorId: id,
         userId: req.user.id,
       });
 
-      // check if update or insert
-      if (oldProgress && oldProgress.length > 0) {
-        console.log("📌 Updating oldProgress record");
-
-        await UserProgress.findOneAndUpdate(
-          { simulatorId: id, userId: req.user.id },
-          progress
-        );
+      if (oldProgress.length > 0) {
+        xp = 50;
       } else {
-        console.log("🆕 Creating new UserProgress record");
-        const saved = await new UserProgress(progress).save();
-        console.log("✅ Saved new progress:", saved);
+        xp = 5;
       }
+
+      progress = {
+        userId: req.user.id,
+        simulatorId: id,
+        type: "simulator",
+        experiencePoints: xp,
+        status: "completed",
+        completedAt: new Date(),
+      };
+      const saved = await new UserProgress(progress).save();
+      console.log("✅ Saved new progress:", saved);
 
       // Update user XP
       console.log("⭐ Updating user XP for userId:", req.user.id);
@@ -841,7 +835,7 @@ module.exports = (app) => {
       const user = await User.findById(req.user.id);
       console.log("User before update:", user);
 
-      const userExp = user.totalExperiencePoints + 50;
+      const userExp = user.totalExperiencePoints + xp;
       user.totalExperiencePoints = userExp;
       user.level = calculateLevel(userExp);
 

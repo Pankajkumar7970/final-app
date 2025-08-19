@@ -1,6 +1,7 @@
+// screens/AboutScreen.js
+import React from "react";
 import {
   View,
-  Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
@@ -22,6 +23,7 @@ import {
   Target,
   Eye,
 } from "lucide-react-native";
+import TranslatedText from "../../../components/TranslatedText";
 
 export default function AboutScreen() {
   const [fontsLoaded] = useFonts({
@@ -47,89 +49,99 @@ export default function AboutScreen() {
       <View style={styles.content}>
         {/* Header Section */}
         <View style={styles.header}>
-          <Text style={styles.mainTitle}>About FinEduGuard</Text>
-          <Text style={styles.description}>
+          <TranslatedText style={styles.mainTitle}>
+            About FinEduGuard
+          </TranslatedText>
+          <TranslatedText style={styles.description}>
             FinEduGuard is an innovative mobile application built to educate
             users about personal finance and raise awareness about financial
             frauds. We combine interactive learning, real-world simulations, and
             AI-powered insights to make finance simple, secure, and engaging.
-          </Text>
+          </TranslatedText>
         </View>
 
         {/* Mission Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Target size={24} color="#1E40AF" />
-            <Text style={styles.sectionTitle}>Our Mission</Text>
+            <TranslatedText style={styles.sectionTitle}>
+              Our Mission
+            </TranslatedText>
           </View>
-          <Text style={styles.sectionText}>
+          <TranslatedText style={styles.sectionText}>
             Our mission is to empower individuals with the knowledge and tools
             to make smarter financial decisions and to protect themselves from
             frauds and scams in the digital world.
-          </Text>
+          </TranslatedText>
         </View>
 
         {/* Vision Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Eye size={24} color="#1E40AF" />
-            <Text style={styles.sectionTitle}>Our Vision</Text>
+            <TranslatedText style={styles.sectionTitle}>
+              Our Vision
+            </TranslatedText>
           </View>
-          <Text style={styles.sectionText}>
+          <TranslatedText style={styles.sectionText}>
             We envision a world where financial literacy is accessible to all,
             and every user feels confident and safe while managing their money.
-          </Text>
+          </TranslatedText>
         </View>
 
         {/* What We Offer Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>What We Offer</Text>
+          <TranslatedText style={styles.sectionTitle}>
+            What We Offer
+          </TranslatedText>
 
           <View style={styles.featuresList}>
             <View style={styles.feature}>
               <View style={styles.featureIcon}>
                 <BookOpen size={20} color="#FFFFFF" />
               </View>
-              <Text style={styles.featureText}>
+              <TranslatedText style={styles.featureText}>
                 Easy-to-understand finance education modules
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.feature}>
               <View style={styles.featureIcon}>
                 <Shield size={20} color="#FFFFFF" />
               </View>
-              <Text style={styles.featureText}>
+              <TranslatedText style={styles.featureText}>
                 Real-life fraud simulations & awareness training
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.feature}>
               <View style={styles.featureIcon}>
                 <Bot size={20} color="#FFFFFF" />
               </View>
-              <Text style={styles.featureText}>
+              <TranslatedText style={styles.featureText}>
                 AI-powered financial assistant (FinEduGuard Assistant)
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.feature}>
               <View style={styles.featureIcon}>
                 <Globe size={20} color="#FFFFFF" />
               </View>
-              <Text style={styles.featureText}>
+              <TranslatedText style={styles.featureText}>
                 Up-to-date fraud alerts, tips, and prevention strategies
-              </Text>
+              </TranslatedText>
             </View>
           </View>
         </View>
 
         {/* Contact Section */}
         <View style={[styles.section, styles.contactSection]}>
-          <Text style={styles.sectionTitle}>Contact Us</Text>
-          <Text style={styles.contactSubtitle}>
+          <TranslatedText style={styles.sectionTitle}>
+            Contact Us
+          </TranslatedText>
+          <TranslatedText style={styles.contactSubtitle}>
             We'd love to hear from you!
-          </Text>
+          </TranslatedText>
 
           <TouchableOpacity
             style={styles.contactItem}
@@ -137,7 +149,9 @@ export default function AboutScreen() {
             activeOpacity={0.7}
           >
             <Mail size={20} color="#1E40AF" />
-            <Text style={styles.contactText}>contact@fineduguard.com</Text>
+            <TranslatedText style={styles.contactText}>
+              contact@fineduguard.com
+            </TranslatedText>
             <ExternalLink size={16} color="#64748B" />
           </TouchableOpacity>
 
@@ -147,7 +161,9 @@ export default function AboutScreen() {
             activeOpacity={0.7}
           >
             <Globe size={20} color="#1E40AF" />
-            <Text style={styles.contactText}>www.fineduguard.com</Text>
+            <TranslatedText style={styles.contactText}>
+              www.fineduguard.com
+            </TranslatedText>
             <ExternalLink size={16} color="#64748B" />
           </TouchableOpacity>
         </View>

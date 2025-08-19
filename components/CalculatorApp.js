@@ -18,6 +18,7 @@ import SimpleInterestCalculator from "./SimpleInterestCalculator";
 import LoanEmiCalculator from "./LoanEmiCalculator";
 import CompoundInterestCalculator from "./CompoundInterestCalculator";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 const CalculatorApp = () => {
   const [activeTab, setActiveTab] = useState("simple");
@@ -38,13 +39,15 @@ const CalculatorApp = () => {
               <Calculator size={32} color="#ffffff" />
             </View>
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>Financial Calculator</Text>
+              <TranslatedText style={styles.title}>
+                Financial Calculator
+              </TranslatedText>
               <Sparkles size={24} color="#ffffff" opacity={0.8} />
             </View>
-            <Text style={styles.subtitle}>
+            <TranslatedText style={styles.subtitle}>
               Calculate Simple Interest, Loan EMI & Compound Interest with
               beautiful visualizations
-            </Text>
+            </TranslatedText>
           </View>
         </View>
 
@@ -67,14 +70,14 @@ const CalculatorApp = () => {
                       size={20}
                       color={activeTab === tab.id ? "#ffffff" : "#666666"}
                     />
-                    <Text
+                    <TranslatedText
                       style={[
                         styles.tabText,
                         activeTab === tab.id && styles.activeTabText,
                       ]}
                     >
                       {tab.label}
-                    </Text>
+                    </TranslatedText>
                   </TouchableOpacity>
                 );
               })}

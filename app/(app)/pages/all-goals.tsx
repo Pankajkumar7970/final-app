@@ -29,6 +29,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useGoals } from "../../../contexts/GoalsContext";
 import { PSBColors } from "../../../utils/PSBColors";
+import TranslatedText from "../../../components/TranslatedText";
 
 const { width } = Dimensions.get("window");
 
@@ -160,11 +161,13 @@ export default function AllGoals() {
             <ArrowLeft size={24} color="#FFFFFF" />
           </TouchableOpacity>
           <View style={styles.headerCenter}>
-            <Text style={styles.headerTitle}>All Goals</Text>
-            <Text style={styles.headerSubtitle}>
+            <TranslatedText style={styles.headerTitle}>
+              All Goals
+            </TranslatedText>
+            <TranslatedText style={styles.headerSubtitle}>
               {filteredGoals.length} goal{filteredGoals.length !== 1 ? "s" : ""}{" "}
               found
-            </Text>
+            </TranslatedText>
           </View>
           {/* <TouchableOpacity style={styles.searchButton}>
             <Search size={24} color="#FFFFFF" />
@@ -200,9 +203,9 @@ export default function AllGoals() {
                       style={styles.filterGradient}
                     >
                       <IconComponent size={18} color="#FFFFFF" />
-                      <Text style={styles.filterTextActive}>
+                      <TranslatedText style={styles.filterTextActive}>
                         {category.name} ({categoryGoals})
-                      </Text>
+                      </TranslatedText>
                     </LinearGradient>
                   ) : (
                     <View
@@ -212,9 +215,9 @@ export default function AllGoals() {
                       ]}
                     >
                       <IconComponent size={18} color={category.color} />
-                      <Text style={styles.filterText}>
+                      <TranslatedText style={styles.filterText}>
                         {category.name} ({categoryGoals})
-                      </Text>
+                      </TranslatedText>
                     </View>
                   )}
                 </TouchableOpacity>
@@ -260,19 +263,21 @@ export default function AllGoals() {
                     <IconComponent size={24} color="#FFFFFF" />
                   </LinearGradient>
                   <View style={styles.goalInfo}>
-                    <Text style={styles.goalTitle}>{goal.title}</Text>
-                    <Text style={styles.goalAmount}>
+                    <TranslatedText style={styles.goalTitle}>
+                      {goal.title}
+                    </TranslatedText>
+                    <TranslatedText style={styles.goalAmount}>
                       {formatCurrency(goal.currentAmount)} /{" "}
                       {formatCurrency(goal.targetAmount)}
-                    </Text>
-                    <Text style={styles.goalRemaining}>
+                    </TranslatedText>
+                    <TranslatedText style={styles.goalRemaining}>
                       {formatCurrency(remainingAmount)} remaining
-                    </Text>
+                    </TranslatedText>
                   </View>
                   <View style={styles.goalProgress}>
-                    <Text style={styles.progressPercentage}>
+                    <TranslatedText style={styles.progressPercentage}>
                       {goal.progress}%
-                    </Text>
+                    </TranslatedText>
                     <Eye size={16} color="#6B7280" />
                   </View>
                 </View>
@@ -293,21 +298,21 @@ export default function AllGoals() {
                 <View style={styles.goalDetails}>
                   <View style={styles.goalDetail}>
                     <Calendar size={16} color="#6B7280" />
-                    <Text style={styles.goalDetailText}>
+                    <TranslatedText style={styles.goalDetailText}>
                       Target: {targetDate.toLocaleDateString("en-IN")}
-                    </Text>
+                    </TranslatedText>
                   </View>
                   <View style={styles.goalDetail}>
                     <IndianRupee size={16} color="#6B7280" />
-                    <Text style={styles.goalDetailText}>
+                    <TranslatedText style={styles.goalDetailText}>
                       {formatCurrency(goal.monthlyTarget)}/month needed
-                    </Text>
+                    </TranslatedText>
                   </View>
                   <View style={styles.goalDetail}>
                     <Target size={16} color="#6B7280" />
-                    <Text style={styles.goalDetailText}>
+                    <TranslatedText style={styles.goalDetailText}>
                       {monthsRemaining} months remaining
-                    </Text>
+                    </TranslatedText>
                   </View>
                 </View>
 
@@ -331,10 +336,12 @@ export default function AllGoals() {
         {filteredGoals.length === 0 && (
           <View style={styles.emptyState}>
             <Target size={48} color="#9CA3AF" />
-            <Text style={styles.emptyStateTitle}>No goals found</Text>
-            <Text style={styles.emptyStateText}>
+            <TranslatedText style={styles.emptyStateTitle}>
+              No goals found
+            </TranslatedText>
+            <TranslatedText style={styles.emptyStateText}>
               Try selecting a different category or create a new goal
-            </Text>
+            </TranslatedText>
           </View>
         )}
       </ScrollView>

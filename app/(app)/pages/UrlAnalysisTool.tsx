@@ -4,6 +4,7 @@ import { FraudAnalyzer } from "../../../components/FraudAnalyzer";
 import { SecurityFeatures } from "../../../components/SecurityFeatures";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useFocusEffect } from "expo-router";
+import TranslatedText from "../../../components/TranslatedText";
 
 export default function UrlAnalysisTool() {
   useFocusEffect(() => {

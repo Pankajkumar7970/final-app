@@ -16,6 +16,7 @@ import {
 } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { markLessonCompleted } from "../../../data/lessonsData";
+import TranslatedText from "../../../components/TranslatedText";
 
 const QuizScreen: React.FC = ({ route, navigation }: any) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -108,27 +109,27 @@ const QuizScreen: React.FC = ({ route, navigation }: any) => {
                   )}
                 </View>
 
-                <Text style={styles.resultTitle}>
+                <TranslatedText style={styles.resultTitle}>
                   {passed ? "Congratulations!" : "Try Again!"}
-                </Text>
+                </TranslatedText>
 
                 <View style={styles.scoreContainer}>
-                  <Text style={styles.scoreText}>
+                  <TranslatedText style={styles.scoreText}>
                     {score}/{totalQuestions}
-                  </Text>
-                  <Text style={styles.scoreDescription}>
+                  </TranslatedText>
+                  <TranslatedText style={styles.scoreDescription}>
                     {passed
                       ? "You have successfully completed this lesson!"
                       : `You need ${passingScore} correct answers to pass.`}
-                  </Text>
+                  </TranslatedText>
                 </View>
 
                 <View style={styles.answersContainer}>
                   {quiz.map((question, index) => (
                     <View key={question.id} style={styles.answerRow}>
-                      <Text style={styles.answerText}>
+                      <TranslatedText style={styles.answerText}>
                         Question {index + 1}
-                      </Text>
+                      </TranslatedText>
                       {selectedAnswers[index] === question.correct ? (
                         <CheckCircle size={20} color="#059669" />
                       ) : (
@@ -150,7 +151,9 @@ const QuizScreen: React.FC = ({ route, navigation }: any) => {
                         color="#1e40af"
                         style={{ marginRight: 8 }}
                       />
-                      <Text style={styles.retakeButtonText}>Retake Quiz</Text>
+                      <TranslatedText style={styles.retakeButtonText}>
+                        Retake Quiz
+                      </TranslatedText>
                     </View>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -162,7 +165,9 @@ const QuizScreen: React.FC = ({ route, navigation }: any) => {
                       colors={["#3b82f6", "#1d4ed8"]}
                       style={styles.backButtonGradient}
                     >
-                      <Text style={styles.backButtonText}>Back to Lessons</Text>
+                      <TranslatedText style={styles.backButtonText}>
+                        Back to Lessons
+                      </TranslatedText>
                     </LinearGradient>
                   </TouchableOpacity>
                 </View>
@@ -194,14 +199,14 @@ const QuizScreen: React.FC = ({ route, navigation }: any) => {
               <Text style={styles.headerTitle} numberOfLines={1}>
                 {lesson.title} - Quiz
               </Text>
-              <Text style={styles.headerSubtitle}>
+              <TranslatedText style={styles.headerSubtitle}>
                 Question {currentQuestion + 1} of {totalQuestions}
-              </Text>
+              </TranslatedText>
             </View>
             <View style={styles.progressBadge}>
-              <Text style={styles.progressText}>
+              <TranslatedText style={styles.progressText}>
                 {Math.round(((currentQuestion + 1) / totalQuestions) * 100)}%
-              </Text>
+              </TranslatedText>
             </View>
           </View>
 
@@ -225,7 +230,9 @@ const QuizScreen: React.FC = ({ route, navigation }: any) => {
               colors={["rgba(255,255,255,0.9)", "rgba(255,255,255,0.6)"]}
               style={styles.cardGradient}
             >
-              <Text style={styles.questionText}>{currentQ.question}</Text>
+              <TranslatedText style={styles.questionText}>
+                {currentQ.question}
+              </TranslatedText>
 
               <View style={styles.optionsContainer}>
                 {currentQ.options.map((option, index) => (
@@ -251,7 +258,7 @@ const QuizScreen: React.FC = ({ route, navigation }: any) => {
                           <View style={styles.radioButtonInner} />
                         )}
                       </View>
-                      <Text
+                      <TranslatedText
                         style={[
                           styles.optionText,
                           selectedAnswers[currentQuestion] === index &&
@@ -259,7 +266,7 @@ const QuizScreen: React.FC = ({ route, navigation }: any) => {
                         ]}
                       >
                         {option}
-                      </Text>
+                      </TranslatedText>
                     </View>
                   </TouchableOpacity>
                 ))}
@@ -284,14 +291,14 @@ const QuizScreen: React.FC = ({ route, navigation }: any) => {
                   color={currentQuestion === 0 ? "#9ca3af" : "#1e40af"}
                   style={{ marginRight: 8 }}
                 />
-                <Text
+                <TranslatedText
                   style={[
                     styles.navButtonText,
                     currentQuestion === 0 && styles.navButtonTextDisabled,
                   ]}
                 >
                   Previous
-                </Text>
+                </TranslatedText>
               </View>
             </TouchableOpacity>
 
@@ -310,9 +317,9 @@ const QuizScreen: React.FC = ({ route, navigation }: any) => {
                 }
                 style={styles.nextButtonGradient}
               >
-                <Text style={styles.nextButtonText}>
+                <TranslatedText style={styles.nextButtonText}>
                   {isLastQuestion ? "Finish Quiz" : "Next"}
-                </Text>
+                </TranslatedText>
                 {!isLastQuestion && (
                   <ArrowLeft
                     size={16}

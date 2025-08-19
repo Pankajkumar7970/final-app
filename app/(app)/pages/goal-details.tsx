@@ -37,6 +37,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useGoals } from "../../../contexts/GoalsContext";
 import { get } from "mongoose";
 import { PSBColors } from "../../../utils/PSBColors";
+import TranslatedText from "../../../components/TranslatedText";
 
 const { width } = Dimensions.get("window");
 
@@ -68,9 +69,11 @@ export default function GoalDetails() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>Goal not found</Text>
+          <TranslatedText style={styles.errorText}>
+            Goal not found
+          </TranslatedText>
           <TouchableOpacity onPress={() => router.back()}>
-            <Text style={styles.backText}>Go Back</Text>
+            <TranslatedText style={styles.backText}>Go Back</TranslatedText>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -231,7 +234,9 @@ export default function GoalDetails() {
             <ArrowLeft size={24} color="#FFFFFF" />
           </TouchableOpacity>
           <View style={styles.headerCenter}>
-            <Text style={styles.headerTitle}>Goal Details</Text>
+            <TranslatedText style={styles.headerTitle}>
+              Goal Details
+            </TranslatedText>
           </View>
           <TouchableOpacity style={styles.editButton} onPress={openEditModal}>
             <Edit3 size={20} color="#FFFFFF" />
@@ -244,7 +249,9 @@ export default function GoalDetails() {
         <View style={styles.overviewCard}>
           <View style={styles.overviewHeader}>
             <Zap size={24} color="#F59E0B" />
-            <Text style={styles.overviewTitle}>Goal Overview</Text>
+            <TranslatedText style={styles.overviewTitle}>
+              Goal Overview
+            </TranslatedText>
           </View>
           <View style={styles.overviewStats}>
             <View style={styles.overviewStat}>
@@ -252,44 +259,52 @@ export default function GoalDetails() {
                 colors={["#3B82F6", "#1D4ED8"]}
                 style={styles.statGradient}
               >
-                <Text style={styles.overviewStatValue}>
+                <TranslatedText style={styles.overviewStatValue}>
                   ₹{(goal.currentAmount / 100000).toFixed(1)}L
-                </Text>
+                </TranslatedText>
               </LinearGradient>
-              <Text style={styles.overviewStatLabel}>Current Amount</Text>
+              <TranslatedText style={styles.overviewStatLabel}>
+                Current Amount
+              </TranslatedText>
             </View>
             <View style={styles.overviewStat}>
               <LinearGradient
                 colors={["#10B981", "#047857"]}
                 style={styles.statGradient}
               >
-                <Text style={styles.overviewStatValue}>
+                <TranslatedText style={styles.overviewStatValue}>
                   ₹{(goal.targetAmount / 100000).toFixed(1)}L
-                </Text>
+                </TranslatedText>
               </LinearGradient>
-              <Text style={styles.overviewStatLabel}>Target Amount</Text>
+              <TranslatedText style={styles.overviewStatLabel}>
+                Target Amount
+              </TranslatedText>
             </View>
             <View style={styles.overviewStat}>
               <LinearGradient
                 colors={["#F59E0B", "#D97706"]}
                 style={styles.statGradient}
               >
-                <Text style={styles.overviewStatValue}>
+                <TranslatedText style={styles.overviewStatValue}>
                   ₹{(goal.monthlyTarget / 1000).toFixed(0)}K
-                </Text>
+                </TranslatedText>
               </LinearGradient>
-              <Text style={styles.overviewStatLabel}>Monthly Target</Text>
+              <TranslatedText style={styles.overviewStatLabel}>
+                Monthly Target
+              </TranslatedText>
             </View>
             <View style={styles.overviewStat}>
               <LinearGradient
                 colors={["#8B5CF6", "#7C3AED"]}
                 style={styles.statGradient}
               >
-                <Text style={styles.overviewStatValue}>
+                <TranslatedText style={styles.overviewStatValue}>
                   {goal.progress.toFixed(0)}%
-                </Text>
+                </TranslatedText>
               </LinearGradient>
-              <Text style={styles.overviewStatLabel}>Progress</Text>
+              <TranslatedText style={styles.overviewStatLabel}>
+                Progress
+              </TranslatedText>
             </View>
           </View>
         </View>
@@ -311,15 +326,23 @@ export default function GoalDetails() {
                 <IconComponent size={32} color="#FFFFFF" />
               </LinearGradient>
               <View style={styles.goalInfo}>
-                <Text style={styles.goalTitle}>{goal.title}</Text>
-                <Text style={styles.goalDescription}>{goal.description}</Text>
+                <TranslatedText style={styles.goalTitle}>
+                  {goal.title}
+                </TranslatedText>
+                <TranslatedText style={styles.goalDescription}>
+                  {goal.description}
+                </TranslatedText>
               </View>
             </View>
 
             <View style={styles.progressSection}>
               <View style={styles.progressHeader}>
-                <Text style={styles.progressTitle}>Progress</Text>
-                <Text style={styles.progressPercentage}>{goal.progress}%</Text>
+                <TranslatedText style={styles.progressTitle}>
+                  Progress
+                </TranslatedText>
+                <TranslatedText style={styles.progressPercentage}>
+                  {goal.progress}%
+                </TranslatedText>
               </View>
               <View style={styles.progressBarContainer}>
                 <LinearGradient
@@ -334,12 +357,12 @@ export default function GoalDetails() {
                 />
               </View>
               <View style={styles.amountInfo}>
-                <Text style={styles.currentAmount}>
+                <TranslatedText style={styles.currentAmount}>
                   {formatCurrency(goal.currentAmount)}
-                </Text>
-                <Text style={styles.targetAmount}>
+                </TranslatedText>
+                <TranslatedText style={styles.targetAmount}>
                   of {formatCurrency(goal.targetAmount)}
-                </Text>
+                </TranslatedText>
               </View>
             </View>
           </LinearGradient>
@@ -347,7 +370,9 @@ export default function GoalDetails() {
 
         {/* Key Metrics */}
         <View style={styles.metricsCard}>
-          <Text style={styles.metricsTitle}>Key Metrics</Text>
+          <TranslatedText style={styles.metricsTitle}>
+            Key Metrics
+          </TranslatedText>
           <View style={styles.metricsGrid}>
             <View style={styles.metricItem}>
               <LinearGradient
@@ -356,10 +381,12 @@ export default function GoalDetails() {
               >
                 <DollarSign size={20} color="#FFFFFF" />
               </LinearGradient>
-              <Text style={styles.metricValue}>
+              <TranslatedText style={styles.metricValue}>
                 {formatCurrency(remainingAmount)}
-              </Text>
-              <Text style={styles.metricLabel}>Remaining</Text>
+              </TranslatedText>
+              <TranslatedText style={styles.metricLabel}>
+                Remaining
+              </TranslatedText>
             </View>
             <View style={styles.metricItem}>
               <LinearGradient
@@ -368,10 +395,12 @@ export default function GoalDetails() {
               >
                 <IndianRupee size={20} color="#FFFFFF" />
               </LinearGradient>
-              <Text style={styles.metricValue}>
+              <TranslatedText style={styles.metricValue}>
                 {formatCurrency(goal.monthlyTarget)}
-              </Text>
-              <Text style={styles.metricLabel}>Monthly Target</Text>
+              </TranslatedText>
+              <TranslatedText style={styles.metricLabel}>
+                Monthly Target
+              </TranslatedText>
             </View>
             <View style={styles.metricItem}>
               <LinearGradient
@@ -380,8 +409,12 @@ export default function GoalDetails() {
               >
                 <Clock size={20} color="#FFFFFF" />
               </LinearGradient>
-              <Text style={styles.metricValue}>{monthsRemaining}</Text>
-              <Text style={styles.metricLabel}>Months Left</Text>
+              <TranslatedText style={styles.metricValue}>
+                {monthsRemaining}
+              </TranslatedText>
+              <TranslatedText style={styles.metricLabel}>
+                Months Left
+              </TranslatedText>
             </View>
             <View style={styles.metricItem}>
               <LinearGradient
@@ -390,7 +423,7 @@ export default function GoalDetails() {
               >
                 <TrendingUp size={20} color="#FFFFFF" />
               </LinearGradient>
-              <Text style={styles.metricValue}>
+              <TranslatedText style={styles.metricValue}>
                 ₹
                 {contributions.length > 0
                   ? (goal.currentAmount / contributions.length / 1000).toFixed(
@@ -398,8 +431,10 @@ export default function GoalDetails() {
                     )
                   : "0"}
                 K
-              </Text>
-              <Text style={styles.metricLabel}>Avg Contribution</Text>
+              </TranslatedText>
+              <TranslatedText style={styles.metricLabel}>
+                Avg Contribution
+              </TranslatedText>
             </View>
           </View>
         </View>
@@ -418,7 +453,9 @@ export default function GoalDetails() {
               style={styles.primaryActionGradient}
             >
               <Plus size={20} color="#FFFFFF" />
-              <Text style={styles.primaryActionText}>Add Contribution</Text>
+              <TranslatedText style={styles.primaryActionText}>
+                Add Contribution
+              </TranslatedText>
             </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
@@ -426,13 +463,17 @@ export default function GoalDetails() {
             onPress={openEditModal}
           >
             <Edit3 size={18} color="#059669" />
-            <Text style={styles.secondaryActionText}>Edit Goal</Text>
+            <TranslatedText style={styles.secondaryActionText}>
+              Edit Goal
+            </TranslatedText>
           </TouchableOpacity>
         </View>
 
         {/* Contribution History */}
         <View style={styles.historyCard}>
-          <Text style={styles.historyTitle}>Contribution History</Text>
+          <TranslatedText style={styles.historyTitle}>
+            Contribution History
+          </TranslatedText>
           <View style={styles.historyList}>
             {contributions.map((contribution) => (
               <View key={contribution._id} style={styles.historyItem}>
@@ -440,14 +481,14 @@ export default function GoalDetails() {
                   <Plus size={16} color="#10B981" />
                 </View>
                 <View style={styles.historyInfo}>
-                  <Text style={styles.historyAmount}>
+                  <TranslatedText style={styles.historyAmount}>
                     {formatCurrency(contribution.amount)}
-                  </Text>
-                  <Text style={styles.historyDate}>
+                  </TranslatedText>
+                  <TranslatedText style={styles.historyDate}>
                     {new Date(contribution.createdAt).toLocaleDateString(
                       "en-IN"
                     )}
-                  </Text>
+                  </TranslatedText>
                 </View>
                 {/* <View style={styles.historyType}>
                   <Text style={styles.historyTypeText}>
@@ -461,16 +502,20 @@ export default function GoalDetails() {
 
         {/* Goal Timeline */}
         <View style={styles.timelineCard}>
-          <Text style={styles.timelineTitle}>Goal Timeline</Text>
+          <TranslatedText style={styles.timelineTitle}>
+            Goal Timeline
+          </TranslatedText>
           <View style={styles.timelineItem}>
             <View style={styles.timelineIcon}>
               <Target size={16} color="#2563EB" />
             </View>
             <View style={styles.timelineContent}>
-              <Text style={styles.timelineText}>Goal Created</Text>
-              <Text style={styles.timelineDate}>
+              <TranslatedText style={styles.timelineText}>
+                Goal Created
+              </TranslatedText>
+              <TranslatedText style={styles.timelineDate}>
                 {new Date(goal.createdAt).toLocaleDateString("en-IN")}
-              </Text>
+              </TranslatedText>
             </View>
           </View>
           <View style={styles.timelineItem}>
@@ -478,10 +523,12 @@ export default function GoalDetails() {
               <Calendar size={16} color="#F59E0B" />
             </View>
             <View style={styles.timelineContent}>
-              <Text style={styles.timelineText}>Target Date</Text>
-              <Text style={styles.timelineDate}>
+              <TranslatedText style={styles.timelineText}>
+                Target Date
+              </TranslatedText>
+              <TranslatedText style={styles.timelineDate}>
                 {targetDate.toLocaleDateString("en-IN")}
-              </Text>
+              </TranslatedText>
             </View>
           </View>
         </View>
@@ -498,7 +545,9 @@ export default function GoalDetails() {
               ]}
               style={styles.modalHeader}
             >
-              <Text style={styles.modalTitle}>Add Money</Text>
+              <TranslatedText style={styles.modalTitle}>
+                Add Money
+              </TranslatedText>
               <TouchableOpacity onPress={() => setAddMoneyModalVisible(false)}>
                 <X size={24} color="#FFFFFF" />
               </TouchableOpacity>
@@ -506,7 +555,9 @@ export default function GoalDetails() {
 
             <View style={styles.modalBody}>
               <View style={styles.inputGroup}>
-                <Text style={styles.inputLabel}>Amount (₹)</Text>
+                <TranslatedText style={styles.inputLabel}>
+                  Amount (₹)
+                </TranslatedText>
                 <TextInput
                   style={styles.input}
                   value={contributionAmount}
@@ -518,7 +569,9 @@ export default function GoalDetails() {
               </View>
 
               <View style={styles.quickAmounts}>
-                <Text style={styles.quickAmountsLabel}>Quick amounts:</Text>
+                <TranslatedText style={styles.quickAmountsLabel}>
+                  Quick amounts:
+                </TranslatedText>
                 <View style={styles.quickAmountsRow}>
                   {[1000, 5000, 10000, 25000].map((amount) => (
                     <TouchableOpacity
@@ -526,7 +579,9 @@ export default function GoalDetails() {
                       style={styles.quickAmountButton}
                       onPress={() => setContributionAmount(amount.toString())}
                     >
-                      <Text style={styles.quickAmountText}>₹{amount}</Text>
+                      <TranslatedText style={styles.quickAmountText}>
+                        ₹{amount}
+                      </TranslatedText>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -545,7 +600,9 @@ export default function GoalDetails() {
                 style={styles.addMoneyGradient}
               >
                 <Plus size={20} color="#FFFFFF" />
-                <Text style={styles.addMoneyButtonText}>Add Money</Text>
+                <TranslatedText style={styles.addMoneyButtonText}>
+                  Add Money
+                </TranslatedText>
               </LinearGradient>
             </TouchableOpacity>
           </View>
@@ -563,7 +620,9 @@ export default function GoalDetails() {
               ]}
               style={styles.modalHeader}
             >
-              <Text style={styles.modalTitle}>Edit Goal</Text>
+              <TranslatedText style={styles.modalTitle}>
+                Edit Goal
+              </TranslatedText>
               <TouchableOpacity onPress={() => setEditModalVisible(false)}>
                 <X size={24} color="#FFFFFF" />
               </TouchableOpacity>
@@ -571,7 +630,9 @@ export default function GoalDetails() {
 
             <ScrollView style={styles.modalBody}>
               <View style={styles.inputGroup}>
-                <Text style={styles.inputLabel}>Goal Title</Text>
+                <TranslatedText style={styles.inputLabel}>
+                  Goal Title
+                </TranslatedText>
                 <TextInput
                   style={styles.input}
                   value={editedGoal.title}
@@ -584,7 +645,9 @@ export default function GoalDetails() {
               </View>
 
               <View style={styles.inputGroup}>
-                <Text style={styles.inputLabel}>Target Amount (₹)</Text>
+                <TranslatedText style={styles.inputLabel}>
+                  Target Amount (₹)
+                </TranslatedText>
                 <TextInput
                   style={styles.input}
                   value={editedGoal.targetAmount}
@@ -598,7 +661,9 @@ export default function GoalDetails() {
               </View>
 
               <View style={styles.inputGroup}>
-                <Text style={styles.inputLabel}>Target Date</Text>
+                <TranslatedText style={styles.inputLabel}>
+                  Target Date
+                </TranslatedText>
                 <TextInput
                   style={styles.input}
                   value={editedGoal.targetDate}
@@ -611,7 +676,9 @@ export default function GoalDetails() {
               </View>
 
               <View style={styles.inputGroup}>
-                <Text style={styles.inputLabel}>Description</Text>
+                <TranslatedText style={styles.inputLabel}>
+                  Description
+                </TranslatedText>
                 <TextInput
                   style={[styles.input, styles.textArea]}
                   value={editedGoal.description}
@@ -638,7 +705,9 @@ export default function GoalDetails() {
                 style={styles.editGoalGradient}
               >
                 <CheckCircle size={20} color="#FFFFFF" />
-                <Text style={styles.editGoalButtonText}>Update Goal</Text>
+                <TranslatedText style={styles.editGoalButtonText}>
+                  Update Goal
+                </TranslatedText>
               </LinearGradient>
             </TouchableOpacity>
           </View>

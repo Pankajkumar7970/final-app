@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Dimensions,
   StatusBar,
+  Alert,
 } from "react-native";
 import {
   Shield,
@@ -28,6 +29,7 @@ import SecurityTips from "../../../components/SecurityTips";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import API from "../../../api/api";
+import TranslatedText from "../../../components/TranslatedText";
 
 type Step =
   | "intro"
@@ -48,11 +50,20 @@ export default function Index() {
     otp: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
-  const resetSimulation = () => {
+  const resetSimulation = async () => {
     setCurrentStep("intro");
     setUserData({ account: "", otp: "", password: "" });
-    API.post("/simulator-use/phishing-simulator");
+    setLoading(true);
+    const response = await API.post("/simulator-use/phishing-simulator");
+    setLoading(false);
+    const Exp = response.data.progress.experiencePoints;
+    Alert.alert(
+      "Exp Earned!",
+      `Congratulations!!! You have earned ${Exp} Exp points.`,
+      [{ text: "OK" }]
+    );
     router.replace("/(app)/(tabs)/simulator");
   };
 
@@ -66,16 +77,20 @@ export default function Index() {
               <View style={styles.iconContainer}>
                 <Shield size={64} color="#FFFFFF" strokeWidth={2} />
               </View>
-              <Text style={styles.heroTitle}>Phishing Awareness Simulator</Text>
-              <Text style={styles.heroSubtitle}>
+              <TranslatedText style={styles.heroTitle}>
+                Phishing Awareness Simulator
+              </TranslatedText>
+              <TranslatedText style={styles.heroSubtitle}>
                 Master cybersecurity through interactive learning
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.badgeContainer}>
               <View style={styles.educationalBadge}>
                 <Star size={16} color="#F59E0B" strokeWidth={2} />
-                <Text style={styles.badgeText}>Educational Purpose Only</Text>
+                <TranslatedText style={styles.badgeText}>
+                  Educational Purpose Only
+                </TranslatedText>
               </View>
             </View>
           </View>
@@ -85,14 +100,14 @@ export default function Index() {
               <View style={styles.featureIconContainer}>
                 <AlertTriangle size={48} color="#F59E0B" strokeWidth={2} />
               </View>
-              <Text style={styles.featureTitle}>
+              <TranslatedText style={styles.featureTitle}>
                 🛡️ Learn to Recognize Threats
-              </Text>
-              <Text style={styles.featureDescription}>
+              </TranslatedText>
+              <TranslatedText style={styles.featureDescription}>
                 Master the art of spotting suspicious messages, emails, and
                 websites before they can deceive you. Your awareness is your
                 strongest defense.
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.benefitsGrid}>
@@ -100,21 +115,25 @@ export default function Index() {
                 <View style={styles.benefitIcon}>
                   <CheckCircle size={32} color="#10B981" strokeWidth={2} />
                 </View>
-                <Text style={styles.benefitTitle}>Safe Practice</Text>
-                <Text style={styles.benefitDescription}>
+                <TranslatedText style={styles.benefitTitle}>
+                  Safe Practice
+                </TranslatedText>
+                <TranslatedText style={styles.benefitDescription}>
                   Experience realistic scenarios in a completely secure
                   environment
-                </Text>
+                </TranslatedText>
               </View>
 
               <View style={styles.benefitCard}>
                 <View style={styles.benefitIcon}>
                   <Shield size={32} color="#3B82F6" strokeWidth={2} />
                 </View>
-                <Text style={styles.benefitTitle}>Stay Protected</Text>
-                <Text style={styles.benefitDescription}>
+                <TranslatedText style={styles.benefitTitle}>
+                  Stay Protected
+                </TranslatedText>
+                <TranslatedText style={styles.benefitDescription}>
                   Learn proven techniques to defend against real cyber threats
-                </Text>
+                </TranslatedText>
               </View>
             </View>
           </View>
@@ -123,44 +142,46 @@ export default function Index() {
             <View style={styles.disclaimerIcon}>
               <AlertTriangle size={24} color="#F59E0B" strokeWidth={2} />
             </View>
-            <Text style={styles.disclaimerTitle}>Important Safety Notice</Text>
+            <TranslatedText style={styles.disclaimerTitle}>
+              Important Safety Notice
+            </TranslatedText>
             <View style={styles.disclaimerList}>
               <View style={styles.disclaimerItem}>
                 <CheckCircle size={16} color="#10B981" strokeWidth={2} />
-                <Text style={styles.disclaimerText}>
+                <TranslatedText style={styles.disclaimerText}>
                   Completely safe educational simulation
-                </Text>
+                </TranslatedText>
               </View>
               <View style={styles.disclaimerItem}>
                 <CheckCircle size={16} color="#10B981" strokeWidth={2} />
-                <Text style={styles.disclaimerText}>
+                <TranslatedText style={styles.disclaimerText}>
                   No real data transmitted or stored
-                </Text>
+                </TranslatedText>
               </View>
               <View style={styles.disclaimerItem}>
                 <CheckCircle size={16} color="#10B981" strokeWidth={2} />
-                <Text style={styles.disclaimerText}>
+                <TranslatedText style={styles.disclaimerText}>
                   All banking interfaces are fake demos
-                </Text>
+                </TranslatedText>
               </View>
               <View style={styles.disclaimerItem}>
                 <CheckCircle size={16} color="#10B981" strokeWidth={2} />
-                <Text style={styles.disclaimerText}>
+                <TranslatedText style={styles.disclaimerText}>
                   Educational cybersecurity purpose only
-                </Text>
+                </TranslatedText>
               </View>
             </View>
           </View>
 
           <View style={styles.trainingSection}>
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>
+              <TranslatedText style={styles.sectionTitle}>
                 Choose Your Training Module
-              </Text>
-              <Text style={styles.sectionSubtitle}>
+              </TranslatedText>
+              <TranslatedText style={styles.sectionSubtitle}>
                 Select an interactive cybersecurity training to begin your
                 learning journey
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.appGrid}>
@@ -172,10 +193,16 @@ export default function Index() {
                   <MessageSquare size={32} color="#FFFFFF" strokeWidth={2} />
                   <ChevronRight size={20} color="#FFFFFF" strokeWidth={2} />
                 </View>
-                <Text style={styles.cardTitle}>SMS Security</Text>
-                <Text style={styles.cardSubtitle}>Interactive Mobile Demo</Text>
+                <TranslatedText style={styles.cardTitle}>
+                  SMS Security
+                </TranslatedText>
+                <TranslatedText style={styles.cardSubtitle}>
+                  Interactive Mobile Demo
+                </TranslatedText>
                 <View style={styles.cardBadge}>
-                  <Text style={styles.cardBadgeText}>Beginner Friendly</Text>
+                  <TranslatedText style={styles.cardBadgeText}>
+                    Beginner Friendly
+                  </TranslatedText>
                 </View>
               </TouchableOpacity>
 
@@ -187,10 +214,16 @@ export default function Index() {
                   <Mail size={32} color="#FFFFFF" strokeWidth={2} />
                   <ChevronRight size={20} color="#FFFFFF" strokeWidth={2} />
                 </View>
-                <Text style={styles.cardTitle}>Email Shield</Text>
-                <Text style={styles.cardSubtitle}>Advanced Email Training</Text>
+                <TranslatedText style={styles.cardTitle}>
+                  Email Shield
+                </TranslatedText>
+                <TranslatedText style={styles.cardSubtitle}>
+                  Advanced Email Training
+                </TranslatedText>
                 <View style={styles.cardBadge}>
-                  <Text style={styles.cardBadgeText}>Intermediate</Text>
+                  <TranslatedText style={styles.cardBadgeText}>
+                    Intermediate
+                  </TranslatedText>
                 </View>
               </TouchableOpacity>
 
@@ -202,10 +235,16 @@ export default function Index() {
                   <Brain size={32} color="#FFFFFF" strokeWidth={2} />
                   <ChevronRight size={20} color="#FFFFFF" strokeWidth={2} />
                 </View>
-                <Text style={styles.cardTitle}>Brain Trainer</Text>
-                <Text style={styles.cardSubtitle}>Knowledge Assessment</Text>
+                <TranslatedText style={styles.cardTitle}>
+                  Brain Trainer
+                </TranslatedText>
+                <TranslatedText style={styles.cardSubtitle}>
+                  Knowledge Assessment
+                </TranslatedText>
                 <View style={styles.cardBadge}>
-                  <Text style={styles.cardBadgeText}>Test Your Skills</Text>
+                  <TranslatedText style={styles.cardBadgeText}>
+                    Test Your Skills
+                  </TranslatedText>
                 </View>
               </TouchableOpacity>
             </View>
@@ -252,7 +291,7 @@ export default function Index() {
   }
 
   if (currentStep === "tips") {
-    return <SecurityTips onRestart={resetSimulation} />;
+    return <SecurityTips onRestart={resetSimulation} loading={loading} />;
   }
 
   return null;

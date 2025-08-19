@@ -8,6 +8,7 @@ import {
   TextInput,
   Alert,
   Animated,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
@@ -28,6 +29,7 @@ export default function SupportScreen() {
   const [chatActive, setChatActive] = useState(false);
   const [blocked, setBlocked] = useState(false);
   const [fadeAnim] = useState(new Animated.Value(1));
+  const [loading, setLoading] = useState(false);
 
   const startChat = () => {
     setChatActive(true);
@@ -59,8 +61,16 @@ export default function SupportScreen() {
     router.back();
   };
 
-  const goToEducation = () => {
-    API.post("/simulator-use/lottery-fraud-simulator");
+  const goToEducation = async () => {
+    setLoading(true);
+    const response = await API.post("/simulator-use/lottery-fraud-simulator");
+    setLoading(false);
+    const Exp = response.data.progress.experiencePoints;
+    Alert.alert(
+      "Exp Earned!",
+      `Congratulations!!! You have earned ${Exp} Exp points.`,
+      [{ text: "OK" }]
+    );
     router.push("/education");
   };
 
@@ -242,14 +252,19 @@ export default function SupportScreen() {
               <TouchableOpacity
                 style={styles.educationButton}
                 onPress={goToEducation}
+                disabled={loading}
               >
                 <LinearGradient
                   colors={["#059669", "#047857"]}
                   style={styles.educationGradient}
                 >
-                  <Text style={styles.educationButtonText}>
-                    Learn How to Protect Yourself
-                  </Text>
+                  {loading ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <Text style={styles.educationButtonText}>
+                      Learn How to Protect Yourself
+                    </Text>
+                  )}
                 </LinearGradient>
               </TouchableOpacity>
             </View>

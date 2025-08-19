@@ -14,6 +14,7 @@ import SecureTextInput from "../../components/SecureTextInput";
 import { PSBColors } from "../../utils/PSBColors";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import TranslatedText from "../../components/TranslatedText";
 
 const OTPVerification = ({ onVerificationComplete }) => {
   const [otp, setOtp] = useState(["", "", "", ""]);
@@ -145,10 +146,10 @@ const OTPVerification = ({ onVerificationComplete }) => {
 
       {/* Card */}
       <View style={styles.card}>
-        <Text style={styles.title}>Enter OTP</Text>
-        <Text style={styles.subtitle}>
+        <TranslatedText style={styles.title}>Enter OTP</TranslatedText>
+        <TranslatedText style={styles.subtitle}>
           We have sent a verification code to your email address
-        </Text>
+        </TranslatedText>
 
         <View style={styles.otpContainer}>
           {otp.map((digit, index) => (

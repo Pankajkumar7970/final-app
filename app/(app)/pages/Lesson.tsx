@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LessonViewer } from "../../../components/LessonViewer";
 // import type { Lesson, Course } from "../../../types/lesson"; // Adjust the import path as needed
@@ -7,6 +7,7 @@ import { goBack } from "expo-router/build/global-state/routing";
 import { useEffect, useState } from "react";
 import API from "../../../api/api";
 import Loader from "../../../components/Loader";
+import TranslatedText from "../../../components/TranslatedText";
 
 const fetchCourse = async (courseId) => {
   console.log("Fetching course with ID:", courseId);
@@ -67,11 +68,19 @@ export default function Lesson() {
       // If there are no more lessons, you can navigate back or show a completion message
       router.back();
     }
-    await API.post(`/courses/${courseId}/complete`, {
+    const response = await API.post(`/courses/${courseId}/complete`, {
       lessonId: lesson._id,
       status:
         nextLessonIndex < course.lessons.length ? "in_progress" : "completed",
     });
+    const Exp = response.data.points;
+    if (nextLessonIndex === course.lessons.length) {
+      Alert.alert(
+        "Exp Earned!",
+        `Congratulations!!! You have earned ${Exp} Exp points.`,
+        [{ text: "OK" }]
+      );
+    }
   };
 
   if (loading) {

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import { router } from "expo-router";
 import {
@@ -17,8 +19,17 @@ import {
 import API from "../../../../api/api";
 
 export default function RevelationScreen() {
-  const handleRestart = () => {
-    API.post("/simulator-use/loan-scam-simulator");
+  const [loading, setLoading] = useState(false);
+  const handleRestart = async () => {
+    setLoading(true);
+    const response = await API.post("/simulator-use/loan-scam-simulator");
+    setLoading(false);
+    const Exp = response.data.progress.experiencePoints;
+    Alert.alert(
+      "Exp Earned!",
+      `Congratulations!!! You have earned ${Exp} Exp points.`,
+      [{ text: "OK" }]
+    );
     router.replace("/(app)/(tabs)/simulator");
   };
 
@@ -150,9 +161,19 @@ export default function RevelationScreen() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.restartButton} onPress={handleRestart}>
-          <ArrowLeft size={20} color="#ffffff" />
-          <Text style={styles.restartButtonText}>Go Back</Text>
+        <TouchableOpacity
+          style={styles.restartButton}
+          onPress={handleRestart}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <>
+              <ArrowLeft size={20} color="#ffffff" />
+              <Text style={styles.restartButtonText}>Go Back</Text>
+            </>
+          )}
         </TouchableOpacity>
 
         <View style={styles.educationNote}>

@@ -28,43 +28,6 @@ function MainLayout() {
   useFrameworkReady();
 
   // Language Switcher component
-  const LanguageSwitcher = () => {
-    const { setLang } = useLanguage();
-    const [selected, setSelected] = useState("en");
-
-    const handleSwitch = (lang) => {
-      setSelected(lang);
-      setLang(lang);
-    };
-
-    return (
-      <View style={styles.switcherContainer}>
-        {[
-          { code: "en", label: "EN" },
-          { code: "hi", label: "हि" },
-          { code: "pa", label: "ਪੰ" },
-        ].map((lang) => (
-          <TouchableOpacity
-            key={lang.code}
-            style={[
-              styles.switchButton,
-              selected === lang.code && styles.activeButton,
-            ]}
-            onPress={() => handleSwitch(lang.code)}
-          >
-            <Text
-              style={[
-                styles.switchText,
-                selected === lang.code && styles.activeText,
-              ]}
-            >
-              {lang.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    );
-  };
 
   return (
     <LanguageProvider>
@@ -73,17 +36,11 @@ function MainLayout() {
           <GestureHandlerRootView style={{ flex: 1 }}>
             <AuthProvider>
               <SafeAreaView style={{ flex: 1 }}>
-                {/* Top-right language switcher */}
-                <View style={styles.topRight}>
-                  <LanguageSwitcher />
-                </View>
-
                 {/* App screens */}
                 <Slot />
 
                 {/* Status bar & indicators */}
                 <StatusBar style="light" backgroundColor="#1a1a2e" />
-                <SecurityStatusIndicator />
                 <Toast position="top" visibilityTime={3000} />
               </SafeAreaView>
             </AuthProvider>

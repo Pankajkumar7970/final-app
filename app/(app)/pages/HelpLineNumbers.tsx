@@ -31,6 +31,7 @@ import {
   X,
 } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TranslatedText from "../../../components/TranslatedText";
 
 const { width, height } = Dimensions.get("window");
 const isTablet = width >= 768;
@@ -224,22 +225,22 @@ export default function App() {
       style === "primary"
         ? styles.primaryPhoneButton
         : style === "secondary"
-        ? styles.secondaryPhoneButton
-        : styles.specialPhoneButton;
+          ? styles.secondaryPhoneButton
+          : styles.specialPhoneButton;
 
     const textStyle =
       style === "primary"
         ? styles.primaryPhoneText
         : style === "secondary"
-        ? styles.secondaryPhoneText
-        : styles.specialPhoneText;
+          ? styles.secondaryPhoneText
+          : styles.specialPhoneText;
 
     const iconColor =
       style === "primary"
         ? "#ffffff"
         : style === "secondary"
-        ? "#374151"
-        : "#dc2626";
+          ? "#374151"
+          : "#dc2626";
 
     return (
       <TouchableOpacity
@@ -248,9 +249,13 @@ export default function App() {
         onPress={() => makePhoneCall(number)}
         activeOpacity={0.85}
       >
-        {label && <Text style={styles.phoneLabel}>{label}</Text>}
+        {label && (
+          <TranslatedText style={styles.phoneLabel}>{label}</TranslatedText>
+        )}
         <View style={styles.phoneButtonContent}>
-          <Text style={[textStyle, styles.phoneNumber]}>{number}</Text>
+          <TranslatedText style={[textStyle, styles.phoneNumber]}>
+            {number}
+          </TranslatedText>
           <View style={styles.phoneIconContainer}>
             <PhoneCall size={16} color={iconColor} />
           </View>
@@ -325,10 +330,12 @@ export default function App() {
                 <AlertTriangle size={24} color="#dc2626" />
               </View>
               <View style={styles.rbiTextContainer}>
-                <Text style={styles.rbiTitle}>Reserve Bank of India</Text>
-                <Text style={styles.rbiSubtitle}>
+                <TranslatedText style={styles.rbiTitle}>
+                  Reserve Bank of India
+                </TranslatedText>
+                <TranslatedText style={styles.rbiSubtitle}>
                   Banking Ombudsman & Consumer Helpline
-                </Text>
+                </TranslatedText>
               </View>
             </View>
 
@@ -340,10 +347,12 @@ export default function App() {
               >
                 <View style={styles.rbiPhoneContent}>
                   <View style={styles.rbiPhoneInfo}>
-                    <Text style={styles.rbiPhoneNumber}>14448</Text>
-                    <Text style={styles.rbiPhoneLabel}>
+                    <TranslatedText style={styles.rbiPhoneNumber}>
+                      14448
+                    </TranslatedText>
+                    <TranslatedText style={styles.rbiPhoneLabel}>
                       Consumer Helpline (Toll-Free)
-                    </Text>
+                    </TranslatedText>
                   </View>
                   <View style={styles.rbiPhoneIcon}>
                     <PhoneCall size={20} color="#ffffff" />
@@ -354,15 +363,19 @@ export default function App() {
               <View style={styles.rbiDetails}>
                 <View style={styles.rbiDetailItem}>
                   <Clock size={16} color="#6b7280" />
-                  <Text style={styles.rbiDetailText}>
+                  <TranslatedText style={styles.rbiDetailText}>
                     Monday - Friday: 9:30 AM - 5:15 PM
-                  </Text>
+                  </TranslatedText>
                 </View>
                 <View style={styles.rbiDetailItem}>
-                  <Text style={styles.rbiDetailText}>📧 crpc@rbi.org.in</Text>
+                  <TranslatedText style={styles.rbiDetailText}>
+                    📧 crpc@rbi.org.in
+                  </TranslatedText>
                 </View>
                 <View style={styles.rbiDetailItem}>
-                  <Text style={styles.rbiDetailText}>🌐 sachet.rbi.org.in</Text>
+                  <TranslatedText style={styles.rbiDetailText}>
+                    🌐 sachet.rbi.org.in
+                  </TranslatedText>
                 </View>
               </View>
             </View>
@@ -404,8 +417,10 @@ export default function App() {
                   onPress={() => setSelectedType(filter.key as any)}
                   activeOpacity={0.8}
                 >
-                  <Text style={styles.filterIcon}>{filter.icon}</Text>
-                  <Text
+                  <TranslatedText style={styles.filterIcon}>
+                    {filter.icon}
+                  </TranslatedText>
+                  <TranslatedText
                     style={[
                       styles.filterButtonText,
                       selectedType === filter.key &&
@@ -413,7 +428,7 @@ export default function App() {
                     ]}
                   >
                     {filter.label}
-                  </Text>
+                  </TranslatedText>
                 </TouchableOpacity>
               ))}
             </View>
@@ -421,13 +436,13 @@ export default function App() {
 
           {/* Results Header */}
           <View style={styles.resultsHeader}>
-            <Text style={styles.resultsTitle}>
+            <TranslatedText style={styles.resultsTitle}>
               {filteredBanks.length} Bank{filteredBanks.length !== 1 ? "s" : ""}{" "}
               Found
-            </Text>
-            <Text style={styles.resultsSubtitle}>
+            </TranslatedText>
+            <TranslatedText style={styles.resultsSubtitle}>
               Tap any number to call directly
-            </Text>
+            </TranslatedText>
           </View>
 
           {/* Banks Grid */}
@@ -449,9 +464,11 @@ export default function App() {
                       ]}
                     />
                     <View style={styles.bankTitleContainer}>
-                      <Text style={styles.bankName}>{bank.name}</Text>
+                      <TranslatedText style={styles.bankName}>
+                        {bank.name}
+                      </TranslatedText>
                       <View style={styles.bankMeta}>
-                        <Text
+                        <TranslatedText
                           style={[
                             styles.bankType,
                             bank.type === "government"
@@ -462,11 +479,13 @@ export default function App() {
                           {bank.type === "government"
                             ? "Government Bank"
                             : "Private Bank"}
-                        </Text>
+                        </TranslatedText>
                         {bank.verified && (
                           <View style={styles.verifiedBadge}>
                             <CheckCircle size={12} color="#10b981" />
-                            <Text style={styles.verifiedText}>Verified</Text>
+                            <TranslatedText style={styles.verifiedText}>
+                              Verified
+                            </TranslatedText>
                           </View>
                         )}
                       </View>
@@ -492,7 +511,9 @@ export default function App() {
 
                 {/* Primary Numbers */}
                 <View style={styles.primaryNumbers}>
-                  <Text style={styles.numbersTitle}>Primary Helplines</Text>
+                  <TranslatedText style={styles.numbersTitle}>
+                    Primary Helplines
+                  </TranslatedText>
                   <View
                     style={[
                       styles.phoneGrid,
@@ -509,9 +530,9 @@ export default function App() {
                       style={styles.showMoreButton}
                       onPress={() => setExpandedBank(bank.name)}
                     >
-                      <Text style={styles.showMoreText}>
+                      <TranslatedText style={styles.showMoreText}>
                         +{bank.tollFree.length - 2} more numbers
-                      </Text>
+                      </TranslatedText>
                       <ChevronDown size={16} color="#3b82f6" />
                     </TouchableOpacity>
                   )}
@@ -523,7 +544,9 @@ export default function App() {
                     {/* Regular Numbers */}
                     {bank.regular && bank.regular.length > 0 && (
                       <View style={styles.numbersSection}>
-                        <Text style={styles.numbersTitle}>Regular Numbers</Text>
+                        <TranslatedText style={styles.numbersTitle}>
+                          Regular Numbers
+                        </TranslatedText>
                         <View
                           style={[
                             styles.phoneGrid,
@@ -540,9 +563,9 @@ export default function App() {
                     {/* Special Services */}
                     {bank.specialNumbers && bank.specialNumbers.length > 0 && (
                       <View style={styles.numbersSection}>
-                        <Text style={styles.numbersTitle}>
+                        <TranslatedText style={styles.numbersTitle}>
                           Specialized Services
-                        </Text>
+                        </TranslatedText>
                         <View
                           style={[
                             styles.phoneGrid,
@@ -563,10 +586,12 @@ export default function App() {
                     {/* Notes */}
                     {bank.notes && (
                       <View style={styles.notesSection}>
-                        <Text style={styles.notesTitle}>
+                        <TranslatedText style={styles.notesTitle}>
                           Additional Information
-                        </Text>
-                        <Text style={styles.notesText}>{bank.notes}</Text>
+                        </TranslatedText>
+                        <TranslatedText style={styles.notesText}>
+                          {bank.notes}
+                        </TranslatedText>
                       </View>
                     )}
                   </View>
@@ -579,7 +604,9 @@ export default function App() {
           <View style={styles.guidelinesSection}>
             <View style={styles.guidelinesHeader}>
               <AlertTriangle size={24} color="#f59e0b" />
-              <Text style={styles.guidelinesTitle}>Emergency Guidelines</Text>
+              <TranslatedText style={styles.guidelinesTitle}>
+                Emergency Guidelines
+              </TranslatedText>
             </View>
 
             <View
@@ -589,53 +616,65 @@ export default function App() {
               ]}
             >
               <View style={styles.guidelineCard}>
-                <Text style={styles.guidelineTitle}>Before Calling</Text>
-                <Text style={styles.guidelineText}>
+                <TranslatedText style={styles.guidelineTitle}>
+                  Before Calling
+                </TranslatedText>
+                <TranslatedText style={styles.guidelineText}>
                   • Account number and details
-                </Text>
-                <Text style={styles.guidelineText}>
+                </TranslatedText>
+                <TranslatedText style={styles.guidelineText}>
                   • Transaction information
-                </Text>
-                <Text style={styles.guidelineText}>• Identity documents</Text>
+                </TranslatedText>
+                <TranslatedText style={styles.guidelineText}>
+                  • Identity documents
+                </TranslatedText>
               </View>
 
               <View style={styles.guidelineCard}>
-                <Text style={styles.guidelineTitle}>During the Call</Text>
-                <Text style={styles.guidelineText}>
+                <TranslatedText style={styles.guidelineTitle}>
+                  During the Call
+                </TranslatedText>
+                <TranslatedText style={styles.guidelineText}>
                   • Request reference number
-                </Text>
-                <Text style={styles.guidelineText}>• Note agent details</Text>
-                <Text style={styles.guidelineText}>
+                </TranslatedText>
+                <TranslatedText style={styles.guidelineText}>
+                  • Note agent details
+                </TranslatedText>
+                <TranslatedText style={styles.guidelineText}>
                   • Confirm resolution timeline
-                </Text>
+                </TranslatedText>
               </View>
 
               <View style={styles.guidelineCard}>
-                <Text style={styles.guidelineTitle}>Follow Up</Text>
-                <Text style={styles.guidelineText}>
+                <TranslatedText style={styles.guidelineTitle}>
+                  Follow Up
+                </TranslatedText>
+                <TranslatedText style={styles.guidelineText}>
                   • Contact RBI if no response in 30 days
-                </Text>
-                <Text style={styles.guidelineText}>
+                </TranslatedText>
+                <TranslatedText style={styles.guidelineText}>
                   • Keep all communication records
-                </Text>
-                <Text style={styles.guidelineText}>
+                </TranslatedText>
+                <TranslatedText style={styles.guidelineText}>
                   • Escalate through proper channels
-                </Text>
+                </TranslatedText>
               </View>
             </View>
           </View>
 
           {/* Professional Footer */}
           <View style={styles.footer}>
-            <Text style={styles.footerTitle}>Banking Emergency Resources</Text>
-            <Text style={styles.footerText}>
+            <TranslatedText style={styles.footerTitle}>
+              Banking Emergency Resources
+            </TranslatedText>
+            <TranslatedText style={styles.footerText}>
               All contact numbers are verified and sourced from official bank
               websites. Always prioritize your bank's official channels first.
-            </Text>
-            <Text style={styles.footerDisclaimer}>
+            </TranslatedText>
+            <TranslatedText style={styles.footerDisclaimer}>
               For unresolved issues, contact RBI Banking Ombudsman after 30
               days.
-            </Text>
+            </TranslatedText>
           </View>
         </View>
       </ScrollView>

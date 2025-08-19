@@ -3,6 +3,7 @@ import { View, StyleSheet, BackHandler } from "react-native";
 import Calculator from "../../../components/Calculator";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, useFocusEffect } from "expo-router";
+import TranslatedText from "../../../components/TranslatedText";
 
 export default function FdAndRdCalculator() {
   useFocusEffect(() => {

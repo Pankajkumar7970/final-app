@@ -6,6 +6,7 @@ import { ensurePermission } from "../utils/permissions";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { Shield } from "lucide-react-native";
 import { colors } from "../utils/colors";
+import TranslatedText from "../components/TranslatedText";
 
 export default function Index() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -62,10 +63,12 @@ export default function Index() {
                 resizeMode="contain"
               />
             </View>
-            <Text style={styles.title}>Welcome to FinEduGuard App</Text>
-            <Text style={styles.subtitle}>
+            <TranslatedText style={styles.title}>
+              Welcome to FinEduGuard App
+            </TranslatedText>
+            <TranslatedText style={styles.subtitle}>
               Your trusted financial partner for secure banking solutions
-            </Text>
+            </TranslatedText>
           </View>
 
           <View style={styles.actionSection}>
@@ -84,9 +87,9 @@ export default function Index() {
           </View>
 
           <View style={styles.footerSection}>
-            <Text style={styles.footerText}>
+            <TranslatedText style={styles.footerText}>
               Secured by industry-leading encryption
-            </Text>
+            </TranslatedText>
           </View>
         </View>
       </View>

@@ -25,6 +25,7 @@ import { CourseCard } from "../../../components/CourseCard";
 import { router } from "expo-router";
 import API from "../../../api/api";
 import Loader from "../../../components/Loader";
+import TranslatedText from "../../../components/TranslatedText";
 
 const { width } = Dimensions.get("window");
 const fetchCourses = async () => {
@@ -98,16 +99,6 @@ export default function LessonsPage() {
     }
   };
 
-  // const getProgressForCourse = (courseId: string) => {
-  //   const courseProgress = progress.find((p) => p.courseId === courseId);
-  //   if (!courseProgress) return 0;
-  //   const course = courses.find((c) => c._id === courseId);
-  //   if (!course) return 0;
-  //   return (
-  //     (courseProgress.completedLessons.length / course.lessons.length) * 100
-  //   );
-  // };
-
   if (loading) {
     return (
       <SafeAreaView
@@ -122,12 +113,16 @@ export default function LessonsPage() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={colors.primary} />
       <View style={styles.audioLessonsContainer}>
-        <Text style={styles.audioLessonsTitle}>Also Try our Audio Lessons</Text>
+        <TranslatedText style={styles.audioLessonsTitle}>
+          Also Try our Audio Lessons
+        </TranslatedText>
         <TouchableOpacity
           style={styles.audioLessonsButton}
           onPress={() => router.push("/pages/AudioLessons")}
         >
-          <Text style={styles.audioLessonsButtonText}>Listen Now</Text>
+          <TranslatedText style={styles.audioLessonsButtonText}>
+            Listen Now
+          </TranslatedText>
         </TouchableOpacity>
       </View>
 

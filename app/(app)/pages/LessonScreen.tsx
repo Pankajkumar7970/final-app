@@ -11,6 +11,7 @@ import { ArrowLeft, ArrowRight, BookOpen, Clock } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import AudioPlayer from "../../../components/AudioPlayer";
 import { PSBColors } from "../../../utils/PSBColors";
+import TranslatedText from "../../../components/TranslatedText";
 
 const LessonScreen: React.FC = ({ route, navigation }: any) => {
   const { lesson, language } = route.params || {};
@@ -61,13 +62,15 @@ const LessonScreen: React.FC = ({ route, navigation }: any) => {
               <ArrowLeft size={20} color="#1e40af" />
             </TouchableOpacity>
             <View style={styles.headerContent}>
-              <Text style={styles.title} numberOfLines={2}>
+              <TranslatedText style={styles.title}>
                 {lesson.title}
-              </Text>
+              </TranslatedText>
               <View style={styles.metaContainer}>
                 <View style={styles.metaItem}>
                   <Clock size={16} color="#6b7280" />
-                  <Text style={styles.metaText}>{lesson.duration}</Text>
+                  <TranslatedText style={styles.metaText}>
+                    {lesson.duration}
+                  </TranslatedText>
                 </View>
                 <View style={styles.metaItem}>
                   <BookOpen size={16} color="#6b7280" />
@@ -79,7 +82,9 @@ const LessonScreen: React.FC = ({ route, navigation }: any) => {
                       },
                     ]}
                   >
-                    <Text style={styles.badgeText}>{lesson.difficulty}</Text>
+                    <TranslatedText style={styles.badgeText}>
+                      {lesson.difficulty}
+                    </TranslatedText>
                   </View>
                 </View>
               </View>
@@ -92,8 +97,12 @@ const LessonScreen: React.FC = ({ route, navigation }: any) => {
               colors={["rgba(255,255,255,0.9)", "rgba(255,255,255,0.6)"]}
               style={styles.cardGradient}
             >
-              <Text style={styles.cardTitle}>About This Lesson</Text>
-              <Text style={styles.description}>{lesson.description}</Text>
+              <TranslatedText style={styles.cardTitle}>
+                About This Lesson
+              </TranslatedText>
+              <TranslatedText style={styles.description}>
+                {lesson.description}
+              </TranslatedText>
             </LinearGradient>
           </View>
 
@@ -110,11 +119,13 @@ const LessonScreen: React.FC = ({ route, navigation }: any) => {
             >
               <View style={styles.quizContent}>
                 <View style={styles.quizInfo}>
-                  <Text style={styles.quizTitle}>Ready for the Quiz?</Text>
-                  <Text style={styles.quizDescription}>
+                  <TranslatedText style={styles.quizTitle}>
+                    Ready for the Quiz?
+                  </TranslatedText>
+                  <TranslatedText style={styles.quizDescription}>
                     Test your understanding with a quick quiz to reinforce your
                     learning.
-                  </Text>
+                  </TranslatedText>
                 </View>
 
                 <TouchableOpacity
@@ -134,7 +145,9 @@ const LessonScreen: React.FC = ({ route, navigation }: any) => {
                       color="white"
                       style={{ marginRight: 8 }}
                     />
-                    <Text style={styles.quizButtonText}>Take Quiz</Text>
+                    <TranslatedText style={styles.quizButtonText}>
+                      Take Quiz
+                    </TranslatedText>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>

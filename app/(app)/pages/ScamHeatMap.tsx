@@ -10,6 +10,7 @@ import { ReportProvider } from "../../../contexts/ReportContext";
 import { BackHandler } from "react-native";
 import { router, useFocusEffect } from "expo-router";
 import API from "../../../api/api";
+import TranslatedText from "../../../components/TranslatedText";
 
 const Tab = createBottomTabNavigator();
 

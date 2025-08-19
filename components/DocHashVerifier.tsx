@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Shield, Save } from "lucide-react-native";
 import { FileUploader } from "./FileUploader";
 import { HashGenerator } from "./HashGenerator";
@@ -10,6 +10,7 @@ import { useDocumentStorage } from "../hooks/useDocumentStorage";
 import API from "../api/api";
 import { PSBColors } from "../utils/PSBColors";
 import { colors } from "../utils/colors";
+import TranslatedText from "./TranslatedText";
 
 interface FileInfo {
   uri: string;
@@ -95,15 +96,15 @@ export const DocHashVerifier = () => {
       <View style={styles.header}>
         <View style={styles.badge}>
           <Shield size={20} color={PSBColors.primary.green} />
-          <Text style={styles.badgeText}>
+          <TranslatedText style={styles.badgeText}>
             Decentralized Document Verification
-          </Text>
+          </TranslatedText>
         </View>
-        <Text style={styles.title}>DecentraHash Vault</Text>
-        <Text style={styles.subtitle}>
+        <TranslatedText style={styles.title}>DecentraHash Vault</TranslatedText>
+        <TranslatedText style={styles.subtitle}>
           Upload, generate cryptographic hashes, and verify document integrity
           using secure storage
-        </Text>
+        </TranslatedText>
       </View>
 
       {/* File Upload */}

@@ -18,6 +18,7 @@ import {
 } from "lucide-react-native";
 import { LineChart } from "react-native-chart-kit";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -74,21 +75,27 @@ const CompoundInterestCalculator = () => {
       <View style={styles.header}>
         <View style={styles.titleContainer}>
           <Calculator size={32} color={PSBColors.primary.darkGreen} />
-          <Text style={styles.title}>Compound Interest Calculator</Text>
+          <TranslatedText style={styles.title}>
+            Compound Interest Calculator
+          </TranslatedText>
         </View>
-        <Text style={styles.subtitle}>
+        <TranslatedText style={styles.subtitle}>
           Calculate compound interest with different compounding frequencies
-        </Text>
+        </TranslatedText>
       </View>
 
       {/* Input Section */}
       <View style={styles.card}>
         <View style={styles.cardHeader}>
-          <Text style={styles.cardTitle}>Enter Investment Details</Text>
+          <TranslatedText style={styles.cardTitle}>
+            Enter Investment Details
+          </TranslatedText>
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>Principal Amount (₹)</Text>
+          <TranslatedText style={styles.label}>
+            Principal Amount (₹)
+          </TranslatedText>
           <TextInput
             style={styles.input}
             placeholder="Enter principal"
@@ -101,7 +108,9 @@ const CompoundInterestCalculator = () => {
         <View style={styles.inputContainer}>
           <View style={styles.labelContainer}>
             <Percent size={16} color="#666666" />
-            <Text style={styles.label}>Annual Interest Rate (%)</Text>
+            <TranslatedText style={styles.label}>
+              Annual Interest Rate (%)
+            </TranslatedText>
           </View>
           <TextInput
             style={styles.input}
@@ -115,7 +124,9 @@ const CompoundInterestCalculator = () => {
         <View style={styles.inputContainer}>
           <View style={styles.labelContainer}>
             <Calendar size={16} color="#666666" />
-            <Text style={styles.label}>Time Period (Years)</Text>
+            <TranslatedText style={styles.label}>
+              Time Period (Years)
+            </TranslatedText>
           </View>
           <TextInput
             style={styles.input}
@@ -129,7 +140,9 @@ const CompoundInterestCalculator = () => {
         <View style={styles.inputContainer}>
           <View style={styles.labelContainer}>
             <Layers size={16} color="#666666" />
-            <Text style={styles.label}>Compounding Frequency</Text>
+            <TranslatedText style={styles.label}>
+              Compounding Frequency
+            </TranslatedText>
           </View>
           <View style={styles.pickerContainer}>
             <Picker
@@ -147,7 +160,9 @@ const CompoundInterestCalculator = () => {
 
         <TouchableOpacity style={styles.calculateButton} onPress={calculate}>
           <Calculator size={16} color="#ffffff" />
-          <Text style={styles.calculateButtonText}>Calculate</Text>
+          <TranslatedText style={styles.calculateButtonText}>
+            Calculate
+          </TranslatedText>
         </TouchableOpacity>
       </View>
 
@@ -156,26 +171,36 @@ const CompoundInterestCalculator = () => {
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <TrendingUp size={20} color="#10b981" />
-            <Text style={styles.cardTitle}>Calculation Results</Text>
+            <TranslatedText style={styles.cardTitle}>
+              Calculation Results
+            </TranslatedText>
           </View>
           <View style={styles.resultContainer}>
             <View style={styles.resultItem}>
-              <Text style={styles.resultLabel}>Compound Interest</Text>
-              <Text style={styles.resultValue}>
+              <TranslatedText style={styles.resultLabel}>
+                Compound Interest
+              </TranslatedText>
+              <TranslatedText style={styles.resultValue}>
                 {formatCurrency(result.compoundInterest)}
-              </Text>
+              </TranslatedText>
             </View>
             <View style={[styles.resultItem, styles.totalAmountItem]}>
-              <Text style={styles.resultLabel}>Total Amount</Text>
-              <Text style={[styles.resultValue, styles.totalAmountValue]}>
+              <TranslatedText style={styles.resultLabel}>
+                Total Amount
+              </TranslatedText>
+              <TranslatedText
+                style={[styles.resultValue, styles.totalAmountValue]}
+              >
                 {formatCurrency(result.totalAmount)}
-              </Text>
+              </TranslatedText>
             </View>
           </View>
 
           {/* Graph */}
           <View style={styles.chartWrapper}>
-            <Text style={styles.chartTitle}>Growth Over Time</Text>
+            <TranslatedText style={styles.chartTitle}>
+              Growth Over Time
+            </TranslatedText>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <LineChart
                 data={{

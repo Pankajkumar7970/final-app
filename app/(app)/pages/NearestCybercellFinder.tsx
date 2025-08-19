@@ -9,6 +9,7 @@ import "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import API from "../../../api/api"; // adjust the path if needed
 import { router, useFocusEffect } from "expo-router";
+import TranslatedText from "../../../components/TranslatedText";
 
 export default function App() {
   const [userLocation, setUserLocation] = useState(null);
@@ -77,7 +78,9 @@ export default function App() {
             disabled={false}
           />
           {currentAddress ? (
-            <Text style={styles.addressText}>📍 Current: {currentAddress}</Text>
+            <TranslatedText style={styles.addressText}>
+              📍 Current: {currentAddress}
+            </TranslatedText>
           ) : null}
         </View>
 

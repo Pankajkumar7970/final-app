@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import { router } from "expo-router";
 import {
@@ -18,8 +20,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import API from "../../../../api/api";
 
 export default function EducationalSummaryScreen() {
-  const handleBackToScenarios = () => {
-    API.post("/simulator-use/identity-theft-simulator");
+  const [loading, setLoading] = useState(false);
+  const handleBackToScenarios = async () => {
+    setLoading(true);
+    const response = await API.post("/simulator-use/identity-theft-simulator");
+    setLoading(false);
+    const Exp = response.data.progress.experiencePoints;
+    Alert.alert(
+      "Exp Earned!",
+      `Congratulations!!! You have earned ${Exp} Exp points.`,
+      [{ text: "OK" }]
+    );
     router.replace("/(app)/(tabs)/simulator");
   };
 
@@ -152,9 +163,16 @@ export default function EducationalSummaryScreen() {
         <TouchableOpacity
           style={styles.homeButton}
           onPress={handleBackToScenarios}
+          disabled={loading}
         >
-          <Home size={20} color="#FFFFFF" />
-          <Text style={styles.homeButtonText}>Return to Home</Text>
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <>
+              <Home size={20} color="#FFFFFF" />
+              <Text style={styles.homeButtonText}>Return to Home</Text>
+            </>
+          )}
         </TouchableOpacity>
 
         <View style={styles.footer}>

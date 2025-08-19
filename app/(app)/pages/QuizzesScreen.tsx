@@ -29,6 +29,7 @@ import { router, useFocusEffect } from "expo-router";
 import API from "../../../api/api";
 import Loader from "../../../components/Loader";
 import { PSBColors } from "../../../utils/PSBColors";
+import TranslatedText from "../../../components/TranslatedText";
 
 const QuizzesScreen = () => {
   const [completedQuizzes, setCompletedQuizzes] = useState([]);
@@ -147,11 +148,13 @@ const QuizzesScreen = () => {
         <View style={styles.header}>
           <View style={styles.headerGradient}>
             <View style={styles.headerContent}>
-              <Text style={styles.headerTitle}>Your Learning Journey</Text>
-              <Text style={styles.headerSubtitle}>
+              <TranslatedText style={styles.headerTitle}>
+                Your Learning Journey
+              </TranslatedText>
+              <TranslatedText style={styles.headerSubtitle}>
                 Master fraud protection and financial literacy with
                 expert-designed quizzes
-              </Text>
+              </TranslatedText>
             </View>
           </View>
         </View>
@@ -161,7 +164,9 @@ const QuizzesScreen = () => {
           <View style={styles.progressCard}>
             <View style={styles.progressHeader}>
               <TrendingUp size={24} color="#6366f1" />
-              <Text style={styles.progressTitle}>Your Progress</Text>
+              <TranslatedText style={styles.progressTitle}>
+                Your Progress
+              </TranslatedText>
             </View>
 
             <View style={styles.progressStats}>
@@ -169,8 +174,12 @@ const QuizzesScreen = () => {
                 <View style={styles.statIconContainer}>
                   <BookOpen size={20} color="#10b981" />
                 </View>
-                <Text style={styles.statNumber}>{completedCount}</Text>
-                <Text style={styles.statLabel}>Completed</Text>
+                <TranslatedText style={styles.statNumber}>
+                  {completedCount}
+                </TranslatedText>
+                <TranslatedText style={styles.statLabel}>
+                  Completed
+                </TranslatedText>
               </View>
 
               <View style={styles.statDivider} />
@@ -179,10 +188,12 @@ const QuizzesScreen = () => {
                 <View style={styles.statIconContainer}>
                   <Target size={20} color="#f59e0b" />
                 </View>
-                <Text style={styles.statNumber}>
+                <TranslatedText style={styles.statNumber}>
                   {quizzes.length - completedCount}
-                </Text>
-                <Text style={styles.statLabel}>Remaining</Text>
+                </TranslatedText>
+                <TranslatedText style={styles.statLabel}>
+                  Remaining
+                </TranslatedText>
               </View>
 
               <View style={styles.statDivider} />
@@ -191,15 +202,21 @@ const QuizzesScreen = () => {
                 <View style={styles.statIconContainer}>
                   <Trophy size={20} color="#ef4444" />
                 </View>
-                <Text style={styles.statNumber}>{averageScore}%</Text>
-                <Text style={styles.statLabel}>Avg Score</Text>
+                <TranslatedText style={styles.statNumber}>
+                  {averageScore}%
+                </TranslatedText>
+                <TranslatedText style={styles.statLabel}>
+                  Avg Score
+                </TranslatedText>
               </View>
             </View>
 
             {/* Badges Section */}
             {badges.length > 0 && (
               <View style={styles.badgesSection}>
-                <Text style={styles.badgesTitle}>Your Achievements</Text>
+                <TranslatedText style={styles.badgesTitle}>
+                  Your Achievements
+                </TranslatedText>
                 <View style={styles.badgesContainer}>
                   {badges.map((badge, index) => {
                     const BadgeIcon = badge.icon;
@@ -209,7 +226,9 @@ const QuizzesScreen = () => {
                         style={[styles.badge, { backgroundColor: badge.color }]}
                       >
                         <BadgeIcon size={16} color="#ffffff" />
-                        <Text style={styles.badgeText}>{badge.name}</Text>
+                        <TranslatedText style={styles.badgeText}>
+                          {badge.name}
+                        </TranslatedText>
                       </View>
                     );
                   })}
@@ -256,7 +275,9 @@ const QuizzesScreen = () => {
           {showFilters && (
             <View style={styles.filtersContainer}>
               <View style={styles.filterGroup}>
-                <Text style={styles.filterLabel}>Category</Text>
+                <TranslatedText style={styles.filterLabel}>
+                  Category
+                </TranslatedText>
                 <View style={styles.filterOptions}>
                   {[
                     { value: "all", label: "All Topics" },
@@ -272,7 +293,7 @@ const QuizzesScreen = () => {
                       ]}
                       onPress={() => setSelectedCategory(option.value)}
                     >
-                      <Text
+                      <TranslatedText
                         style={[
                           styles.filterOptionText,
                           selectedCategory === option.value &&
@@ -280,14 +301,16 @@ const QuizzesScreen = () => {
                         ]}
                       >
                         {option.label}
-                      </Text>
+                      </TranslatedText>
                     </TouchableOpacity>
                   ))}
                 </View>
               </View>
 
               <View style={styles.filterGroup}>
-                <Text style={styles.filterLabel}>Difficulty</Text>
+                <TranslatedText style={styles.filterLabel}>
+                  Difficulty
+                </TranslatedText>
                 <View style={styles.filterOptions}>
                   {[
                     { value: "all", label: "All Levels", icon: BookOpen },
@@ -314,7 +337,7 @@ const QuizzesScreen = () => {
                               : "#6b7280"
                           }
                         />
-                        <Text
+                        <TranslatedText
                           style={[
                             styles.filterOptionText,
                             selectedDifficulty === option.value &&
@@ -322,7 +345,7 @@ const QuizzesScreen = () => {
                           ]}
                         >
                           {option.label}
-                        </Text>
+                        </TranslatedText>
                       </TouchableOpacity>
                     );
                   })}
@@ -334,7 +357,9 @@ const QuizzesScreen = () => {
                 onPress={clearFilters}
               >
                 <X size={16} color="#ef4444" />
-                <Text style={styles.clearFiltersText}>Clear All Filters</Text>
+                <TranslatedText style={styles.clearFiltersText}>
+                  Clear All Filters
+                </TranslatedText>
               </TouchableOpacity>
             </View>
           )}
@@ -342,15 +367,17 @@ const QuizzesScreen = () => {
 
         {/* Results Counter */}
         <View style={styles.resultsSection}>
-          <Text style={styles.resultsText}>
+          <TranslatedText style={styles.resultsText}>
             {quizzes.length} quiz
             {quizzes.length !== 1 ? "es" : ""} found
-          </Text>
+          </TranslatedText>
           {(searchQuery ||
             selectedCategory !== "all" ||
             selectedDifficulty !== "all") && (
             <TouchableOpacity style={styles.resetButton} onPress={clearFilters}>
-              <Text style={styles.resetButtonText}>Show All</Text>
+              <TranslatedText style={styles.resetButtonText}>
+                Show All
+              </TranslatedText>
             </TouchableOpacity>
           )}
         </View>
@@ -377,16 +404,20 @@ const QuizzesScreen = () => {
               <View style={styles.noResultsIcon}>
                 <Search size={48} color="#d1d5db" />
               </View>
-              <Text style={styles.noResultsTitle}>No quizzes found</Text>
-              <Text style={styles.noResultsText}>
+              <TranslatedText style={styles.noResultsTitle}>
+                No quizzes found
+              </TranslatedText>
+              <TranslatedText style={styles.noResultsText}>
                 Try adjusting your search terms or filters to find what you're
                 looking for.
-              </Text>
+              </TranslatedText>
               <TouchableOpacity
                 style={styles.noResultsButton}
                 onPress={clearFilters}
               >
-                <Text style={styles.noResultsButtonText}>Reset Filters</Text>
+                <TranslatedText style={styles.noResultsButtonText}>
+                  Reset Filters
+                </TranslatedText>
               </TouchableOpacity>
             </View>
           )}

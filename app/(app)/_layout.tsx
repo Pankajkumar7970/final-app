@@ -2,6 +2,7 @@ import { Redirect, Stack } from "expo-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { View, Text, ActivityIndicator } from "react-native";
 import { GoalsProvider } from "../../contexts/GoalsContext";
+import TranslatedText from "../../components/TranslatedText";
 
 export default function AppLayout() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -18,7 +19,9 @@ export default function AppLayout() {
         }}
       >
         <ActivityIndicator size="large" color="#ff6b6b" />
-        <Text style={{ color: "white", marginTop: 10 }}>Loading...</Text>
+        <TranslatedText style={{ color: "white", marginTop: 10 }}>
+          Loading...
+        </TranslatedText>
       </View>
     );
   }

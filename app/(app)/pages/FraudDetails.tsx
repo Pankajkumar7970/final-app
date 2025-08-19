@@ -49,6 +49,7 @@ const fraudTypes = [
     id: 3,
     title: "Ponzi Scheme",
     icon: Banknote,
+    url: "RPz95qoPFLQ",
     color: "#F59E0B",
     description:
       "A fraudulent investment scheme paying returns using new investors’ money",
@@ -120,6 +121,7 @@ const fraudTypes = [
     title: "Pyramid Scheme",
     icon: Layers,
     color: "#EC4899",
+    url: "k7MP1vCf2nk",
     description:
       "A business model focused on recruitment rather than product sales",
     detailedDescription:
@@ -186,6 +188,7 @@ const fraudTypes = [
   {
     id: 3,
     title: "Identity Theft",
+    url: "QXuiUi9kxE4",
     icon: Fingerprint,
     color: "#EF4444",
     description:
@@ -253,6 +256,7 @@ const fraudTypes = [
   {
     id: 4,
     title: "Credit Card Fraud",
+    url: "iRtvHCxyUFI",
     icon: CreditCard,
     color: "#6366F1",
     description: "Unauthorized use of credit card data to make transactions",
@@ -317,8 +321,9 @@ const fraudTypes = [
     ],
   },
   {
-    id: 1,
+    id: 5,
     title: "Email Phishing",
+    url: "/vF-YUQqOv5Y",
     icon: Mail,
     color: "#3B82F6",
     description: "Fraudulent emails designed to steal personal information",
@@ -656,6 +661,7 @@ const fraudTypes = [
     id: 9,
     title: "Charity Scams",
     icon: HeartHandshake,
+    url: "EDAVW5TGeUw",
     color: "#F97316",
     description:
       "Fake charities solicit donations for non-existent or fraudulent causes",
@@ -852,6 +858,7 @@ const fraudTypes = [
     id: 12,
     title: "Online Banking Fraud",
     icon: LockKeyhole,
+    url: "IQW2oAjoHt4",
     color: "#0F766E",
     description: "Cybercriminals gain unauthorized access to your bank account",
     detailedDescription:
@@ -919,6 +926,7 @@ const fraudTypes = [
     title: "Employment Fraud",
     icon: Briefcase,
     color: "#7C3AED",
+    url: "dMwcWm_1vTs",
     description:
       "Fake job offers used to steal money or identity from job seekers",
     detailedDescription:
@@ -1149,12 +1157,18 @@ const FraudDetailModal = ({ fraud }: { fraud: any }) => {
       case "overview":
         return (
           <View>
-            <YoutubeIframe
-              height={250}
-              videoId="eDOrVtncRZY"
-              play={true}
-              style={{ marginBottom: 8, borderRadius: 16, overflow: "hidden" }}
-            />
+            {fraud.url && (
+              <YoutubeIframe
+                height={250}
+                videoId={fraud.url}
+                play={true}
+                style={{
+                  marginBottom: 8,
+                  borderRadius: 16,
+                  overflow: "hidden",
+                }}
+              />
+            )}
             <Text style={styles.sectionText}>{fraud.detailedDescription}</Text>
             <View style={styles.detailSection}>
               <View style={styles.sectionHeader}>

@@ -55,6 +55,12 @@ const SimulatorScreen = ({ navigation }: any) => {
 
   useEffect(() => {
     API.post("/simulator-use/ponzi-simulator");
+    //  const Exp = response.data.progress.experiencePoints;
+    Alert.alert(
+      "Exp Earned!",
+      `Congratulations!!! You have earned Exp points.`,
+      [{ text: "OK" }]
+    );
   }, []);
 
   const [simulation, setSimulation] = useState<SimulationState>({

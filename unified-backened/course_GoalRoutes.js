@@ -498,7 +498,12 @@ module.exports = (app) => {
         await new UserProgress(progress).save();
       }
       console.log("Progress updated for course:", courseId);
-      res.json({ success: true, message: "Progress updated." });
+      res.json({
+        success: true,
+        message: "Progress updated.",
+        points: progress.experiencePoints,
+        status: progress.status,
+      });
     } catch (error) {
       res
         .status(500)
@@ -506,21 +511,6 @@ module.exports = (app) => {
     }
   });
 
-  app.get("/api/quizzes", async (req, res) => {
-    try {
-      const { category, difficulty } = req.query;
-      let filter = {};
-      if (category !== "all") filter.category = category;
-      if (difficulty !== "all") filter.difficulty = difficulty;
-
-      const quizzes = await Quiz.find(filter);
-      res.json({ success: true, quizzes });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: "Error fetching quizzes", error: error.message });
-    }
-  });
   app.get("/api/lessons", async (req, res) => {
     try {
       const { language = "en" } = req.query;
@@ -613,6 +603,7 @@ module.exports = (app) => {
 
       // Calculate score
       let correctAnswers = 0;
+      let xp;
       const processedAnswers = answers.map((answer, index) => {
         const question = quiz.questions[index];
         const isCorrect = question && question.correctAnswer === answer;
@@ -628,8 +619,16 @@ module.exports = (app) => {
       console.log("Processed Answers:", processedAnswers);
       const score = Math.round((correctAnswers / quiz.questions.length) * 100);
 
-      console.log("Score calculated:", score);
-      const xp = correctAnswers * 15;
+      const oldProgress = await UserProgress.find({
+        type: "quiz",
+        quizId,
+      });
+
+      if (oldProgress.length > 0) {
+        xp = correctAnswers * 2;
+      } else {
+        xp = correctAnswers * 15;
+      }
       // Save progress
       const progress = {
         userId: req.user.id,
@@ -643,11 +642,6 @@ module.exports = (app) => {
         completedAt: new Date(),
       };
 
-      const oldProgress = await UserProgress.find({
-        type: "quiz",
-        quizId,
-      });
-
       console.log("Prepared UserProgress object:", progress);
       if (oldProgress.length > 0) {
         await UserProgress.findByIdAndUpdate(oldProgress[0]._id, progress);
@@ -660,9 +654,9 @@ module.exports = (app) => {
       user.totalExperiencePoints = userExp;
       user.level = calculateLevel(userExp);
       await user.save();
-
       res.json({
         success: true,
+        progress,
       });
     } catch (error) {
       res
@@ -716,6 +710,7 @@ module.exports = (app) => {
     try {
       const { choiceId, timeSpent, points } = req.body;
       const scenarioId = req.params.id;
+      let Exp;
       console.log(req.user.id);
 
       console.log("Incoming request to submit scenario:");
@@ -734,6 +729,16 @@ module.exports = (app) => {
         (choice) => choice.id === choiceId
       );
 
+      const oldProgress = await UserProgress.find({
+        type: "scenario",
+        scenarioId,
+        userId: req.user.id,
+      });
+
+      if (oldProgress.length > 0) {
+        Exp = points / 10;
+      }
+
       if (!selectedChoice) {
         console.log("Invalid choice submitted:", choiceId);
         return res.status(400).json({ message: "Invalid choice" });
@@ -744,7 +749,7 @@ module.exports = (app) => {
         scenarioId,
         type: "scenario",
         status: "completed",
-        experiencePoints: points,
+        experiencePoints: Exp,
         timeSpent,
         answers: [
           {
@@ -757,12 +762,6 @@ module.exports = (app) => {
         completedAt: new Date(),
       };
 
-      const oldProgress = await UserProgress.find({
-        type: "scenario",
-        scenarioId,
-        userId: req.user.id,
-      });
-
       // console.log("Prepared UserProgress object:", oldProgress);
 
       if (oldProgress.length > 0) {
@@ -772,7 +771,7 @@ module.exports = (app) => {
       }
 
       const user = await User.findById(req.user.id);
-      const userExp = user.totalExperiencePoints + points;
+      const userExp = user.totalExperiencePoints + Exp;
       user.totalExperiencePoints = userExp;
       user.level = calculateLevel(userExp);
       await user.save();
@@ -782,7 +781,7 @@ module.exports = (app) => {
       res.json({
         success: true,
         choice: selectedChoice,
-        points: selectedChoice.points,
+        points: Exp,
       });
     } catch (error) {
       console.error("Error submitting scenario:", error);
@@ -812,10 +811,12 @@ module.exports = (app) => {
         userId: req.user.id,
       });
 
+      console.log("Old Progress", oldProgress);
+
       if (oldProgress.length > 0) {
-        xp = 50;
-      } else {
         xp = 5;
+      } else {
+        xp = 50;
       }
 
       progress = {

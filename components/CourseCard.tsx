@@ -1,15 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   StyleSheet,
   Dimensions,
   Animated,
+  Text,
   Image,
 } from "react-native";
 import { Course } from "../types/lesson";
 import { BookOpen } from "lucide-react-native";
+import TranslatedText from "./TranslatedText";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -80,14 +81,16 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         </View>
 
         <View style={styles.content}>
-          <Text style={styles.title}>{course.title}</Text>
+          <TranslatedText style={styles.title}>{course.title}</TranslatedText>
           <Text style={styles.description} numberOfLines={2}>
             {course.description}
           </Text>
 
           <View style={[styles.button, { backgroundColor: course.color }]}>
             <BookOpen size={18} color="#fff" />
-            <Text style={styles.buttonText}>Start Course</Text>
+            <TranslatedText style={styles.buttonText}>
+              Start Course
+            </TranslatedText>
           </View>
         </View>
       </TouchableOpacity>

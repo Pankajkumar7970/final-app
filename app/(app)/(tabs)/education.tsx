@@ -25,6 +25,7 @@ import { useTheme } from "../../../contexts/ThemeContext";
 import { PSBColors, PSBShadows, PSBSpacing } from "../../../utils/PSBColors";
 import { router, useFocusEffect } from "expo-router";
 import LessonsPage from "../pages/LessonsPage";
+import TranslatedText from "../../../components/TranslatedText";
 
 const EducationScreen = () => {
   const { theme } = useTheme();
@@ -191,23 +192,9 @@ const EducationScreen = () => {
       url: "", // Placeholder for helpline numbers
       icon: Phone,
     },
-    {
-      title: "Financial Literacy Videos",
-      description:
-        "Educational videos on financial literacy and fraud prevention",
-      url: "https://www.youtube.com/FinancialLiteracyIndia",
-      icon: Globe,
-    },
-    {
-      title: "Consumer Complaints",
-      description:
-        "File complaints against banks, insurance companies, and financial institutions",
-      url: "https://www.consumercomplaints.in",
-      icon: Mail,
-    },
   ];
 
-  const handleLinkPress = (url) => {
+  const handleLinkPress = (url: any) => {
     if (!url) return router.push("/pages/HelpLineNumbers");
     Linking.openURL(url);
   };
@@ -240,16 +227,18 @@ const EducationScreen = () => {
                 justifyContent: "space-between",
               }}
             >
-              <Text style={[styles.glossaryTerm, { color: theme.colors.text }]}>
+              <TranslatedText
+                style={[styles.glossaryTerm, { color: theme.colors.text }]}
+              >
                 {item.term}
-              </Text>
+              </TranslatedText>
               <ExternalLink size={22} color={theme.colors.textSecondary} />
             </View>
-            <Text
+            <TranslatedText
               style={[styles.glossaryDefinition, { color: theme.colors.text }]}
             >
               {item.definition}
-            </Text>
+            </TranslatedText>
             <View
               style={[
                 styles.exampleContainer,
@@ -260,38 +249,42 @@ const EducationScreen = () => {
                 },
               ]}
             >
-              <Text style={styles.exampleIcon}>💡</Text>
-              <Text
+              <TranslatedText style={styles.exampleIcon}>💡</TranslatedText>
+              <TranslatedText
                 style={[styles.glossaryExample, { color: theme.colors.text }]}
               >
                 {item.example}
-              </Text>
+              </TranslatedText>
             </View>
           </TouchableOpacity>
         </View>
       ))}
       <View style={styles.emergencyCard}>
-        <Text style={styles.emergencyTitle}>🚨 Report Fraud Immediately</Text>
-        <Text style={styles.emergencyText}>
+        <TranslatedText style={styles.emergencyTitle}>
+          🚨 Report Fraud Immediately
+        </TranslatedText>
+        <TranslatedText style={styles.emergencyText}>
           If you've been a victim of fraud or suspect fraudulent activity,
           report it immediately through these official channels:
-        </Text>
+        </TranslatedText>
         <View style={styles.emergencyContacts}>
           <View style={styles.contactItem}>
             <Phone size={16} color="#EF4444" />
-            <Text style={styles.emergencyContact}>
+            <TranslatedText style={styles.emergencyContact}>
               Cyber Crime Helpline: 1930
-            </Text>
+            </TranslatedText>
           </View>
           <View style={styles.contactItem}>
             <Globe size={16} color="#EF4444" />
-            <Text style={styles.emergencyContact}>cybercrime.gov.in</Text>
+            <TranslatedText style={styles.emergencyContact}>
+              cybercrime.gov.in
+            </TranslatedText>
           </View>
           <View style={styles.contactItem}>
             <Mail size={16} color="#EF4444" />
-            <Text style={styles.emergencyContact}>
+            <TranslatedText style={styles.emergencyContact}>
               report.phishing@rbi.org.in
-            </Text>
+            </TranslatedText>
           </View>
         </View>
       </View>
@@ -319,19 +312,19 @@ const EducationScreen = () => {
           <View style={styles.resourceHeader}>
             <resource.icon size={24} color="#45b7d1" />
             <View style={styles.resourceContent}>
-              <Text
+              <TranslatedText
                 style={[styles.resourceTitle, { color: theme.colors.text }]}
               >
                 {resource.title}
-              </Text>
-              <Text
+              </TranslatedText>
+              <TranslatedText
                 style={[
                   styles.resourceDescription,
                   { color: theme.colors.textSecondary },
                 ]}
               >
                 {resource.description}
-              </Text>
+              </TranslatedText>
             </View>
             <ExternalLink size={22} color={theme.colors.textSecondary} />
           </View>
@@ -347,14 +340,14 @@ const EducationScreen = () => {
     >
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.header}>
-          <Text style={[styles.title, { color: theme.colors.text }]}>
+          <TranslatedText style={[styles.title, { color: theme.colors.text }]}>
             Education Center
-          </Text>
-          <Text
+          </TranslatedText>
+          <TranslatedText
             style={[styles.subtitle, { color: theme.colors.textSecondary }]}
           >
             Master essential skills through our structured learning modules.
-          </Text>
+          </TranslatedText>
         </View>
 
         {/* Tab Navigation */}
@@ -375,7 +368,7 @@ const EducationScreen = () => {
               size={20}
               color={selectedTab === "lessons" ? "white" : theme.colors.icon}
             />
-            <Text
+            <TranslatedText
               style={[
                 styles.tabText,
                 {
@@ -385,7 +378,7 @@ const EducationScreen = () => {
               ]}
             >
               Lessons
-            </Text>
+            </TranslatedText>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -403,7 +396,7 @@ const EducationScreen = () => {
               size={20}
               color={selectedTab === "glossary" ? "white" : theme.colors.icon}
             />
-            <Text
+            <TranslatedText
               style={[
                 styles.tabText,
                 {
@@ -413,7 +406,7 @@ const EducationScreen = () => {
               ]}
             >
               Glossary
-            </Text>
+            </TranslatedText>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -432,7 +425,7 @@ const EducationScreen = () => {
               size={20}
               color={selectedTab === "resources" ? "white" : theme.colors.icon}
             />
-            <Text
+            <TranslatedText
               style={[
                 styles.tabText,
                 {
@@ -442,7 +435,7 @@ const EducationScreen = () => {
               ]}
             >
               Resources
-            </Text>
+            </TranslatedText>
           </TouchableOpacity>
         </View>
 

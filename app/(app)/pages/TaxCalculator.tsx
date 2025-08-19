@@ -15,6 +15,7 @@ import PDFReportGenerator from "../../../components/PDFReportGenerator";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PSBColors } from "../../../utils/PSBColors";
 import { router, useFocusEffect } from "expo-router";
+import TranslatedText from "../../../components/TranslatedText";
 
 const TaxCalculatorPage = () => {
   const [activeTab, setActiveTab] = useState("calculator");
@@ -139,10 +140,12 @@ const TaxCalculatorPage = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Smart Tax Assistant</Text>
-        <Text style={styles.subtitle}>
+        <TranslatedText style={styles.title}>
+          Smart Tax Assistant
+        </TranslatedText>
+        <TranslatedText style={styles.subtitle}>
           AI-powered tax optimization for Indian taxpayers
-        </Text>
+        </TranslatedText>
       </View>
 
       <View style={styles.tabContainer}>
@@ -167,14 +170,14 @@ const TaxCalculatorPage = () => {
                       : PSBColors.primary.darkGreen
                   }
                 />
-                <Text
+                <TranslatedText
                   style={[
                     styles.tabText,
                     activeTab === tab.id && styles.activeTabText,
                   ]}
                 >
                   {tab.label}
-                </Text>
+                </TranslatedText>
               </TouchableOpacity>
             );
           })}

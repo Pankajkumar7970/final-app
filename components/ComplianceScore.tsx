@@ -1,71 +1,72 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Shield, CheckCircle, AlertCircle, XCircle } from 'lucide-react-native';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Shield, CheckCircle, AlertCircle, XCircle } from "lucide-react-native";
+import TranslatedText from "./TranslatedText";
 
 interface ComplianceItem {
   name: string;
-  status: 'completed' | 'pending' | 'failed';
+  status: "completed" | "pending" | "failed";
   score: number;
   description: string;
 }
 
 const complianceItems: ComplianceItem[] = [
   {
-    name: 'Aadhaar-PAN Linked',
-    status: 'completed',
+    name: "Aadhaar-PAN Linked",
+    status: "completed",
     score: 20,
-    description: 'Aadhaar successfully linked with PAN'
+    description: "Aadhaar successfully linked with PAN",
   },
   {
-    name: 'KYC Verified',
-    status: 'completed',
+    name: "KYC Verified",
+    status: "completed",
     score: 15,
-    description: 'Know Your Customer verification completed'
+    description: "Know Your Customer verification completed",
   },
   {
-    name: 'ITR Filed (Previous Year)',
-    status: 'completed',
+    name: "ITR Filed (Previous Year)",
+    status: "completed",
     score: 25,
-    description: 'Income Tax Return filed for FY 2023-24'
+    description: "Income Tax Return filed for FY 2023-24",
   },
   {
-    name: 'Advance Tax Paid',
-    status: 'pending',
+    name: "Advance Tax Paid",
+    status: "pending",
     score: 10,
-    description: 'Q4 advance tax payment due'
+    description: "Q4 advance tax payment due",
   },
   {
-    name: 'TDS Reconciliation Done',
-    status: 'completed',
+    name: "TDS Reconciliation Done",
+    status: "completed",
     score: 15,
-    description: 'Form 26AS matched with Form 16'
+    description: "Form 26AS matched with Form 16",
   },
   {
-    name: 'Form 16 Uploaded',
-    status: 'pending',
+    name: "Form 16 Uploaded",
+    status: "pending",
     score: 10,
-    description: 'Employer certificate pending upload'
+    description: "Employer certificate pending upload",
   },
   {
-    name: 'E-Verification Complete',
-    status: 'failed',
+    name: "E-Verification Complete",
+    status: "failed",
     score: 15,
-    description: 'ITR e-verification not completed'
-  }
+    description: "ITR e-verification not completed",
+  },
 ];
 
 const ComplianceScore = () => {
   const totalScore = complianceItems.reduce((sum, item) => {
-    return sum + (item.status === 'completed' ? item.score : 0);
+    return sum + (item.status === "completed" ? item.score : 0);
   }, 0);
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'completed':
+      case "completed":
         return <CheckCircle size={20} color="#28a745" />;
-      case 'pending':
+      case "pending":
         return <AlertCircle size={20} color="#ffc107" />;
-      case 'failed':
+      case "failed":
         return <XCircle size={20} color="#dc3545" />;
       default:
         return <AlertCircle size={20} color="#6c757d" />;
@@ -74,42 +75,66 @@ const ComplianceScore = () => {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'completed':
-        return { text: '✔ Completed', color: '#28a745', backgroundColor: '#d4edda' };
-      case 'pending':
-        return { text: '⚠ Pending', color: '#856404', backgroundColor: '#fff3cd' };
-      case 'failed':
-        return { text: '❗ Action Required', color: '#721c24', backgroundColor: '#f8d7da' };
+      case "completed":
+        return {
+          text: "✔ Completed",
+          color: "#28a745",
+          backgroundColor: "#d4edda",
+        };
+      case "pending":
+        return {
+          text: "⚠ Pending",
+          color: "#856404",
+          backgroundColor: "#fff3cd",
+        };
+      case "failed":
+        return {
+          text: "❗ Action Required",
+          color: "#721c24",
+          backgroundColor: "#f8d7da",
+        };
       default:
-        return { text: 'Unknown', color: '#6c757d', backgroundColor: '#e2e3e5' };
+        return {
+          text: "Unknown",
+          color: "#6c757d",
+          backgroundColor: "#e2e3e5",
+        };
     }
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return '#28a745';
-    if (score >= 60) return '#ffc107';
-    return '#dc3545';
+    if (score >= 80) return "#28a745";
+    if (score >= 60) return "#ffc107";
+    return "#dc3545";
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Shield size={24} color="#0070ba" />
-        <Text style={styles.title}>Tax Compliance Score</Text>
+        <TranslatedText style={styles.title}>
+          Tax Compliance Score
+        </TranslatedText>
       </View>
 
       <View style={styles.scoreContainer}>
         <View style={styles.circularProgress}>
-          <Text style={[styles.scoreText, { color: getScoreColor(totalScore) }]}>
+          <TranslatedText
+            style={[styles.scoreText, { color: getScoreColor(totalScore) }]}
+          >
             {totalScore}
-          </Text>
-          <Text style={styles.scoreSubtext}>out of 100</Text>
+          </TranslatedText>
+          <TranslatedText style={styles.scoreSubtext}>
+            out of 100
+          </TranslatedText>
         </View>
-        <Text style={styles.scoreDescription}>
-          {totalScore >= 80 ? 'Excellent Compliance' : 
-           totalScore >= 60 ? 'Good Compliance' : 
-           'Needs Improvement'}
-        </Text>
+        <TranslatedText style={styles.scoreDescription}>
+          {totalScore >= 80
+            ? "Excellent Compliance"
+            : totalScore >= 60
+              ? "Good Compliance"
+              : "Needs Improvement"}
+        </TranslatedText>
       </View>
 
       <View style={styles.itemsContainer}>
@@ -120,16 +145,29 @@ const ComplianceScore = () => {
               <View style={styles.itemLeft}>
                 {getStatusIcon(item.status)}
                 <View style={styles.itemText}>
-                  <Text style={styles.itemName}>{item.name}</Text>
-                  <Text style={styles.itemDescription}>{item.description}</Text>
+                  <TranslatedText style={styles.itemName}>
+                    {item.name}
+                  </TranslatedText>
+                  <TranslatedText style={styles.itemDescription}>
+                    {item.description}
+                  </TranslatedText>
                 </View>
               </View>
               <View style={styles.itemRight}>
-                <Text style={styles.scorePoints}>+{item.score} pts</Text>
-                <View style={[styles.badge, { backgroundColor: badge.backgroundColor }]}>
-                  <Text style={[styles.badgeText, { color: badge.color }]}>
+                <TranslatedText style={styles.scorePoints}>
+                  +{item.score} pts
+                </TranslatedText>
+                <View
+                  style={[
+                    styles.badge,
+                    { backgroundColor: badge.backgroundColor },
+                  ]}
+                >
+                  <TranslatedText
+                    style={[styles.badgeText, { color: badge.color }]}
+                  >
                     {badge.text}
-                  </Text>
+                  </TranslatedText>
                 </View>
               </View>
             </View>
@@ -139,26 +177,38 @@ const ComplianceScore = () => {
 
       <View style={styles.actionButtons}>
         <TouchableOpacity style={styles.primaryButton}>
-          <Text style={styles.primaryButtonText}>Improve Score</Text>
+          <TranslatedText style={styles.primaryButtonText}>
+            Improve Score
+          </TranslatedText>
         </TouchableOpacity>
         <TouchableOpacity style={styles.secondaryButton}>
-          <Text style={styles.secondaryButtonText}>View Detailed Report</Text>
+          <TranslatedText style={styles.secondaryButtonText}>
+            View Detailed Report
+          </TranslatedText>
         </TouchableOpacity>
       </View>
 
       <View style={styles.quickActions}>
-        <Text style={styles.quickActionsTitle}>Quick Actions</Text>
+        <TranslatedText style={styles.quickActionsTitle}>
+          Quick Actions
+        </TranslatedText>
         <TouchableOpacity style={styles.quickActionItem}>
           <AlertCircle size={16} color="#0070ba" />
-          <Text style={styles.quickActionText}>Complete e-verification for ITR (+10 pts)</Text>
+          <TranslatedText style={styles.quickActionText}>
+            Complete e-verification for ITR (+10 pts)
+          </TranslatedText>
         </TouchableOpacity>
         <TouchableOpacity style={styles.quickActionItem}>
           <AlertCircle size={16} color="#0070ba" />
-          <Text style={styles.quickActionText}>Upload Form 16 (+15 pts)</Text>
+          <TranslatedText style={styles.quickActionText}>
+            Upload Form 16 (+15 pts)
+          </TranslatedText>
         </TouchableOpacity>
         <TouchableOpacity style={styles.quickActionItem}>
           <AlertCircle size={16} color="#0070ba" />
-          <Text style={styles.quickActionText}>Pay advance tax (+10 pts)</Text>
+          <TranslatedText style={styles.quickActionText}>
+            Pay advance tax (+10 pts)
+          </TranslatedText>
         </TouchableOpacity>
       </View>
     </View>
@@ -167,29 +217,29 @@ const ComplianceScore = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     borderRadius: 12,
     padding: 20,
     marginBottom: 16,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 20,
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginLeft: 12,
-    color: '#333',
+    color: "#333",
   },
   scoreContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 24,
   },
   circularProgress: {
@@ -197,42 +247,42 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 60,
     borderWidth: 8,
-    borderColor: '#e9ecef',
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderColor: "#e9ecef",
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 16,
   },
   scoreText: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   scoreSubtext: {
     fontSize: 12,
-    color: '#6c757d',
+    color: "#6c757d",
   },
   scoreDescription: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: "600",
+    color: "#333",
   },
   itemsContainer: {
     marginBottom: 24,
   },
   complianceItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingVertical: 16,
     paddingHorizontal: 16,
     marginBottom: 8,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: "#f8f9fa",
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#e9ecef',
+    borderColor: "#e9ecef",
   },
   itemLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     flex: 1,
   },
   itemText: {
@@ -241,21 +291,21 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: "600",
+    color: "#333",
     marginBottom: 4,
   },
   itemDescription: {
     fontSize: 12,
-    color: '#6c757d',
+    color: "#6c757d",
   },
   itemRight: {
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   scorePoints: {
     fontSize: 12,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: "600",
+    color: "#333",
     marginBottom: 4,
   },
   badge: {
@@ -265,57 +315,57 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     fontSize: 10,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   actionButtons: {
     marginBottom: 24,
   },
   primaryButton: {
-    backgroundColor: '#0070ba',
+    backgroundColor: "#0070ba",
     paddingVertical: 12,
     borderRadius: 8,
     marginBottom: 12,
   },
   primaryButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: "600",
+    textAlign: "center",
   },
   secondaryButton: {
-    backgroundColor: '#f8f9fa',
+    backgroundColor: "#f8f9fa",
     paddingVertical: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
   },
   secondaryButtonText: {
-    color: '#333',
+    color: "#333",
     fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: "600",
+    textAlign: "center",
   },
   quickActions: {
-    backgroundColor: '#e3f2fd',
+    backgroundColor: "#e3f2fd",
     padding: 16,
     borderRadius: 8,
   },
   quickActionsTitle: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#0070ba',
+    fontWeight: "600",
+    color: "#0070ba",
     marginBottom: 12,
   },
   quickActionItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 8,
   },
   quickActionText: {
     fontSize: 14,
-    color: '#0070ba',
+    color: "#0070ba",
     marginLeft: 8,
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
 });
 

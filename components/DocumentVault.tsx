@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   StyleSheet,
   Alert,
@@ -14,6 +13,7 @@ import { useDocumentStorage, SavedDocument } from "../hooks/useDocumentStorage";
 import API from "../api/api";
 import { PSBColors } from "../utils/PSBColors";
 import { colors } from "../utils/colors";
+import TranslatedText from "./TranslatedText";
 
 interface FileInfo {
   uri: string;
@@ -127,10 +127,10 @@ export const DocumentVault = ({ file, hash }: DocumentVaultProps) => {
             <Shield size={20} color={PSBColors.primary.green} />
           </View>
           <View>
-            <Text style={styles.title}>Document Vault</Text>
-            <Text style={styles.subtitle}>
+            <TranslatedText style={styles.title}>Document Vault</TranslatedText>
+            <TranslatedText style={styles.subtitle}>
               Securely store document hashes locally
-            </Text>
+            </TranslatedText>
           </View>
         </View>
         <View style={styles.saveButtonContainer}>
@@ -141,9 +141,9 @@ export const DocumentVault = ({ file, hash }: DocumentVaultProps) => {
               disabled={isSaving}
             >
               <Save size={16} color="white" />
-              <Text style={styles.saveButtonText}>
+              <TranslatedText style={styles.saveButtonText}>
                 {isSaving ? "Saving..." : "Save"}
-              </Text>
+              </TranslatedText>
             </TouchableOpacity>
           )}
         </View>
@@ -158,46 +158,56 @@ export const DocumentVault = ({ file, hash }: DocumentVaultProps) => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Document Details</Text>
+            <TranslatedText style={styles.modalTitle}>
+              Document Details
+            </TranslatedText>
             {selectedDoc && (
               <>
-                <Text style={styles.modalLabel}>
+                <TranslatedText style={styles.modalLabel}>
                   Name:{" "}
-                  <Text style={styles.modalValue}>{selectedDoc.filename}</Text>
-                </Text>
-                <Text style={styles.modalLabel}>
+                  <TranslatedText style={styles.modalValue}>
+                    {selectedDoc.filename}
+                  </TranslatedText>
+                </TranslatedText>
+                <TranslatedText style={styles.modalLabel}>
                   Hash:{" "}
-                  <Text style={styles.modalValue}>{selectedDoc.hash}</Text>
-                </Text>
-                <Text style={styles.modalLabel}>
+                  <TranslatedText style={styles.modalValue}>
+                    {selectedDoc.hash}
+                  </TranslatedText>
+                </TranslatedText>
+                <TranslatedText style={styles.modalLabel}>
                   Size:{" "}
-                  <Text style={styles.modalValue}>
+                  <TranslatedText style={styles.modalValue}>
                     {formatFileSize(selectedDoc.size)}
-                  </Text>
-                </Text>
-                <Text style={styles.modalLabel}>
+                  </TranslatedText>
+                </TranslatedText>
+                <TranslatedText style={styles.modalLabel}>
                   Type:{" "}
-                  <Text style={styles.modalValue}>{selectedDoc.type}</Text>
-                </Text>
-                <Text style={styles.modalLabel}>
+                  <TranslatedText style={styles.modalValue}>
+                    {selectedDoc.type}
+                  </TranslatedText>
+                </TranslatedText>
+                <TranslatedText style={styles.modalLabel}>
                   Wallet:{" "}
-                  <Text style={styles.modalValue}>
+                  <TranslatedText style={styles.modalValue}>
                     {selectedDoc.walletAddress}
-                  </Text>
-                </Text>
-                <Text style={styles.modalLabel}>
+                  </TranslatedText>
+                </TranslatedText>
+                <TranslatedText style={styles.modalLabel}>
                   Timestamp:{" "}
-                  <Text style={styles.modalValue}>
+                  <TranslatedText style={styles.modalValue}>
                     {formatDate(selectedDoc.timestamp)}
-                  </Text>
-                </Text>
+                  </TranslatedText>
+                </TranslatedText>
               </>
             )}
             <Pressable
               style={styles.closeButton}
               onPress={() => setModalVisible(false)}
             >
-              <Text style={styles.closeButtonText}>Close</Text>
+              <TranslatedText style={styles.closeButtonText}>
+                Close
+              </TranslatedText>
             </Pressable>
           </View>
         </View>
@@ -205,7 +215,9 @@ export const DocumentVault = ({ file, hash }: DocumentVaultProps) => {
 
       {userDocuments.length > 0 && (
         <View style={styles.documentsSection}>
-          <Text style={styles.documentsTitle}>Your Saved Documents</Text>
+          <TranslatedText style={styles.documentsTitle}>
+            Your Saved Documents
+          </TranslatedText>
           <View style={styles.documentsListContainer}>
             <ScrollView
               style={styles.documentsList}
@@ -224,22 +236,24 @@ export const DocumentVault = ({ file, hash }: DocumentVaultProps) => {
                   <View style={styles.documentItemCard}>
                     <View style={styles.documentIconBar} />
                     <View style={styles.documentInfoContentShort}>
-                      <Text style={styles.documentLabel}>
+                      <TranslatedText style={styles.documentLabel}>
                         Name:{" "}
-                        <Text style={styles.documentValue}>{doc.filename}</Text>
-                      </Text>
-                      <Text style={styles.documentLabel}>
+                        <TranslatedText style={styles.documentValue}>
+                          {doc.filename}
+                        </TranslatedText>
+                      </TranslatedText>
+                      <TranslatedText style={styles.documentLabel}>
                         Size:{" "}
-                        <Text style={styles.documentValue}>
+                        <TranslatedText style={styles.documentValue}>
                           {formatFileSize(doc.size)}
-                        </Text>
-                      </Text>
-                      <Text style={styles.documentLabel}>
+                        </TranslatedText>
+                      </TranslatedText>
+                      <TranslatedText style={styles.documentLabel}>
                         Date:{" "}
-                        <Text style={styles.documentValue}>
+                        <TranslatedText style={styles.documentValue}>
                           {formatDate(doc.timestamp)}
-                        </Text>
-                      </Text>
+                        </TranslatedText>
+                      </TranslatedText>
                     </View>
                     <TouchableOpacity
                       style={styles.deleteButton}
@@ -258,10 +272,12 @@ export const DocumentVault = ({ file, hash }: DocumentVaultProps) => {
       {userDocuments.length === 0 && (
         <View style={styles.emptyState}>
           <FileText size={48} color="#d1d5db" />
-          <Text style={styles.emptyTitle}>No documents saved yet</Text>
-          <Text style={styles.emptySubtitle}>
+          <TranslatedText style={styles.emptyTitle}>
+            No documents saved yet
+          </TranslatedText>
+          <TranslatedText style={styles.emptySubtitle}>
             Upload and save a document to get started
-          </Text>
+          </TranslatedText>
         </View>
       )}
     </View>

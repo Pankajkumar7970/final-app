@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TranslatedText from "./TranslatedText";
 
 interface DebitSimulationProps {
   onNext: () => void;
@@ -31,12 +32,12 @@ const DebitSimulation = ({ onNext }: DebitSimulationProps) => {
         <View style={styles.phone}>
           {/* Status Bar */}
           <View style={styles.statusBar}>
-            <Text style={styles.time}>9:47</Text>
+            <TranslatedText style={styles.time}>9:47</TranslatedText>
             <View style={styles.statusIcons}>
               <Ionicons name="wifi" size={12} color="#000" />
-              <Text style={styles.signal}>●●●</Text>
+              <TranslatedText style={styles.signal}>●●●</TranslatedText>
               <Ionicons name="battery-full" size={12} color="#000" />
-              <Text style={styles.battery}>95%</Text>
+              <TranslatedText style={styles.battery}>95%</TranslatedText>
             </View>
           </View>
 
@@ -45,18 +46,20 @@ const DebitSimulation = ({ onNext }: DebitSimulationProps) => {
               <View style={styles.panicCard}>
                 <View style={styles.panicHeader}>
                   <Ionicons name="warning" size={32} color="#DC2626" />
-                  <Text style={styles.panicTitle}>😱 The Panic Sets In</Text>
+                  <TranslatedText style={styles.panicTitle}>
+                    😱 The Panic Sets In
+                  </TranslatedText>
                 </View>
-                <Text style={styles.panicDescription}>
+                <TranslatedText style={styles.panicDescription}>
                   This is the moment victims realize they've been scammed.
                   ₹24,000 is gone, and it's often very difficult to recover.
-                </Text>
+                </TranslatedText>
               </View>
 
               <View style={styles.responseCard}>
-                <Text style={styles.responseTitle}>
+                <TranslatedText style={styles.responseTitle}>
                   Typical Victim Response:
-                </Text>
+                </TranslatedText>
                 <View style={styles.responseList}>
                   <View style={styles.responseItem}>
                     <View
@@ -65,9 +68,9 @@ const DebitSimulation = ({ onNext }: DebitSimulationProps) => {
                         { backgroundColor: "#DC2626" },
                       ]}
                     />
-                    <Text style={styles.responseText}>
+                    <TranslatedText style={styles.responseText}>
                       Immediately calls the bank
-                    </Text>
+                    </TranslatedText>
                   </View>
                   <View style={styles.responseItem}>
                     <View
@@ -76,9 +79,9 @@ const DebitSimulation = ({ onNext }: DebitSimulationProps) => {
                         { backgroundColor: "#F59E0B" },
                       ]}
                     />
-                    <Text style={styles.responseText}>
+                    <TranslatedText style={styles.responseText}>
                       Reports to cyber crime
-                    </Text>
+                    </TranslatedText>
                   </View>
                   <View style={styles.responseItem}>
                     <View
@@ -87,9 +90,9 @@ const DebitSimulation = ({ onNext }: DebitSimulationProps) => {
                         { backgroundColor: "#EAB308" },
                       ]}
                     />
-                    <Text style={styles.responseText}>
+                    <TranslatedText style={styles.responseText}>
                       Blocks all cards and accounts
-                    </Text>
+                    </TranslatedText>
                   </View>
                   <View style={styles.responseItem}>
                     <View
@@ -98,9 +101,9 @@ const DebitSimulation = ({ onNext }: DebitSimulationProps) => {
                         { backgroundColor: "#6B7280" },
                       ]}
                     />
-                    <Text style={styles.responseText}>
+                    <TranslatedText style={styles.responseText}>
                       Money recovery: Often unsuccessful
-                    </Text>
+                    </TranslatedText>
                   </View>
                 </View>
               </View>
@@ -110,20 +113,24 @@ const DebitSimulation = ({ onNext }: DebitSimulationProps) => {
           {/* Educational Overlay */}
           <View style={styles.educationalOverlay}>
             <View style={styles.simulationBadge}>
-              <Text style={styles.simulationBadgeText}>🎓 SIMULATION</Text>
+              <TranslatedText style={styles.simulationBadgeText}>
+                🎓 SIMULATION
+              </TranslatedText>
             </View>
-            <Text style={styles.overlayDescription}>
+            <TranslatedText style={styles.overlayDescription}>
               This represents the devastating moment when victims realize
               they've lost money to a scam.
-            </Text>
+            </TranslatedText>
 
             <View style={styles.loadingContainer}>
               {showPanic ? (
-                <Text style={styles.nextText}>
+                <TranslatedText style={styles.nextText}>
                   Proceeding to protection tips...
-                </Text>
+                </TranslatedText>
               ) : (
-                <Text style={styles.loadingText}>Loading...</Text>
+                <TranslatedText style={styles.loadingText}>
+                  Loading...
+                </TranslatedText>
               )}
             </View>
           </View>

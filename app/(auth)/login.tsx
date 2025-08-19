@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import LoginForm from "../../components/LoginForm";
 import { useAuth } from "../../contexts/AuthContext";
 import { router } from "expo-router";
+import TranslatedText from "../../components/TranslatedText";
 
 const { width } = Dimensions.get("window");
 

@@ -8,6 +8,7 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { DocHashVerifier } from "../../../components/DocHashVerifier";
 import { router, useFocusEffect } from "expo-router";
+import TranslatedText from "../../../components/TranslatedText";
 
 export default function DocHashVerifierTool() {
   useFocusEffect(() => {

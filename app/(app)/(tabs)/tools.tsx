@@ -41,6 +41,7 @@ import {
   BarChart2,
 } from "lucide-react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import TranslatedText from "../../../components/TranslatedText";
 
 const { width, height } = Dimensions.get("window");
 
@@ -404,14 +405,16 @@ const ModuleCard: React.FC<{ module: SimulatorModule; index: number }> = ({
               <View style={styles.iconShine} />
             </LinearGradient>
             <View style={styles.categoryBadge}>
-              <Text style={styles.categoryText}>
+              <TranslatedText style={styles.categoryText}>
                 {module.category === "fraud" ? "🛡️" : "💰"}
-              </Text>
+              </TranslatedText>
             </View>
           </View>
 
           <View style={styles.cardInfo}>
-            <Text style={styles.moduleTitle}>{module.title}</Text>
+            <TranslatedText style={styles.moduleTitle}>
+              {module.title}
+            </TranslatedText>
             <Text style={styles.moduleDescription} numberOfLines={2}>
               {module.description}
             </Text>
@@ -423,11 +426,11 @@ const ModuleCard: React.FC<{ module: SimulatorModule; index: number }> = ({
                     { backgroundColor: module.accentColor },
                   ]}
                 />
-                <Text
+                <TranslatedText
                   style={[styles.statusText, { color: module.accentColor }]}
                 >
                   Ready to Launch
-                </Text>
+                </TranslatedText>
               </View>
               {/* <View style={styles.ratingContainer}>
                 {[...Array(5)].map((_, i) => (
@@ -544,8 +547,12 @@ const CategoryHeader: React.FC<{
             <Icon size={26} color="rgba(255,255,255,0.8)" strokeWidth={2.5} />
           </Animated.View>
           <View style={styles.categoryTextContainer}>
-            <Text style={styles.categoryTitle}>{title}</Text>
-            <Text style={styles.categorySubtitle}>{subtitle}</Text>
+            <TranslatedText style={styles.categoryTitle}>
+              {title}
+            </TranslatedText>
+            <TranslatedText style={styles.categorySubtitle}>
+              {subtitle}
+            </TranslatedText>
           </View>
           {/* <LinearGradient
             colors={[color, color + "80"]}
@@ -765,18 +772,24 @@ export default function ToolsScreen() {
               </View>
 
               <View style={styles.brandTextContainer}>
-                <Text style={styles.brandTitle}>Professional Suite</Text>
-                <Text style={styles.brandSubtitle}>
+                <TranslatedText style={styles.brandTitle}>
+                  Professional Suite
+                </TranslatedText>
+                <TranslatedText style={styles.brandSubtitle}>
                   Next-generation AI-powered tools for security and finance
-                </Text>
+                </TranslatedText>
                 <View style={styles.brandFeatures}>
                   <View style={styles.featurePill}>
                     <Lock size={12} color="#10B981" strokeWidth={2} />
-                    <Text style={styles.featureText}>Enterprise Security</Text>
+                    <TranslatedText style={styles.featureText}>
+                      Enterprise Security
+                    </TranslatedText>
                   </View>
                   <View style={styles.featurePill}>
                     <Eye size={12} color="#3B82F6" strokeWidth={2} />
-                    <Text style={styles.featureText}>AI Analytics</Text>
+                    <TranslatedText style={styles.featureText}>
+                      AI Analytics
+                    </TranslatedText>
                   </View>
                 </View>
               </View>
@@ -784,18 +797,24 @@ export default function ToolsScreen() {
 
             <View style={styles.heroStats}>
               <View style={styles.statItem}>
-                <Text style={styles.statNumber}>8</Text>
-                <Text style={styles.statLabel}>Professional Tools</Text>
+                <TranslatedText style={styles.statNumber}>8</TranslatedText>
+                <TranslatedText style={styles.statLabel}>
+                  Professional Tools
+                </TranslatedText>
               </View>
               <View style={styles.statDivider} />
               <View style={styles.statItem}>
-                <Text style={styles.statNumber}>99.9%</Text>
-                <Text style={styles.statLabel}>Accuracy Rate</Text>
+                <TranslatedText style={styles.statNumber}>99.9%</TranslatedText>
+                <TranslatedText style={styles.statLabel}>
+                  Accuracy Rate
+                </TranslatedText>
               </View>
               <View style={styles.statDivider} />
               <View style={styles.statItem}>
-                <Text style={styles.statNumber}>24/7</Text>
-                <Text style={styles.statLabel}>Availability</Text>
+                <TranslatedText style={styles.statNumber}>24/7</TranslatedText>
+                <TranslatedText style={styles.statLabel}>
+                  Availability
+                </TranslatedText>
               </View>
             </View>
           </Animated.View>
@@ -845,15 +864,17 @@ export default function ToolsScreen() {
                   <Rocket size={14} color="#fff" strokeWidth={2} />
                 </View>
               </View>
-              <Text style={styles.footerTitle}>
+              <TranslatedText style={styles.footerTitle}>
                 🚀 More Amazing Tools Coming
-              </Text>
-              <Text style={styles.footerDescription}>
+              </TranslatedText>
+              <TranslatedText style={styles.footerDescription}>
                 Stay tuned for our revolutionary new features launching soon!
-              </Text>
+              </TranslatedText>
               <View style={styles.comingSoonBadge}>
                 <Sparkles size={14} color="#667eea" strokeWidth={2} />
-                <Text style={styles.comingSoonText}>Coming Soon</Text>
+                <TranslatedText style={styles.comingSoonText}>
+                  Coming Soon
+                </TranslatedText>
               </View>
             </View>
           </LinearGradient>

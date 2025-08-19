@@ -1,11 +1,22 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking, Alert } from 'react-native';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Linking,
+  Alert,
+} from "react-native";
+import TranslatedText from "./TranslatedText";
 
 const CyberCellList = ({ nearbyCells, userLocation }) => {
   if (!nearbyCells || nearbyCells.length === 0) {
     return (
       <View style={styles.emptyContainer}>
-        <Text style={styles.emptyText}>No nearby cyber cells found.</Text>
+        <TranslatedText style={styles.emptyText}>
+          No nearby cyber cells found.
+        </TranslatedText>
       </View>
     );
   }
@@ -16,28 +27,34 @@ const CyberCellList = ({ nearbyCells, userLocation }) => {
       if (supported) {
         Linking.openURL(url);
       } else {
-        Alert.alert('Error', 'Unable to open maps app.');
+        Alert.alert("Error", "Unable to open maps app.");
       }
     });
   };
 
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.address}>{item.address}</Text>
+      <TranslatedText style={styles.name}>{item.name}</TranslatedText>
+      <TranslatedText style={styles.address}>{item.address}</TranslatedText>
       {userLocation && item.distance !== undefined && (
-        <Text style={styles.distance}>
+        <TranslatedText style={styles.distance}>
           Distance: {item.distance.toFixed(2)} km
-        </Text>
+        </TranslatedText>
       )}
-      <Text style={styles.info}>📞 {item.phone || 'N/A'}</Text>
-      <Text style={styles.info}>📧 {item.email || 'N/A'}</Text>
+      <TranslatedText style={styles.info}>
+        📞 {item.phone || "N/A"}
+      </TranslatedText>
+      <TranslatedText style={styles.info}>
+        📧 {item.email || "N/A"}
+      </TranslatedText>
 
       <TouchableOpacity
         style={styles.navigateButton}
         onPress={() => handleNavigate(item.lat, item.lng)}
       >
-        <Text style={styles.navigateButtonText}>Navigate</Text>
+        <TranslatedText style={styles.navigateButtonText}>
+          Navigate
+        </TranslatedText>
       </TouchableOpacity>
     </View>
   );
@@ -62,7 +79,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     paddingVertical: 15,
     paddingHorizontal: 15,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 16,
     marginVertical: 4,
     shadowOffset: { width: 0, height: 4 },
@@ -70,78 +87,78 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 6,
     borderWidth: 1,
-    borderColor: 'rgba(0, 112, 186, 0.08)',
+    borderColor: "rgba(0, 112, 186, 0.08)",
     borderLeftWidth: 4,
-    borderLeftColor: '#0070BA',
+    borderLeftColor: "#0070BA",
   },
   name: {
-    fontWeight: '800',
+    fontWeight: "800",
     fontSize: 16,
-    color: '#0070BA',
+    color: "#0070BA",
     letterSpacing: 0.3,
     marginBottom: 6,
   },
   address: {
-    color: '#6b7280',
+    color: "#6b7280",
     marginTop: 3,
     fontSize: 13,
     lineHeight: 15,
-    fontWeight: '500',
+    fontWeight: "500",
     letterSpacing: 0.2,
   },
   distance: {
     marginTop: 8,
-    fontWeight: '700',
-    color: '#059669',
+    fontWeight: "700",
+    color: "#059669",
     fontSize: 13,
-    backgroundColor: 'rgba(5, 150, 105, 0.1)',
+    backgroundColor: "rgba(5, 150, 105, 0.1)",
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 12,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     letterSpacing: 0.3,
   },
   info: {
     marginTop: 6,
-    color: '#4b5563',
+    color: "#4b5563",
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: "500",
     letterSpacing: 0.2,
   },
   navigateButton: {
     marginTop: 12,
-    backgroundColor: '#0070BA',
+    backgroundColor: "#0070BA",
     paddingVertical: 14,
     paddingHorizontal: 20,
     borderRadius: 12,
-    alignItems: 'center',
+    alignItems: "center",
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
     elevation: 4,
     borderWidth: 1,
-    borderColor: 'rgba(0, 112, 186, 0.2)',
+    borderColor: "rgba(0, 112, 186, 0.2)",
   },
   navigateButtonText: {
-    color: 'white',
-    fontWeight: '700',
+    color: "white",
+    fontWeight: "700",
     fontSize: 16,
     letterSpacing: 0.5,
   },
   emptyContainer: {
     padding: 32,
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 112, 186, 0.05)',
+    alignItems: "center",
+    backgroundColor: "rgba(0, 112, 186, 0.05)",
     borderRadius: 16,
     margin: 16,
     borderWidth: 1,
-    borderColor: 'rgba(0, 112, 186, 0.1)',
+    borderColor: "rgba(0, 112, 186, 0.1)",
   },
   emptyText: {
-    fontStyle: 'italic',
-    color: '#6b7280',
+    fontStyle: "italic",
+    color: "#6b7280",
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
     letterSpacing: 0.2,
   },
 });

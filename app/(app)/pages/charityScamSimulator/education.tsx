@@ -20,13 +20,6 @@ import API from "../../../../api/api";
 
 export default function EducationScreen() {
   const handleBackToScenarios = async () => {
-    await API.post("/simulator-use/charity-scam-simulator");
-    Alert.alert(
-      "Exp Earned!",
-      "Congratulations!!! You have earned 50 Exp points.",
-      [{ text: "OK" }]
-    );
-
     router.replace("/pages/charityScamSimulator");
   };
 

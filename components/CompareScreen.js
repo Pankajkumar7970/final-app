@@ -25,6 +25,7 @@ import {
 import { useApp } from "../contexts/AppContext";
 import api from "../api/financePlannerApi";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 const { width } = Dimensions.get("window");
 
@@ -118,7 +119,9 @@ const CompareScreen = ({ navigation }) => {
 
   const renderHorizonSelector = () => (
     <View style={styles.selectorContainer}>
-      <Text style={styles.selectorTitle}>Investment Horizon</Text>
+      <TranslatedText style={styles.selectorTitle}>
+        Investment Horizon
+      </TranslatedText>
       <View style={styles.horizonGrid}>
         {horizonOptions.map((months) => (
           <TouchableOpacity
@@ -129,14 +132,14 @@ const CompareScreen = ({ navigation }) => {
             ]}
             onPress={() => setSelectedHorizon(months)}
           >
-            <Text
+            <TranslatedText
               style={[
                 styles.horizonButtonText,
                 selectedHorizon === months && styles.horizonButtonTextActive,
               ]}
             >
               {months < 12 ? `${months}M` : `${months / 12}Y`}
-            </Text>
+            </TranslatedText>
           </TouchableOpacity>
         ))}
       </View>
@@ -145,7 +148,9 @@ const CompareScreen = ({ navigation }) => {
 
   const renderInstrumentSelector = () => (
     <View style={styles.selectorContainer}>
-      <Text style={styles.selectorTitle}>Investment Options</Text>
+      <TranslatedText style={styles.selectorTitle}>
+        Investment Options
+      </TranslatedText>
       <View style={styles.instrumentGrid}>
         {Object.entries(investmentOptions).map(([key, option]) => {
           const isSelected = selectedInstruments.includes(key);
@@ -165,16 +170,18 @@ const CompareScreen = ({ navigation }) => {
                   size={20}
                   color={isSelected ? PSBColors.primary.darkGreen : "#64748b"}
                 />
-                <Text
+                <TranslatedText
                   style={[
                     styles.instrumentName,
                     isSelected && styles.instrumentNameActive,
                   ]}
                 >
                   {option.name}
-                </Text>
+                </TranslatedText>
               </View>
-              <Text style={styles.instrumentRate}>{option.rate}% p.a.</Text>
+              <TranslatedText style={styles.instrumentRate}>
+                {option.rate}% p.a.
+              </TranslatedText>
             </TouchableOpacity>
           );
         })}
@@ -242,7 +249,9 @@ const CompareScreen = ({ navigation }) => {
 
     return (
       <View style={styles.chartContainer}>
-        <Text style={styles.chartTitle}>Growth Over Time</Text>
+        <TranslatedText style={styles.chartTitle}>
+          Growth Over Time
+        </TranslatedText>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <LineChart
             data={chartData}
@@ -301,7 +310,9 @@ const CompareScreen = ({ navigation }) => {
 
     return (
       <View style={styles.chartContainer}>
-        <Text style={styles.chartTitle}>Final Amount Comparison</Text>
+        <TranslatedText style={styles.chartTitle}>
+          Final Amount Comparison
+        </TranslatedText>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <BarChart
             data={chartData}
@@ -354,34 +365,44 @@ const CompareScreen = ({ navigation }) => {
 
     return (
       <View style={styles.tableContainer}>
-        <Text style={styles.tableTitle}>Detailed Comparison</Text>
+        <TranslatedText style={styles.tableTitle}>
+          Detailed Comparison
+        </TranslatedText>
         <View style={styles.tableHeader}>
-          <Text style={styles.tableHeaderText}>Investment</Text>
-          <Text style={styles.tableHeaderText}>Rate</Text>
-          <Text style={styles.tableHeaderText}>Final Amount</Text>
-          <Text style={styles.tableHeaderText}>Gain vs Savings</Text>
+          <TranslatedText style={styles.tableHeaderText}>
+            Investment
+          </TranslatedText>
+          <TranslatedText style={styles.tableHeaderText}>Rate</TranslatedText>
+          <TranslatedText style={styles.tableHeaderText}>
+            Final Amount
+          </TranslatedText>
+          <TranslatedText style={styles.tableHeaderText}>
+            Gain vs Savings
+          </TranslatedText>
         </View>
 
         {/* Savings only row */}
         <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Savings Only</Text>
-          <Text style={styles.tableCell}>0%</Text>
-          <Text style={styles.tableCell}>
+          <TranslatedText style={styles.tableCell}>Savings Only</TranslatedText>
+          <TranslatedText style={styles.tableCell}>0%</TranslatedText>
+          <TranslatedText style={styles.tableCell}>
             ₹{savingsAmount.toLocaleString("en-IN")}
-          </Text>
-          <Text style={styles.tableCell}>-</Text>
+          </TranslatedText>
+          <TranslatedText style={styles.tableCell}>-</TranslatedText>
         </View>
 
         {tableData.map((row, index) => (
           <View key={index} style={styles.tableRow}>
-            <Text style={styles.tableCell}>{row.name}</Text>
-            <Text style={styles.tableCell}>{row.rate}%</Text>
-            <Text style={styles.tableCell}>
+            <TranslatedText style={styles.tableCell}>{row.name}</TranslatedText>
+            <TranslatedText style={styles.tableCell}>
+              {row.rate}%
+            </TranslatedText>
+            <TranslatedText style={styles.tableCell}>
               ₹{row.finalAmount.toLocaleString("en-IN")}
-            </Text>
-            <Text style={[styles.tableCell, styles.gainText]}>
+            </TranslatedText>
+            <TranslatedText style={[styles.tableCell, styles.gainText]}>
               +₹{row.gain.toLocaleString("en-IN")} ({row.gainPercentage}%)
-            </Text>
+            </TranslatedText>
           </View>
         ))}
       </View>
@@ -393,12 +414,14 @@ const CompareScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Input Section */}
         <View style={styles.inputSection}>
-          <Text style={styles.sectionTitle}>
+          <TranslatedText style={styles.sectionTitle}>
             Investment Comparison Calculator
-          </Text>
+          </TranslatedText>
           <View style={styles.inputRow}>
             <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Goal Amount</Text>
+              <TranslatedText style={styles.inputLabel}>
+                Goal Amount
+              </TranslatedText>
               <View style={styles.inputWrapper}>
                 <DollarSign size={16} color="#666" />
                 <TextInput
@@ -412,7 +435,9 @@ const CompareScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Monthly SIP</Text>
+              <TranslatedText style={styles.inputLabel}>
+                Monthly SIP
+              </TranslatedText>
               <View style={styles.inputWrapper}>
                 <Calendar size={16} color="#666" />
                 <TextInput
@@ -436,9 +461,9 @@ const CompareScreen = ({ navigation }) => {
             ) : (
               <>
                 <BarChart3 size={20} color="#fff" />
-                <Text style={styles.calculateButtonText}>
+                <TranslatedText style={styles.calculateButtonText}>
                   Compare Investments
-                </Text>
+                </TranslatedText>
               </>
             )}
           </TouchableOpacity>

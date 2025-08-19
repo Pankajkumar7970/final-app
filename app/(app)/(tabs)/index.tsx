@@ -20,7 +20,7 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ThemeToggle from "../../../components/ThemeToggle";
+// import ThemeToggle from "../../../components/ThemeToggle";
 import {
   Award,
   ChartBar as BarChart3,
@@ -48,8 +48,70 @@ import { router, useFocusEffect } from "expo-router";
 import { useTheme } from "../../../contexts/ThemeContext";
 import API from "../../../api/api";
 import Toast from "react-native-toast-message";
+import TranslatedText from "../../../components/TranslatedText";
+import {
+  LanguageProvider,
+  useLanguage,
+} from "../../../contexts/LanguageContext";
 
 const width = Dimensions.get("window").width;
+
+const LanguageSwitcher = () => {
+  const { lang, setLang } = useLanguage(); // 👈 get current language from context
+  const [open, setOpen] = useState(false);
+
+  const languages = [
+    { code: "en", label: "Eng" },
+    { code: "hi", label: "Hin" },
+    { code: "pa", label: "Pun" },
+  ];
+
+  const handleSelect = (langObj) => {
+    setLang(langObj.code);
+    setOpen(false);
+  };
+
+  return (
+    <View style={{ position: "absolute", right: -10 }}>
+      {/* Small white button with arrow */}
+      <TouchableOpacity
+        style={styles.dropdownButton}
+        onPress={() => setOpen(!open)}
+        activeOpacity={0.8}
+      >
+        <Text style={styles.dropdownButtonText}>
+          {languages.find((l) => l.code === lang)?.label}
+        </Text>
+        <Text style={styles.arrow}>{open ? "▲" : "▼"}</Text>
+      </TouchableOpacity>
+
+      {/* Dropdown options directly below button */}
+      {open && (
+        <View style={styles.dropdownContainer}>
+          {languages.map((langObj) => (
+            <TouchableOpacity
+              key={langObj.code}
+              style={[
+                styles.optionButton,
+                lang === langObj.code && styles.optionSelected,
+              ]}
+              onPress={() => handleSelect(langObj)}
+            >
+              <Text
+                style={[
+                  styles.optionText,
+                  lang === langObj.code && styles.optionTextSelected,
+                ]}
+              >
+                {langObj.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+    </View>
+  );
+};
 
 const home = () => {
   const features = [
@@ -420,13 +482,19 @@ const home = () => {
             >
               <View style={styles.headerContent}>
                 <View style={styles.greetingWrapper}>
-                  <View style={styles.logoRow}>
-                    <View style={styles.logoContainer}>
-                      <Text style={styles.logoText}>FinEduGuard</Text>
+                  <View style={{ position: "relative" }}>
+                    <View style={styles.logoRow}>
+                      <View style={styles.logoContainer}>
+                        <Text style={styles.logoText}>FinEduGuard</Text>
+                      </View>
                     </View>
+                    <LanguageSwitcher />
                   </View>
+
                   <View style={styles.greetingRow}>
-                    <Text style={styles.greeting}>Welcome Back!</Text>
+                    <TranslatedText style={styles.greeting}>
+                      Welcome Back!
+                    </TranslatedText>
                     <Animated.Text
                       style={[
                         styles.waveEmoji,
@@ -445,21 +513,20 @@ const home = () => {
                       👋
                     </Animated.Text>
                   </View>
-                  <Text style={styles.subtitle}>
+                  <TranslatedText style={styles.subtitle}>
                     Stay protected with FinEduGuard
-                  </Text>
-                  <View style={styles.headerStats}>
+                  </TranslatedText>
+                  {/* <View style={styles.headerStats}>
                     <View style={styles.headerStatItem}>
                       <Star size={14} color={PSBColors.primary.gold} />
                       <Text style={styles.headerStatText}>PSB Certified</Text>
                     </View>
                     <View style={styles.headerStatItem}>
                       <Users size={14} color={PSBColors.primary.gold} />
-                      <Text style={styles.headerStatText}>10K+ Protected</Text>
+                      <TranslatedText style={styles.headerStatText}>10K+ Protected</TranslatedText>
                     </View>
-                  </View>
+                  </View> */}
                 </View>
-                <ThemeToggle />
               </View>
             </LinearGradient>
           </AnimatedView>
@@ -473,7 +540,9 @@ const home = () => {
               },
             ]}
           >
-            <Text style={styles.sectionTitle}>Our Impact</Text>
+            <TranslatedText style={styles.sectionTitle}>
+              Our Impact
+            </TranslatedText>
             <View style={styles.statsRow}>
               {stats.map((stat, index) => (
                 <AnimatedView
@@ -494,10 +563,14 @@ const home = () => {
                   >
                     <stat.icon size={28} color={stat.color} />
                   </View>
-                  <Text style={[styles.statValue, { color: stat.color }]}>
+                  <TranslatedText
+                    style={[styles.statValue, { color: stat.color }]}
+                  >
                     {stat.value}
-                  </Text>
-                  <Text style={styles.statLabel}>{stat.label}</Text>
+                  </TranslatedText>
+                  <TranslatedText style={styles.statLabel}>
+                    {stat.label}
+                  </TranslatedText>
                 </AnimatedView>
               ))}
             </View>
@@ -505,7 +578,9 @@ const home = () => {
 
           {/* Features */}
           <View style={styles.featuresContainer}>
-            <Text style={styles.sectionTitle}>Explore Services</Text>
+            <TranslatedText style={styles.sectionTitle}>
+              Explore Services
+            </TranslatedText>
             <View style={styles.featuresGrid}>
               {features.map((feature) => (
                 <AnimatedTouchable
@@ -530,10 +605,12 @@ const home = () => {
                     ]}
                   >
                     <feature.icon size={32} color={feature.color} />
-                    <Text style={styles.featureTitle}>{feature.title}</Text>
-                    <Text style={styles.featureDescription}>
+                    <TranslatedText style={styles.featureTitle}>
+                      {feature.title}
+                    </TranslatedText>
+                    <TranslatedText style={styles.featureDescription}>
                       {feature.description}
-                    </Text>
+                    </TranslatedText>
                   </LinearGradient>
                 </AnimatedTouchable>
               ))}
@@ -543,13 +620,17 @@ const home = () => {
           {/* Explore Tools Section */}
           <View style={[styles.toolsContainer, { marginBottom: 70 }]}>
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Explore Tools</Text>
+              <TranslatedText style={styles.sectionTitle}>
+                Explore Tools
+              </TranslatedText>
               <AnimatedTouchable
                 style={styles.viewAllButton}
                 onPress={() => router.push("/(tabs)/tools")}
                 activeOpacity={0.8}
               >
-                <Text style={styles.viewAllText}>View All</Text>
+                <TranslatedText style={styles.viewAllText}>
+                  View All
+                </TranslatedText>
                 <ChevronRight size={16} color={PSBColors.primary.green} />
               </AnimatedTouchable>
             </View>
@@ -600,25 +681,29 @@ const home = () => {
                             { backgroundColor: tool.color },
                           ]}
                         >
-                          <Text style={styles.toolBadgeText}>{tool.badge}</Text>
+                          <TranslatedText style={styles.toolBadgeText}>
+                            {tool.badge}
+                          </TranslatedText>
                         </View>
                       )}
                     </View>
                     <View style={styles.toolContent}>
-                      <Text style={[styles.toolTitle, { color: tool.color }]}>
+                      <TranslatedText
+                        style={[styles.toolTitle, { color: tool.color }]}
+                      >
                         {tool.title}
-                      </Text>
-                      <Text style={styles.toolDescription}>
+                      </TranslatedText>
+                      <TranslatedText style={styles.toolDescription}>
                         {tool.description}
-                      </Text>
+                      </TranslatedText>
                     </View>
                     <View style={styles.toolFooter}>
                       <View style={styles.toolAction}>
-                        <Text
+                        <TranslatedText
                           style={[styles.toolActionText, { color: tool.color }]}
                         >
                           Try Now
-                        </Text>
+                        </TranslatedText>
                         <ChevronRight
                           size={14}
                           color={tool.color}
@@ -635,13 +720,17 @@ const home = () => {
           {/* Our Simulators Section */}
           <View style={styles.simulatorsContainer}>
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Our Simulators</Text>
+              <TranslatedText style={styles.sectionTitle}>
+                Our Simulators
+              </TranslatedText>
               <TouchableOpacity
                 style={styles.viewAllButton}
                 onPress={() => router.push("/(tabs)/simulator")}
                 activeOpacity={0.7}
               >
-                <Text style={styles.viewAllText}>View All</Text>
+                <TranslatedText style={styles.viewAllText}>
+                  View All
+                </TranslatedText>
                 <ChevronRight size={16} color={PSBColors.primary.green} />
               </TouchableOpacity>
             </View>
@@ -692,29 +781,29 @@ const home = () => {
                               },
                             ]}
                           >
-                            <Text style={styles.difficultyText}>
+                            <TranslatedText style={styles.difficultyText}>
                               {simulator.difficulty}
-                            </Text>
+                            </TranslatedText>
                           </View>
                         </View>
 
                         {/* Main Content */}
                         <View style={styles.simulatorContent}>
-                          <Text style={styles.simulatorTitle}>
+                          <TranslatedText style={styles.simulatorTitle}>
                             {simulator.title}
-                          </Text>
-                          <Text style={styles.simulatorDescription}>
+                          </TranslatedText>
+                          <TranslatedText style={styles.simulatorDescription}>
                             {simulator.description}
-                          </Text>
+                          </TranslatedText>
                         </View>
 
                         {/* Footer */}
                         <View style={styles.simulatorFooter}>
                           <View style={styles.actionContainer}>
                             <Play size={14} color="#FFFFFF" fill="#FFFFFF" />
-                            <Text style={styles.simulatorAction}>
+                            <TranslatedText style={styles.simulatorAction}>
                               Start Simulation
-                            </Text>
+                            </TranslatedText>
                           </View>
                           <ChevronRight
                             size={16}
@@ -738,7 +827,9 @@ const home = () => {
 
           {/* Daily Quiz Section */}
           <View style={styles.quizContainer}>
-            <Text style={styles.sectionTitle}>Daily Challenge</Text>
+            <TranslatedText style={styles.sectionTitle}>
+              Daily Challenge
+            </TranslatedText>
             <TouchableOpacity
               style={[
                 styles.quizCard,
@@ -774,15 +865,19 @@ const home = () => {
                       { backgroundColor: PSBColors.primary.gold },
                     ]}
                   >
-                    <Text style={styles.quizBadgeText}>TODAY</Text>
+                    <TranslatedText style={styles.quizBadgeText}>
+                      TODAY
+                    </TranslatedText>
                   </View>
                 </View>
 
                 <View style={styles.quizContent}>
-                  <Text style={styles.quizTitle}>{dailyQuiz.title}</Text>
-                  <Text style={styles.quizDescription}>
+                  <TranslatedText style={styles.quizTitle}>
+                    {dailyQuiz.title}
+                  </TranslatedText>
+                  <TranslatedText style={styles.quizDescription}>
                     {dailyQuiz.description}
-                  </Text>
+                  </TranslatedText>
 
                   <View style={styles.quizQuestionContainer}>
                     <Text style={styles.quizQuestion}>
@@ -833,7 +928,7 @@ const home = () => {
 
                     {selectedOption !== null && (
                       <View style={styles.feedbackContainer}>
-                        <Text
+                        <TranslatedText
                           style={[
                             styles.quizFeedbackText,
                             {
@@ -846,7 +941,7 @@ const home = () => {
                           {isCorrect
                             ? "🎉 Perfect! You know how to stay safe!"
                             : "💡 Learn more in our comprehensive quizzes!"}
-                        </Text>
+                        </TranslatedText>
                         <TouchableOpacity
                           style={[
                             styles.takeQuizButton,
@@ -855,9 +950,9 @@ const home = () => {
                           onPress={() => router.push(dailyQuiz.route)}
                           activeOpacity={0.8}
                         >
-                          <Text style={styles.takeQuizButtonText}>
+                          <TranslatedText style={styles.takeQuizButtonText}>
                             Take Full Quiz
-                          </Text>
+                          </TranslatedText>
                         </TouchableOpacity>
                       </View>
                     )}
@@ -869,7 +964,9 @@ const home = () => {
 
           {/* Enhanced Tips Carousel with PSB Colors */}
           <View style={styles.tipsContainer}>
-            <Text style={styles.sectionTitle}>Security Tips</Text>
+            <TranslatedText style={styles.sectionTitle}>
+              Security Tips
+            </TranslatedText>
             <ScrollView
               ref={scrollRef}
               horizontal
@@ -889,11 +986,17 @@ const home = () => {
                     style={[styles.tipGradient, PSBShadows.md]}
                   >
                     <View style={styles.tipIconContainer}>
-                      <Text style={styles.tipIcon}>{tip.icon}</Text>
+                      <TranslatedText style={styles.tipIcon}>
+                        {tip.icon}
+                      </TranslatedText>
                     </View>
                     <View style={styles.tipContent}>
-                      <Text style={styles.tipTitle}>{tip.title}</Text>
-                      <Text style={styles.tipText}>{tip.content}</Text>
+                      <TranslatedText style={styles.tipTitle}>
+                        {tip.title}
+                      </TranslatedText>
+                      <TranslatedText style={styles.tipText}>
+                        {tip.content}
+                      </TranslatedText>
                     </View>
                   </LinearGradient>
                 </View>
@@ -955,6 +1058,11 @@ const styles = StyleSheet.create({
     paddingRight: 15,
   },
   logoRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    // gap: 10,
+    // flexGrow: 2,
     marginBottom: PSBSpacing.md,
   },
   logoContainer: {
@@ -964,6 +1072,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 25,
+    // flex: 1,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.2)",
   },
@@ -1510,6 +1619,64 @@ const styles = StyleSheet.create({
   paginationDotActive: {
     backgroundColor: PSBColors.primary.green,
     width: 24,
+  },
+
+  // Add to your StyleSheet
+
+  dropdownButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    // minWidth: 90,
+
+    justifyContent: "space-between",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  dropdownButtonText: {
+    color: "#000",
+    fontWeight: "600",
+    fontSize: 13,
+  },
+  arrow: {
+    color: "#000",
+    marginLeft: 6,
+    fontSize: 12,
+  },
+
+  dropdownContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    marginTop: 4,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  optionButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+  },
+  optionSelected: {
+    backgroundColor: "#eee",
+  },
+  optionText: {
+    color: "#000",
+    fontSize: 14,
+  },
+  optionTextSelected: {
+    fontWeight: "bold",
   },
 });
 

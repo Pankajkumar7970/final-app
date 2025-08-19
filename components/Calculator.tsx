@@ -18,6 +18,7 @@ import {
 import ResultsDisplay from "./ResultsDisplay";
 import { formatCurrency } from "../utils/formatters";
 import { PSBColors } from "../utils/PSBColors";
+import TranslatedText from "./TranslatedText";
 
 const { width } = Dimensions.get("window");
 
@@ -185,11 +186,11 @@ const Calculator = () => {
       onPress={onPress}
     >
       {icon}
-      <Text
+      <TranslatedText
         style={[styles.tabButtonText, isActive && styles.activeTabButtonText]}
       >
         {label}
-      </Text>
+      </TranslatedText>
     </TouchableOpacity>
   );
 
@@ -201,11 +202,11 @@ const Calculator = () => {
     keyboardType = "numeric",
   }: any) => (
     <View style={styles.inputContainer}>
-      <Text style={styles.inputLabel}>{label}</Text>
+      <TranslatedText style={styles.inputLabel}>{label}</TranslatedText>
       <TextInput
         style={styles.textInput}
         value={value}
-        onChangeText={onChangeText}
+        onChange={onChangeText}
         placeholder={placeholder}
         keyboardType={keyboardType}
         placeholderTextColor="#9ca3af"
@@ -215,7 +216,7 @@ const Calculator = () => {
 
   const PickerField = ({ label, value, options, onValueChange }: any) => (
     <View style={styles.inputContainer}>
-      <Text style={styles.inputLabel}>{label}</Text>
+      <TranslatedText style={styles.inputLabel}>{label}</TranslatedText>
       <View style={styles.pickerContainer}>
         {options.map((option: any) => (
           <TouchableOpacity
@@ -226,14 +227,14 @@ const Calculator = () => {
             ]}
             onPress={() => onValueChange(option.value)}
           >
-            <Text
+            <TranslatedText
               style={[
                 styles.pickerOptionText,
                 value === option.value && styles.activePickerOptionText,
               ]}
             >
               {option.label}
-            </Text>
+            </TranslatedText>
           </TouchableOpacity>
         ))}
       </View>
@@ -246,11 +247,13 @@ const Calculator = () => {
         <View style={styles.headerIcon}>
           <CalculatorIcon size={32} color="#ffffff" />
         </View>
-        <Text style={styles.headerTitle}>Smart Investment Calculator</Text>
-        <Text style={styles.headerSubtitle}>
+        <TranslatedText style={styles.headerTitle}>
+          Smart Investment Calculator
+        </TranslatedText>
+        <TranslatedText style={styles.headerSubtitle}>
           Calculate returns for Fixed Deposits, Recurring Deposits, and SIP
           investments
-        </Text>
+        </TranslatedText>
       </View>
 
       <View style={styles.content}>
@@ -280,18 +283,6 @@ const Calculator = () => {
             isActive={activeTab === "rd"}
             onPress={() => setActiveTab("rd")}
           />
-          {/* <TabButton
-            id="sip"
-            label="SIP"
-            icon={
-              <TrendingUp
-                size={20}
-                color={activeTab === "sip" ? "#ffffff" : "#6b7280"}
-              />
-            }
-            isActive={activeTab === "sip"}
-            onPress={() => setActiveTab("sip")}
-          /> */}
         </View>
 
         {/* Input Forms */}
@@ -410,9 +401,9 @@ const Calculator = () => {
             onPress={handleCalculate}
             disabled={loading}
           >
-            <Text style={styles.calculateButtonText}>
+            <TranslatedText style={styles.calculateButtonText}>
               {loading ? "Calculating..." : "Calculate Returns"}
-            </Text>
+            </TranslatedText>
           </TouchableOpacity>
         </View>
 

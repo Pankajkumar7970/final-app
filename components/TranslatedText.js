@@ -9,12 +9,10 @@ const TranslatedText = ({ children, style }) => {
 
   useEffect(() => {
     let mounted = true;
-    console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
     if (children) {
       translateText(children).then((res) => {
         if (mounted) setTranslated(res);
       });
-      console.log("llllllllllllllllllllllllllllllllllllllll");
     }
     return () => (mounted = false);
   }, [lang, children]);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, BackHandler } from "react-native";
+import { View, StyleSheet, BackHandler, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScenarioList } from "../../../components/ScenarioList";
 import { ScenarioSimulator } from "../../../components/ScenarioSimulator";
@@ -8,6 +8,7 @@ import API from "../../../api/api"; // Adjust the import path as necessary
 import axios from "axios";
 import Loader from "../../../components/Loader";
 import { router, useFocusEffect } from "expo-router";
+import TranslatedText from "../../../components/TranslatedText";
 
 const COMPLETED_SCENARIOS_KEY = "completed_scenarios";
 
@@ -68,6 +69,11 @@ export default function ScenarioHub() {
       timeSpent: result.timeSpent,
       points: result.points,
     });
+    Alert.alert(
+      "Exp Earned!",
+      `Congratulations!!! You have earned ${response.data.points} Exp points.`,
+      [{ text: "OK" }]
+    );
     // console.log("Scenario", response.data.choice);
     return [response.data.choice, response.data.points]; // Assuming the API returns the updated scenario data
   };

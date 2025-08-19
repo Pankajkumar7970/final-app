@@ -18,6 +18,7 @@ import { router } from "expo-router";
 import SecureTextInput from "../../components/SecureTextInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PSBColors } from "../../utils/PSBColors";
+import TranslatedText from "../../components/TranslatedText";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -104,10 +105,10 @@ const ForgotPassword = () => {
       {/* Main Content */}
       <View style={styles.container}>
         <View style={styles.card}>
-          <Text style={styles.title}>Forgot Password</Text>
-          <Text style={styles.subtitle}>
+          <TranslatedText style={styles.title}>Forgot Password</TranslatedText>
+          <TranslatedText style={styles.subtitle}>
             Enter your email to receive a reset OTP
-          </Text>
+          </TranslatedText>
 
           {step === 1 && (
             <>
@@ -137,7 +138,7 @@ const ForgotPassword = () => {
 
           {step === 2 && (
             <>
-              <Text style={styles.label}>Enter OTP</Text>
+              <TranslatedText style={styles.label}>Enter OTP</TranslatedText>
               <View style={styles.inputWrapper}>
                 <Ionicons name="key-outline" size={20} color="#777" />
                 <SecureTextInput

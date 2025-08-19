@@ -48,6 +48,7 @@ import Goals from "../../../components/Goals";
 import { useGoals } from "../../../contexts/GoalsContext";
 import { colors } from "../../../utils/colors";
 import API from "../../../api/api";
+import TranslatedText from "../../../components/TranslatedText";
 
 const { width } = Dimensions.get("window");
 const levelThresholds = [0, 200, 500, 1000, 2000, 5000];
@@ -103,9 +104,9 @@ const ProfileScreen = () => {
     });
   }
 
-  useEffect(() => {
+  useFocusEffect(() => {
     loadUserStats();
-  }, []);
+  });
 
   useFocusEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -276,21 +277,21 @@ const ProfileScreen = () => {
                 <View style={styles.onlineIndicator} />
               </Animatable.View>
 
-              <Text style={styles.userName}>
+              <TranslatedText style={styles.userName}>
                 {userData
                   ? `${userData.firstName || ""} ${userData.lastName || ""}`.trim()
                   : "Fraud Fighter"}
-              </Text>
-              <Text style={styles.userLevel}>
+              </TranslatedText>
+              <TranslatedText style={styles.userLevel}>
                 Level {userStats.currentLevel}
-              </Text>
+              </TranslatedText>
 
               {/* Experience Points Display */}
               <View style={styles.xpContainer}>
                 <TrendingUp size={16} color={PSBColors.primary.gold} />
-                <Text style={styles.xpText}>
+                <TranslatedText style={styles.xpText}>
                   {userStats.experiencePoints} XP
-                </Text>
+                </TranslatedText>
               </View>
             </Animated.View>
           </LinearGradient>
@@ -310,17 +311,19 @@ const ProfileScreen = () => {
                         <Award size={24} color={PSBColors.primary.green} />
                       </View>
                       <View style={styles.progressTextContainer}>
-                        <Text style={styles.progressTitle}>Level Progress</Text>
-                        <Text style={styles.progressSubtitle}>
+                        <TranslatedText style={styles.progressTitle}>
+                          Level Progress
+                        </TranslatedText>
+                        <TranslatedText style={styles.progressSubtitle}>
                           {userStats.nextLevelXP - userStats.experiencePoints}{" "}
                           XP to next level
-                        </Text>
+                        </TranslatedText>
                       </View>
                     </View>
                     <View style={styles.progressPercentageContainer}>
-                      <Text style={styles.progressPercentage}>
+                      <TranslatedText style={styles.progressPercentage}>
                         {Math.round(progressPercentage)}%
-                      </Text>
+                      </TranslatedText>
                     </View>
                   </View>
 
@@ -333,12 +336,12 @@ const ProfileScreen = () => {
                   </View>
 
                   <View style={styles.progressLabels}>
-                    <Text style={styles.progressLabelText}>
+                    <TranslatedText style={styles.progressLabelText}>
                       {userStats.experiencePoints} XP
-                    </Text>
-                    <Text style={styles.progressLabelText}>
+                    </TranslatedText>
+                    <TranslatedText style={styles.progressLabelText}>
                       {userStats.nextLevelXP} XP
-                    </Text>
+                    </TranslatedText>
                   </View>
                 </View>
               </Animatable.View>
@@ -360,7 +363,9 @@ const ProfileScreen = () => {
                   <View style={styles.sectionIconContainer}>
                     <Brain size={24} color={PSBColors.primary.green} />
                   </View>
-                  <Text style={styles.sectionTitle}>Performance Stats</Text>
+                  <TranslatedText style={styles.sectionTitle}>
+                    Performance Stats
+                  </TranslatedText>
                 </View>
 
                 <View style={styles.statsContainer}>
@@ -402,8 +407,12 @@ const ProfileScreen = () => {
                       >
                         <stat.icon size={28} color={stat.color} />
                       </LinearGradient>
-                      <Text style={styles.statValue}>{stat.value}</Text>
-                      <Text style={styles.statLabel}>{stat.label}</Text>
+                      <TranslatedText style={styles.statValue}>
+                        {stat.value}
+                      </TranslatedText>
+                      <TranslatedText style={styles.statLabel}>
+                        {stat.label}
+                      </TranslatedText>
                     </Animatable.View>
                   ))}
                 </View>
@@ -419,7 +428,9 @@ const ProfileScreen = () => {
                   <View style={styles.sectionIconContainer}>
                     <Award size={24} color={PSBColors.primary.green} />
                   </View>
-                  <Text style={styles.sectionTitle}>Badge Collection</Text>
+                  <TranslatedText style={styles.sectionTitle}>
+                    Badge Collection
+                  </TranslatedText>
                 </View>
 
                 <View style={styles.badgesContainer}>
@@ -444,14 +455,14 @@ const ProfileScreen = () => {
                         ]}
                       >
                         {typeof badge.icon === "string" ? (
-                          <Text
+                          <TranslatedText
                             style={[
                               styles.badgeIconText,
                               { opacity: badge.earned ? 1 : 0.3 },
                             ]}
                           >
                             {badge.icon}
-                          </Text>
+                          </TranslatedText>
                         ) : (
                           <badge.icon
                             size={24}
@@ -459,14 +470,14 @@ const ProfileScreen = () => {
                           />
                         )}
                       </View>
-                      <Text
+                      <TranslatedText
                         style={[
                           styles.badgeName,
                           !badge.earned && styles.badgeNameLocked,
                         ]}
                       >
                         {badge.name}
-                      </Text>
+                      </TranslatedText>
                       {badge.earned && <View style={styles.earnedIndicator} />}
                     </Animatable.View>
                   ))}
@@ -483,7 +494,9 @@ const ProfileScreen = () => {
                   <View style={styles.sectionIconContainer}>
                     <Trophy size={24} color={PSBColors.primary.green} />
                   </View>
-                  <Text style={styles.sectionTitle}>Recent Achievements</Text>
+                  <TranslatedText style={styles.sectionTitle}>
+                    Recent Achievements
+                  </TranslatedText>
                 </View>
 
                 <View style={styles.achievementsContainer}>
@@ -504,15 +517,15 @@ const ProfileScreen = () => {
                       </View>
 
                       <View style={styles.achievementContent}>
-                        <Text style={styles.achievementTitle}>
+                        <TranslatedText style={styles.achievementTitle}>
                           {achievement.title}
-                        </Text>
-                        <Text style={styles.achievementDescription}>
+                        </TranslatedText>
+                        <TranslatedText style={styles.achievementDescription}>
                           {achievement.description}
-                        </Text>
-                        <Text style={styles.achievementDate}>
+                        </TranslatedText>
+                        <TranslatedText style={styles.achievementDate}>
                           {achievement.date}
-                        </Text>
+                        </TranslatedText>
                       </View>
 
                       <View style={styles.achievementBadge}>
@@ -533,7 +546,9 @@ const ProfileScreen = () => {
                   <View style={styles.sectionIconContainer}>
                     <Info size={24} color={PSBColors.primary.green} />
                   </View>
-                  <Text style={styles.sectionTitle}>Settings & Support</Text>
+                  <TranslatedText style={styles.sectionTitle}>
+                    Settings & Support
+                  </TranslatedText>
                 </View>
 
                 <View style={styles.settingsContainer}>
@@ -552,7 +567,9 @@ const ProfileScreen = () => {
                       >
                         <option.icon size={22} color={option.color} />
                       </View>
-                      <Text style={styles.settingText}>{option.title}</Text>
+                      <TranslatedText style={styles.settingText}>
+                        {option.title}
+                      </TranslatedText>
                       <ChevronRight size={20} color={PSBColors.text.tertiary} />
                     </TouchableOpacity>
                   ))}
@@ -567,9 +584,11 @@ const ProfileScreen = () => {
                     <View style={styles.logoutIconContainer}>
                       <LogOut size={22} color="#ff6b6b" />
                     </View>
-                    <Text style={[styles.settingText, styles.logoutText]}>
+                    <TranslatedText
+                      style={[styles.settingText, styles.logoutText]}
+                    >
                       Logout
-                    </Text>
+                    </TranslatedText>
                     <ChevronRight size={20} color="#ff6b6b" />
                   </TouchableOpacity>
                 </View>

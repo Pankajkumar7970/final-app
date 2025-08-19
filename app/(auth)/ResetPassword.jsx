@@ -15,6 +15,7 @@ import PrimaryButton from "../../components/ui/PrimaryButton";
 import Header from "../../components/ui/Header";
 import { colors } from "../../utils/colors";
 // import { ResetPasswordForm, ValidationError } from '@/types/auth';
+import TranslatedText from "../../components/TranslatedText";
 import {
   validatePassword,
   validateConfirmPassword,
@@ -115,10 +116,12 @@ export default function ResetPasswordScreen() {
                   resizeMode="contain"
                 />
               </View>
-              <Text style={styles.title}>Create New Password</Text>
-              <Text style={styles.subtitle}>
+              <TranslatedText style={styles.title}>
+                Create New Password
+              </TranslatedText>
+              <TranslatedText style={styles.subtitle}>
                 Please create a strong password for your account security.
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.formSection}>
@@ -145,21 +148,21 @@ export default function ResetPasswordScreen() {
               />
 
               <View style={styles.passwordRequirements}>
-                <Text style={styles.requirementsTitle}>
+                <TranslatedText style={styles.requirementsTitle}>
                   Password Requirements:
-                </Text>
-                <Text style={styles.requirementItem}>
+                </TranslatedText>
+                <TranslatedText style={styles.requirementItem}>
                   • At least 8 characters long
-                </Text>
-                <Text style={styles.requirementItem}>
+                </TranslatedText>
+                <TranslatedText style={styles.requirementItem}>
                   • Contains uppercase and lowercase letters
-                </Text>
-                <Text style={styles.requirementItem}>
+                </TranslatedText>
+                <TranslatedText style={styles.requirementItem}>
                   • Contains at least one number
-                </Text>
-                <Text style={styles.requirementItem}>
+                </TranslatedText>
+                <TranslatedText style={styles.requirementItem}>
                   • Contains at least one special character
-                </Text>
+                </TranslatedText>
               </View>
 
               <PrimaryButton

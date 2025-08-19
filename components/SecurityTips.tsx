@@ -6,15 +6,12 @@ import {
   StyleSheet,
   ScrollView,
   Linking,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-interface SecurityTipsProps {
-  onRestart: () => void;
-}
-
-const SecurityTips = ({ onRestart }: SecurityTipsProps) => {
+const SecurityTips = ({ onRestart, loading }) => {
   const tips = [
     {
       icon: "globe-outline",
@@ -141,8 +138,16 @@ const SecurityTips = ({ onRestart }: SecurityTipsProps) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.restartButton} onPress={onRestart}>
-            <Text style={styles.restartButtonText}>Go to Home</Text>
+          <TouchableOpacity
+            style={styles.restartButton}
+            onPress={onRestart}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.restartButtonText}>Go to Home</Text>
+            )}
           </TouchableOpacity>
           {/* <TouchableOpacity style={styles.reportButton} onPress={handleReportCrime}>
             <Text style={styles.reportButtonText}>Report Real Cybercrime</Text>

@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TranslatedText from "./TranslatedText";
 
 interface EducationalWarningProps {
   onNext: () => void;
@@ -22,24 +23,28 @@ const EducationalWarning = ({ onNext, userData }: EducationalWarningProps) => {
           <View style={styles.warningIcon}>
             <Ionicons name="warning" size={32} color="#FFF" />
           </View>
-          <Text style={styles.title}>⚠️ YOU'VE BEEN PHISHED!</Text>
+          <TranslatedText style={styles.title}>
+            ⚠️ YOU'VE BEEN PHISHED!
+          </TranslatedText>
           <View style={styles.simulationBadge}>
-            <Text style={styles.simulationBadgeText}>
+            <TranslatedText style={styles.simulationBadgeText}>
               This was a simulated phishing attack
-            </Text>
+            </TranslatedText>
           </View>
         </View>
 
         <View style={styles.whatHappenedCard}>
           <View style={styles.cardHeader}>
             <Ionicons name="close-circle" size={20} color="#DC2626" />
-            <Text style={styles.cardTitle}>What Just Happened?</Text>
+            <TranslatedText style={styles.cardTitle}>
+              What Just Happened?
+            </TranslatedText>
           </View>
-          <Text style={styles.cardDescription}>
+          <TranslatedText style={styles.cardDescription}>
             You just submitted your sensitive banking information to a{" "}
-            <Text style={styles.bold}>fake website</Text>. In a real phishing
-            attack, criminals would now have:
-          </Text>
+            <TranslatedText style={styles.bold}>fake website</TranslatedText>.
+            In a real phishing attack, criminals would now have:
+          </TranslatedText>
 
           <View style={styles.dataGrid}>
             <View style={styles.dataCard}>
@@ -49,10 +54,12 @@ const EducationalWarning = ({ onNext, userData }: EducationalWarningProps) => {
                 color="#DC2626"
                 style={styles.dataIcon}
               />
-              <Text style={styles.dataTitle}>Your Account Number</Text>
-              <Text style={styles.dataDescription}>
+              <TranslatedText style={styles.dataTitle}>
+                Your Account Number
+              </TranslatedText>
+              <TranslatedText style={styles.dataDescription}>
                 They can use this to target you with more specific attacks
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.dataCard}>
@@ -62,10 +69,12 @@ const EducationalWarning = ({ onNext, userData }: EducationalWarningProps) => {
                 color="#DC2626"
                 style={styles.dataIcon}
               />
-              <Text style={styles.dataTitle}>Your Password</Text>
-              <Text style={styles.dataDescription}>
+              <TranslatedText style={styles.dataTitle}>
+                Your Password
+              </TranslatedText>
+              <TranslatedText style={styles.dataDescription}>
                 Complete access to your online banking account
-              </Text>
+              </TranslatedText>
             </View>
 
             <View style={styles.dataCard}>
@@ -75,58 +84,62 @@ const EducationalWarning = ({ onNext, userData }: EducationalWarningProps) => {
                 color="#DC2626"
                 style={styles.dataIcon}
               />
-              <Text style={styles.dataTitle}>Your OTP</Text>
-              <Text style={styles.dataDescription}>
+              <TranslatedText style={styles.dataTitle}>Your OTP</TranslatedText>
+              <TranslatedText style={styles.dataDescription}>
                 Ability to authorize transactions immediately
-              </Text>
+              </TranslatedText>
             </View>
           </View>
         </View>
 
         <View style={styles.dataSubmittedCard}>
-          <Text style={styles.dataSubmittedTitle}>
+          <TranslatedText style={styles.dataSubmittedTitle}>
             The Data You Submitted (Simulated)
-          </Text>
-          <Text style={styles.dataSubmittedSubtitle}>
+          </TranslatedText>
+          <TranslatedText style={styles.dataSubmittedSubtitle}>
             This data was NOT actually transmitted anywhere
-          </Text>
+          </TranslatedText>
           <View style={styles.dataDisplay}>
-            <Text style={styles.dataItem}>
+            <TranslatedText style={styles.dataItem}>
               Account: {userData.account || "(not entered)"}
-            </Text>
-            <Text style={styles.dataItem}>
+            </TranslatedText>
+            <TranslatedText style={styles.dataItem}>
               Password:{" "}
               {"*".repeat(userData.password.length) || "(not entered)"}
-            </Text>
-            <Text style={styles.dataItem}>
+            </TranslatedText>
+            <TranslatedText style={styles.dataItem}>
               OTP: {userData.otp || "(not entered)"}
-            </Text>
+            </TranslatedText>
           </View>
         </View>
 
         <View style={styles.consequencesCard}>
-          <Text style={styles.consequencesTitle}>Real-World Consequences</Text>
+          <TranslatedText style={styles.consequencesTitle}>
+            Real-World Consequences
+          </TranslatedText>
           <View style={styles.consequencesList}>
-            <Text style={styles.consequenceItem}>
+            <TranslatedText style={styles.consequenceItem}>
               💰 Immediate unauthorized transactions
-            </Text>
-            <Text style={styles.consequenceItem}>
+            </TranslatedText>
+            <TranslatedText style={styles.consequenceItem}>
               🏦 Complete compromise of your bank account
-            </Text>
-            <Text style={styles.consequenceItem}>
+            </TranslatedText>
+            <TranslatedText style={styles.consequenceItem}>
               📱 Additional attacks using your personal information
-            </Text>
-            <Text style={styles.consequenceItem}>
+            </TranslatedText>
+            <TranslatedText style={styles.consequenceItem}>
               🔐 Potential identity theft
-            </Text>
-            <Text style={styles.consequenceItem}>
+            </TranslatedText>
+            <TranslatedText style={styles.consequenceItem}>
               💸 Financial losses that may be difficult to recover
-            </Text>
+            </TranslatedText>
           </View>
         </View>
 
         <TouchableOpacity style={styles.nextButton} onPress={onNext}>
-          <Text style={styles.nextButtonText}>See What Happens Next →</Text>
+          <TranslatedText style={styles.nextButtonText}>
+            See What Happens Next →
+          </TranslatedText>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

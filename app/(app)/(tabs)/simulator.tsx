@@ -35,6 +35,7 @@ import ChatbotPopup from "../../../components/ChatbotPopup";
 import { PSBColors, PSBShadows, PSBSpacing } from "../../../utils/PSBColors";
 // import Animated from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
+import TranslatedText from "../../../components/TranslatedText";
 
 const { width } = Dimensions.get("window");
 
@@ -321,7 +322,9 @@ const ModuleCard = ({ module }) => {
             end={{ x: 1, y: 0 }}
           >
             <Zap size={12} color="#FFFFFF" strokeWidth={2.5} />
-            <Text style={styles.categoryText}>FRAUD DETECTION</Text>
+            <TranslatedText style={styles.categoryText}>
+              FRAUD DETECTION
+            </TranslatedText>
           </LinearGradient>
 
           {module.difficulty && (
@@ -337,14 +340,14 @@ const ModuleCard = ({ module }) => {
                   { backgroundColor: difficultyColors.accent },
                 ]}
               />
-              <Text
+              <TranslatedText
                 style={[
                   styles.difficultyText,
                   { color: difficultyColors.text },
                 ]}
               >
                 {module.difficulty}
-              </Text>
+              </TranslatedText>
             </View>
           )}
         </View>
@@ -365,17 +368,23 @@ const ModuleCard = ({ module }) => {
           {/* Text content */}
           <View style={styles.textSection}>
             <View style={styles.titleContainer}>
-              <Text style={styles.cardTitle}>{module.title}</Text>
+              <TranslatedText style={styles.cardTitle}>
+                {module.title}
+              </TranslatedText>
               <View style={styles.titleUnderline} />
             </View>
 
-            <Text style={styles.cardDescription}>{module.description}</Text>
+            <TranslatedText style={styles.cardDescription}>
+              {module.description}
+            </TranslatedText>
           </View>
         </View>
 
         {/* Footer with action button */}
         <View style={styles.cardFooter}>
-          <Text style={styles.progressText}>Ready to start</Text>
+          <TranslatedText style={styles.progressText}>
+            Ready to start
+          </TranslatedText>
 
           <TouchableOpacity onPress={handlePress}>
             <LinearGradient
@@ -384,7 +393,9 @@ const ModuleCard = ({ module }) => {
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
             >
-              <Text style={styles.actionText}>Start Training</Text>
+              <TranslatedText style={styles.actionText}>
+                Start Training
+              </TranslatedText>
               <ChevronRight size={18} color="#FFFFFF" strokeWidth={2.5} />
             </LinearGradient>
           </TouchableOpacity>
@@ -499,19 +510,25 @@ export default function SimulatorsScreen() {
               </View>
 
               <View style={styles.brandTextContainer}>
-                <Text style={styles.brandTitle}>Simulation Academy</Text>
-                <Text style={styles.brandSubtitle}>
+                <TranslatedText style={styles.brandTitle}>
+                  Simulation Academy
+                </TranslatedText>
+                <TranslatedText style={styles.brandSubtitle}>
                   Master the art of fraud detection with our interactive
                   simulators.
-                </Text>
+                </TranslatedText>
                 <View style={styles.brandFeatures}>
                   <View style={styles.featurePill}>
                     <Lock size={12} color="#10B981" strokeWidth={2} />
-                    <Text style={styles.featureText}>Enterprise Security</Text>
+                    <TranslatedText style={styles.featureText}>
+                      Enterprise Security
+                    </TranslatedText>
                   </View>
                   <View style={styles.featurePill}>
                     <Eye size={12} color="#3B82F6" strokeWidth={2} />
-                    <Text style={styles.featureText}>AI Analytics</Text>
+                    <TranslatedText style={styles.featureText}>
+                      AI Analytics
+                    </TranslatedText>
                   </View>
                 </View>
               </View>

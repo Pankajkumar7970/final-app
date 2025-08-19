@@ -16,6 +16,7 @@ import {
   ArrowRight,
 } from "lucide-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TranslatedText from "./TranslatedText";
 
 interface EmailSimulationProps {
   onNext: () => void;
@@ -34,9 +35,11 @@ const EmailSimulation = ({ onNext }: EmailSimulationProps) => {
           <View style={styles.emailHeader}>
             <View style={styles.headerLeft}>
               <Mail size={24} color="#3B82F6" strokeWidth={2} />
-              <Text style={styles.headerTitle}>Gmail</Text>
+              <TranslatedText style={styles.headerTitle}>Gmail</TranslatedText>
             </View>
-            <Text style={styles.headerRight}>Inbox (1)</Text>
+            <TranslatedText style={styles.headerRight}>
+              Inbox (1)
+            </TranslatedText>
           </View>
 
           {/* Email Content */}
@@ -45,54 +48,70 @@ const EmailSimulation = ({ onNext }: EmailSimulationProps) => {
               {/* Email Header Info */}
               <View style={styles.emailInfo}>
                 <View style={styles.emailSubject}>
-                  <Text style={styles.subjectText}>
+                  <TranslatedText style={styles.subjectText}>
                     🚨 Urgent: Account Verification Required
-                  </Text>
+                  </TranslatedText>
                   <View style={styles.suspiciousBadge}>
-                    <Text style={styles.suspiciousBadgeText}>SUSPICIOUS</Text>
+                    <TranslatedText style={styles.suspiciousBadgeText}>
+                      SUSPICIOUS
+                    </TranslatedText>
                   </View>
                 </View>
-                <Text style={styles.senderEmail}>noreply@abcbank.in</Text>
+                <TranslatedText style={styles.senderEmail}>
+                  noreply@abcbank.in
+                </TranslatedText>
                 <View style={styles.emailMeta}>
                   <View style={styles.metaItem}>
                     <Calendar size={12} color="#666" strokeWidth={2} />
-                    <Text style={styles.metaText}>Today</Text>
+                    <TranslatedText style={styles.metaText}>
+                      Today
+                    </TranslatedText>
                   </View>
                   <View style={styles.metaItem}>
                     <Clock size={12} color="#666" strokeWidth={2} />
-                    <Text style={styles.metaText}>3:42 PM</Text>
+                    <TranslatedText style={styles.metaText}>
+                      3:42 PM
+                    </TranslatedText>
                   </View>
                 </View>
               </View>
 
               {/* Email Body */}
               <View style={styles.emailBody}>
-                <Text style={styles.emailTitle}>
+                <TranslatedText style={styles.emailTitle}>
                   🚨 Urgent: Account Verification Required
-                </Text>
-                <Text style={styles.emailText}>Dear Valued Customer,</Text>
-                <Text style={styles.emailText}>
+                </TranslatedText>
+                <TranslatedText style={styles.emailText}>
+                  Dear Valued Customer,
+                </TranslatedText>
+                <TranslatedText style={styles.emailText}>
                   We have detected unauthorized login attempts on your Bank
                   account. To prevent further misuse, please verify your
                   identity within 12 hours by clicking the button below:
-                </Text>
-                <Text style={styles.warningText}>
+                </TranslatedText>
+                <TranslatedText style={styles.warningText}>
                   Failure to verify may result in account suspension.
-                </Text>
+                </TranslatedText>
                 <TouchableOpacity
                   style={styles.verifyButton}
                   onPress={() =>
                     alert("This would redirect to a fake PSB page!")
                   }
                 >
-                  <Text style={styles.verifyButtonText}>👉 Verify Now</Text>
+                  <TranslatedText style={styles.verifyButtonText}>
+                    👉 Verify Now
+                  </TranslatedText>
                 </TouchableOpacity>
                 <View style={styles.signature}>
-                  <Text style={styles.signatureText}>Sincerely,</Text>
-                  <Text style={styles.signatureText}>
+                  <TranslatedText style={styles.signatureText}>
+                    Sincerely,
+                  </TranslatedText>
+                  <TranslatedText style={styles.signatureText}>
                     Abc Bank Security Team
-                  </Text>
-                  <Text style={styles.signatureText}>www.abcbank.co.in</Text>
+                  </TranslatedText>
+                  <TranslatedText style={styles.signatureText}>
+                    www.abcbank.co.in
+                  </TranslatedText>
                 </View>
               </View>
             </View>
@@ -104,10 +123,14 @@ const EmailSimulation = ({ onNext }: EmailSimulationProps) => {
           <View style={styles.analysisHeader}>
             <View style={styles.analysisTitleContainer}>
               <AlertTriangle size={20} color="#F59E0B" strokeWidth={2} />
-              <Text style={styles.analysisTitleText}>Educational Analysis</Text>
+              <TranslatedText style={styles.analysisTitleText}>
+                Educational Analysis
+              </TranslatedText>
             </View>
             <View style={styles.simulationBadge}>
-              <Text style={styles.simulationBadgeText}>SIMULATION</Text>
+              <TranslatedText style={styles.simulationBadgeText}>
+                SIMULATION
+              </TranslatedText>
             </View>
           </View>
 
@@ -117,49 +140,53 @@ const EmailSimulation = ({ onNext }: EmailSimulationProps) => {
               onPress={() => setShowAnalysis(true)}
             >
               <Eye size={16} color="#374151" strokeWidth={2} />
-              <Text style={styles.analyzeButtonText}>
+              <TranslatedText style={styles.analyzeButtonText}>
                 Analyze This Phishing Email
-              </Text>
+              </TranslatedText>
             </TouchableOpacity>
           ) : (
             <View style={styles.analysisContent}>
               <View style={styles.analysisSection}>
-                <Text style={styles.sectionTitle}>🚩 Red Flags Found:</Text>
-                <Text style={styles.flagItem}>
+                <TranslatedText style={styles.sectionTitle}>
+                  🚩 Red Flags Found:
+                </TranslatedText>
+                <TranslatedText style={styles.flagItem}>
                   • Fake domain: abcbank.in (suspicious)
-                </Text>
-                <Text style={styles.flagItem}>
+                </TranslatedText>
+                <TranslatedText style={styles.flagItem}>
                   • Urgency tactics: "URGENT", "immediate verification"
-                </Text>
-                <Text style={styles.flagItem}>
+                </TranslatedText>
+                <TranslatedText style={styles.flagItem}>
                   • Generic greeting: "Dear Valued Customer"
-                </Text>
-                <Text style={styles.flagItem}>
+                </TranslatedText>
+                <TranslatedText style={styles.flagItem}>
                   • Suspicious button: Asking to click to "verify"
-                </Text>
+                </TranslatedText>
               </View>
 
               <View style={styles.analysisSection}>
-                <Text style={styles.sectionTitle}>✅ How to Verify:</Text>
-                <Text style={styles.verifyItem}>
+                <TranslatedText style={styles.sectionTitle}>
+                  ✅ How to Verify:
+                </TranslatedText>
+                <TranslatedText style={styles.verifyItem}>
                   • Check official Bank domain
-                </Text>
-                <Text style={styles.verifyItem}>
+                </TranslatedText>
+                <TranslatedText style={styles.verifyItem}>
                   • Call ABC customer service: 1800-11-2345
-                </Text>
-                <Text style={styles.verifyItem}>
+                </TranslatedText>
+                <TranslatedText style={styles.verifyItem}>
                   • Login through official app/website
-                </Text>
-                <Text style={styles.verifyItem}>
+                </TranslatedText>
+                <TranslatedText style={styles.verifyItem}>
                   • Never click links in suspicious emails
-                </Text>
+                </TranslatedText>
               </View>
 
               <TouchableOpacity style={styles.continueButton} onPress={onNext}>
                 <ArrowRight size={30} color="#FFF" strokeWidth={2} />
-                <Text style={styles.continueButtonText}>
+                <TranslatedText style={styles.continueButtonText}>
                   Continue to Bank Page Simulation
-                </Text>
+                </TranslatedText>
               </TouchableOpacity>
             </View>
           )}

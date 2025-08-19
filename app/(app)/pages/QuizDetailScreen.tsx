@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
+import TranslatedText from "../../../components/TranslatedText";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   CheckCircle,
@@ -24,13 +25,11 @@ import { saveQuizResult } from "../../../data/quizData";
 import { LinearGradient } from "expo-linear-gradient";
 import { router, useLocalSearchParams } from "expo-router";
 import API from "../../../api/api";
-import { set } from "mongoose";
 import Loader from "../../../components/Loader";
 import { PSBColors } from "../../../utils/PSBColors";
 
 const QuizDetailScreen = () => {
   const { quizId } = useLocalSearchParams();
-
   const [quiz, setQuiz] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
@@ -68,7 +67,7 @@ const QuizDetailScreen = () => {
     setSelectedAnswer(answerIndex);
   };
 
-  const handleNextQuestion = () => {
+  const handleNextQuestion = async () => {
     if (selectedAnswer === null) return;
 
     const newAnswers = [...answers, selectedAnswer];
@@ -81,7 +80,15 @@ const QuizDetailScreen = () => {
     } else {
       // Quiz completed
       setLoading(true);
-      API.post(`/quizzes/${quiz._id}/submit`, { answers: newAnswers });
+      const response = await API.post(`/quizzes/${quiz._id}/submit`, {
+        answers: newAnswers,
+      });
+      const Exp = response.data.progress.experiencePoints;
+      Alert.alert(
+        "Exp Earned!",
+        `Congratulations!!! You have earned ${Exp} Exp points.`,
+        [{ text: "OK" }]
+      );
       const score = newAnswers.reduce((total, answer, index) => {
         return total + (answer === quiz.questions[index].correctAnswer ? 1 : 0);
       }, 0);
@@ -157,13 +164,13 @@ const QuizDetailScreen = () => {
                   style={styles.sparkleIcon}
                 />
               </View>
-              <Text style={styles.resultsTitle}>
+              <TranslatedText style={styles.resultsTitle}>
                 {percentage >= 80
                   ? "Excellent Work!"
                   : percentage >= 60
                     ? "Great Progress!"
                     : "Keep Learning!"}
-              </Text>
+              </TranslatedText>
               <View style={styles.scoreContainer}>
                 <View
                   style={[
@@ -178,9 +185,9 @@ const QuizDetailScreen = () => {
                     },
                   ]}
                 >
-                  <Text style={styles.scoreBadgeText}>
+                  <TranslatedText style={styles.scoreBadgeText}>
                     {score}/{quiz.questions.length}
-                  </Text>
+                  </TranslatedText>
                 </View>
                 <View
                   style={[
@@ -195,7 +202,7 @@ const QuizDetailScreen = () => {
                     },
                   ]}
                 >
-                  <Text
+                  <TranslatedText
                     style={[
                       styles.percentageText,
                       {
@@ -209,17 +216,23 @@ const QuizDetailScreen = () => {
                     ]}
                   >
                     {percentage}%
-                  </Text>
+                  </TranslatedText>
                 </View>
               </View>
             </View>
 
             <View style={styles.resultsContent}>
-              <Text style={styles.quizTitle}>{quiz.title}</Text>
-              <Text style={styles.scoreMessage}>{getScoreMessage(score)}</Text>
+              <TranslatedText style={styles.quizTitle}>
+                {quiz.title}
+              </TranslatedText>
+              <TranslatedText style={styles.scoreMessage}>
+                {getScoreMessage(score)}
+              </TranslatedText>
 
               <View style={styles.reviewSection}>
-                <Text style={styles.reviewTitle}>Review Your Answers:</Text>
+                <TranslatedText style={styles.reviewTitle}>
+                  Review Your Answers:
+                </TranslatedText>
                 {quiz.questions.map((question, index) => (
                   <View key={question.id} style={styles.reviewItem}>
                     <View style={styles.reviewHeader}>
@@ -229,16 +242,16 @@ const QuizDetailScreen = () => {
                         <XCircle size={20} color="#ef4444" />
                       )}
                       <View style={styles.reviewContent}>
-                        <Text style={styles.reviewQuestion}>
+                        <TranslatedText style={styles.reviewQuestion}>
                           {question.question}
-                        </Text>
-                        <Text style={styles.reviewAnswer}>
+                        </TranslatedText>
+                        <TranslatedText style={styles.reviewAnswer}>
                           Your answer: {question.options[answers[index]]}
-                        </Text>
+                        </TranslatedText>
                         {answers[index] !== question.correctAnswer && (
-                          <Text style={styles.reviewCorrect}>
+                          <TranslatedText style={styles.reviewCorrect}>
                             Correct: {question.options[question.correctAnswer]}
-                          </Text>
+                          </TranslatedText>
                         )}
                       </View>
                     </View>
@@ -252,14 +265,18 @@ const QuizDetailScreen = () => {
                   onPress={restartQuiz}
                 >
                   <RotateCcw size={16} color="#1a4b8c" />
-                  <Text style={styles.secondaryButtonText}>Retake Quiz</Text>
+                  <TranslatedText style={styles.secondaryButtonText}>
+                    Retake Quiz
+                  </TranslatedText>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.primaryButton}
                   onPress={() => router.push("/pages/QuizzesScreen")}
                 >
                   <Home size={16} color="#ffffff" />
-                  <Text style={styles.primaryButtonText}>Back to Quizzes</Text>
+                  <TranslatedText style={styles.primaryButtonText}>
+                    Back to Quizzes
+                  </TranslatedText>
                 </TouchableOpacity>
               </View>
             </View>
@@ -285,11 +302,13 @@ const QuizDetailScreen = () => {
             style={styles.headerGradient}
           >
             <View style={styles.headerGradient}>
-              <Text style={styles.quizTitle}>{quiz.title}</Text>
+              <TranslatedText style={styles.quizTitle}>
+                {quiz.title}
+              </TranslatedText>
               <View style={styles.progressInfo}>
-                <Text style={styles.progressText}>
+                <TranslatedText style={styles.progressText}>
                   Question {currentQuestion + 1} of {quiz.questions.length}
-                </Text>
+                </TranslatedText>
                 <View
                   style={[
                     styles.categoryBadge,
@@ -298,7 +317,7 @@ const QuizDetailScreen = () => {
                       : styles.financialCategoryBadge,
                   ]}
                 >
-                  <Text
+                  <TranslatedText
                     style={[
                       styles.categoryBadgeText,
                       quiz.category === "fraud"
@@ -309,7 +328,7 @@ const QuizDetailScreen = () => {
                     {quiz.category === "fraud"
                       ? "Fraud Protection"
                       : "Financial Mastery"}
-                  </Text>
+                  </TranslatedText>
                 </View>
               </View>
               <View style={styles.progressBar}>
@@ -323,7 +342,9 @@ const QuizDetailScreen = () => {
 
         {/* Question Card */}
         <View style={styles.questionCard}>
-          <Text style={styles.questionText}>{question.question}</Text>
+          <TranslatedText style={styles.questionText}>
+            {question.question}
+          </TranslatedText>
 
           <View style={styles.optionsContainer}>
             {question.options.map((option, index) => (
@@ -337,17 +358,17 @@ const QuizDetailScreen = () => {
                 onPress={() => handleAnswerSelect(index)}
                 disabled={showExplanation}
               >
-                <Text style={styles.optionLabel}>
+                <TranslatedText style={styles.optionLabel}>
                   {String.fromCharCode(65 + index)}.
-                </Text>
-                <Text
+                </TranslatedText>
+                <TranslatedText
                   style={[
                     styles.optionText,
                     selectedAnswer === index && styles.selectedOptionText,
                   ]}
                 >
                   {option}
-                </Text>
+                </TranslatedText>
               </TouchableOpacity>
             ))}
           </View>
@@ -362,7 +383,7 @@ const QuizDetailScreen = () => {
               ) : (
                 <XCircle size={20} color="#ef4444" />
               )}
-              <Text
+              <TranslatedText
                 style={[
                   styles.explanationResult,
                   selectedAnswer === question.correctAnswer
@@ -373,15 +394,17 @@ const QuizDetailScreen = () => {
                 {selectedAnswer === question.correctAnswer
                   ? "Correct!"
                   : "Incorrect"}
-              </Text>
+              </TranslatedText>
             </View>
-            <Text style={styles.explanationText}>{question.explanation}</Text>
+            <TranslatedText style={styles.explanationText}>
+              {question.explanation}
+            </TranslatedText>
             {selectedAnswer !== question.correctAnswer && (
-              <Text style={styles.correctAnswerText}>
+              <TranslatedText style={styles.correctAnswerText}>
                 Correct answer:{" "}
                 {String.fromCharCode(65 + question.correctAnswer)}.{" "}
                 {question.options[question.correctAnswer]}
-              </Text>
+              </TranslatedText>
             )}
           </View>
         )}
@@ -392,7 +415,9 @@ const QuizDetailScreen = () => {
             style={styles.secondaryButton}
             onPress={() => router.back()}
           >
-            <Text style={styles.secondaryButtonText}>Back to Quizzes</Text>
+            <TranslatedText style={styles.secondaryButtonText}>
+              Back to Quizzes
+            </TranslatedText>
           </TouchableOpacity>
 
           {!showExplanation ? (
@@ -404,18 +429,20 @@ const QuizDetailScreen = () => {
               onPress={handleShowExplanation}
               disabled={selectedAnswer === null}
             >
-              <Text style={styles.primaryButtonText}>Show Explanation</Text>
+              <TranslatedText style={styles.primaryButtonText}>
+                Show Explanation
+              </TranslatedText>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
               style={styles.primaryButton}
               onPress={handleNextQuestion}
             >
-              <Text style={styles.primaryButtonText}>
+              <TranslatedText style={styles.primaryButtonText}>
                 {currentQuestion < quiz.questions.length - 1
                   ? "Next Question"
                   : "Finish Quiz"}
-              </Text>
+              </TranslatedText>
             </TouchableOpacity>
           )}
         </View>

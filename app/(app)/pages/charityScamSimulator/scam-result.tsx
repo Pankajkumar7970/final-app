@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import {
@@ -15,10 +17,25 @@ import {
   BookOpen,
   Shield,
 } from "lucide-react-native";
+import API from "../../../../api/api";
 
 export default function ScamResultScreen() {
   const params = useLocalSearchParams();
+  const [loading, setLoading] = useState(false);
   const { type, amount, title } = params;
+
+  async function handleBackToScenarios() {
+    setLoading(true);
+    const response = await API.post("/simulator-use/charity-scam-simulator");
+    setLoading(false);
+    const Exp = response.data.progress.experiencePoints;
+    Alert.alert(
+      "Exp Earned!",
+      `Congratulations!!! You have earned ${Exp} Exp points.`,
+      [{ text: "OK" }]
+    );
+    router.replace("/pages/charityScamSimulator");
+  }
 
   const getScamDetails = () => {
     switch (type) {
@@ -182,15 +199,22 @@ export default function ScamResultScreen() {
           <View style={styles.actionButtons}>
             <TouchableOpacity
               style={styles.homeButton}
-              onPress={() => router.push("/pages/charityScamSimulator")}
+              onPress={handleBackToScenarios}
+              disabled={loading}
             >
-              <Home size={20} color="#FFFFFF" />
-              <Text style={styles.homeButtonText}>Back to Home</Text>
+              {loading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <>
+                  <Home size={20} color="#FFFFFF" />
+                  <Text style={styles.homeButtonText}> Back to Home</Text>
+                </>
+              )}
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.learnButton}
-              onPress={() => router.push("/education")}
+              onPress={() => router.replace("/pages/education")}
             >
               <BookOpen size={20} color="#3B82F6" />
               <Text style={styles.learnButtonText}>Learn More</Text>

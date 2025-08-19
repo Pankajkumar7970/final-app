@@ -234,12 +234,12 @@ export default function LoginScreen({
               placeholder="Enter your password"
             />
 
-            <TouchableOpacity style={styles.forgotPasswordContainer}>
-              <Link href="/(auth)/forgot-password" asChild>
+            <TouchableOpacity style={styles.forgotPasswordContainer} onPress={onForgotPassword}>
+              {/* <Link href="/(auth)/forgot-password" asChild> */}
                 <TranslatedText style={styles.forgotPasswordText}>
                   Forgot Password?
                 </TranslatedText>
-              </Link>
+              {/* </Link> */}
             </TouchableOpacity>
 
             <PrimaryButton
@@ -279,9 +279,11 @@ export default function LoginScreen({
           <View style={styles.footerSection}>
             <TranslatedText style={styles.footerText}>
               Don't have an account?{" "}
-              <Link href="/(auth)/signup" asChild>
+              {/* <Link href="/(auth)/signup" asChild> */}
+              <TouchableOpacity onPress={onSwitchToSignup}>
                 <TranslatedText style={styles.linkText}>Sign Up</TranslatedText>
-              </Link>
+              </TouchableOpacity>
+              {/* </Link> */}
             </TranslatedText>
           </View>
         </View>

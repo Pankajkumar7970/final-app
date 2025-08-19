@@ -1,16 +1,44 @@
 import { Redirect, router } from "expo-router";
 import { useAuth } from "../contexts/AuthContext";
-import { View, ActivityIndicator, StyleSheet, Text, Image } from "react-native";
+import { View, ActivityIndicator, StyleSheet, Text, Image,Alert,BackHandler, NativeModules } from "react-native";
 import { useEffect, useState } from "react";
 import { ensurePermission } from "../utils/permissions";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { Shield } from "lucide-react-native";
 import { colors } from "../utils/colors";
 import TranslatedText from "../components/TranslatedText";
+// import {isRootDetected} from "react-native-root-detection";
+import { isDeveloperModeEnabled } from "../utils/DeveloperSettings";
+const { RootDetectionModule } = NativeModules;
 
 export default function Index() {
   const { isAuthenticated, isLoading } = useAuth();
   const [permissionsReady, setPermissionsReady] = useState(false);
+
+  useEffect(() => {
+    async function checkSecurity() {
+      const rooted = await RootDetectionModule.isDeviceRooted();
+      const devMode = await isDeveloperModeEnabled();
+
+      if (rooted) {
+        Alert.alert("Security Alert", "This app cannot run on rooted devices.", [
+          { text: "Exit", onPress: () => BackHandler.exitApp() },
+        ]);
+      }
+
+      // ⚠️ Only check Dev Mode in Production
+      if (!__DEV__ && devMode) {
+        Alert.alert(
+          "Security Alert",
+          "Developer Options are enabled. Please disable to use this app.",
+          [{ text: "Exit", onPress: () => BackHandler.exitApp() }]
+        );
+      }
+    }
+
+    checkSecurity();
+  }, []);
+
 
   useEffect(() => {
     async function requestPermissions() {
@@ -173,3 +201,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
+
+
+
+
+

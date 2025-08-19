@@ -93,14 +93,14 @@ const LearnScreen = () => {
           ]}
           onPress={() => setSelectedCategory(category)}
         >
-          <TranslatedText
+          <Text
             style={[
               styles.categoryButtonText,
               selectedCategory === category && styles.categoryButtonTextActive,
             ]}
           >
             {category}
-          </TranslatedText>
+          </Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
@@ -120,35 +120,35 @@ const LearnScreen = () => {
           <View style={styles.learningTitleContainer}>
             <IconComponent size={20} color={PSBColors.primary.darkGreen} />
             <View style={styles.learningTitleText}>
-              <TranslatedText style={styles.learningTitle}>
+              <Text style={styles.learningTitle}>
                 {item.title}
-              </TranslatedText>
-              <TranslatedText style={styles.learningCategory}>
+              </Text>
+              <Text style={styles.learningCategory}>
                 {item.category}
-              </TranslatedText>
+              </Text>
             </View>
           </View>
           <ChevronIcon size={20} color="#6B7280" />
         </TouchableOpacity>
 
-        <TranslatedText style={styles.learningSummary}>
+        <Text style={styles.learningSummary}>
           {item.summary}
-        </TranslatedText>
-        <TranslatedText style={styles.learningContent}>
+        </Text>
+        <Text style={styles.learningContent}>
           {item.content}
-        </TranslatedText>
+        </Text>
 
         {isExpanded && (
           <View style={styles.expandedContent}>
             <View style={styles.learnMoreHeader}>
               <Lightbulb size={16} color="#F59E0B" />
-              <TranslatedText style={styles.learnMoreTitle}>
+              <Text style={styles.learnMoreTitle}>
                 Learn More
-              </TranslatedText>
+              </Text>
             </View>
-            <TranslatedText style={styles.learnMoreContent}>
+            <Text style={styles.learnMoreContent}>
               {item.learnMore}
-            </TranslatedText>
+            </Text>
           </View>
         )}
       </View>
@@ -160,9 +160,9 @@ const LearnScreen = () => {
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={PSBColors.primary.darkGreen} />
-          <TranslatedText style={styles.loadingText}>
+          <Text style={styles.loadingText}>
             Loading educational content...
-          </TranslatedText>
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -172,7 +172,7 @@ const LearnScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <BookOpen size={24} color={PSBColors.primary.darkGreen} />
-        <TranslatedText style={styles.headerTitle}>Learn & Grow</TranslatedText>
+        <Text style={styles.headerTitle}>Learn & Grow</Text>
       </View>
 
       {renderCategoryFilter()}

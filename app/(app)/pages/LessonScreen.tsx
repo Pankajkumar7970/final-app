@@ -62,15 +62,15 @@ const LessonScreen: React.FC = ({ route, navigation }: any) => {
               <ArrowLeft size={20} color="#1e40af" />
             </TouchableOpacity>
             <View style={styles.headerContent}>
-              <TranslatedText style={styles.title}>
+              <Text style={styles.title}>
                 {lesson.title}
-              </TranslatedText>
+              </Text>
               <View style={styles.metaContainer}>
                 <View style={styles.metaItem}>
                   <Clock size={16} color="#6b7280" />
-                  <TranslatedText style={styles.metaText}>
+                  <Text style={styles.metaText}>
                     {lesson.duration}
-                  </TranslatedText>
+                  </Text>
                 </View>
                 <View style={styles.metaItem}>
                   <BookOpen size={16} color="#6b7280" />
@@ -82,9 +82,9 @@ const LessonScreen: React.FC = ({ route, navigation }: any) => {
                       },
                     ]}
                   >
-                    <TranslatedText style={styles.badgeText}>
+                    <Text style={styles.badgeText}>
                       {lesson.difficulty}
-                    </TranslatedText>
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -97,12 +97,12 @@ const LessonScreen: React.FC = ({ route, navigation }: any) => {
               colors={["rgba(255,255,255,0.9)", "rgba(255,255,255,0.6)"]}
               style={styles.cardGradient}
             >
-              <TranslatedText style={styles.cardTitle}>
+              <Text style={styles.cardTitle}>
                 About This Lesson
-              </TranslatedText>
-              <TranslatedText style={styles.description}>
+              </Text>
+              <Text style={styles.description}>
                 {lesson.description}
-              </TranslatedText>
+              </Text>
             </LinearGradient>
           </View>
 
@@ -119,13 +119,13 @@ const LessonScreen: React.FC = ({ route, navigation }: any) => {
             >
               <View style={styles.quizContent}>
                 <View style={styles.quizInfo}>
-                  <TranslatedText style={styles.quizTitle}>
+                  <Text style={styles.quizTitle}>
                     Ready for the Quiz?
-                  </TranslatedText>
-                  <TranslatedText style={styles.quizDescription}>
+                  </Text>
+                  <Text style={styles.quizDescription}>
                     Test your understanding with a quick quiz to reinforce your
                     learning.
-                  </TranslatedText>
+                  </Text>
                 </View>
 
                 <TouchableOpacity
@@ -145,9 +145,9 @@ const LessonScreen: React.FC = ({ route, navigation }: any) => {
                       color="white"
                       style={{ marginRight: 8 }}
                     />
-                    <TranslatedText style={styles.quizButtonText}>
+                    <Text style={styles.quizButtonText}>
                       Take Quiz
-                    </TranslatedText>
+                    </Text>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>

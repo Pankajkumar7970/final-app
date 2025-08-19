@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import {
   View,
   Text,
@@ -57,7 +57,7 @@ const ProfileScreen = () => {
   const { resetState, setLoginState } = useGoals();
   const dispatch = useDispatch();
   const { signOut } = useAuth();
-  const userProfile = useSelector((state: any) => state.profile?.user);
+  const userProfile = useSelector((state) => state.profile?.user);
   const [userData, setUserData] = useState(null);
 
   const progress = useSharedValue(0);
@@ -72,41 +72,53 @@ const ProfileScreen = () => {
     nextLevelXP: 0,
   });
 
-  async function loadUserStats() {
-    console.log("Requesting user data.............................");
+  const loadUserStats = useCallback(async () => {
+  try {
+    console.log("Requesting user data...");
     const user = await API.get("/users/currentuser");
     console.log("User stats:", user.data.user);
 
     const stats = await API.get("/progress");
+
     const numCompletedCourses = stats.data.progress.filter(
       (item) => item.type === "course"
     ).length;
+
     const numCompletedScenarios = stats.data.progress.filter(
       (item) => item.type === "scenario"
     ).length;
+
     const numCompletedQuizzes = stats.data.progress.filter(
       (item) => item.type === "quiz"
     ).length;
+
     const numSimulatorsUsed = stats.data.progress.filter(
       (item) => item.type === "simulator"
     ).length;
-    setUserStats((prev) => {
-      return {
-        ...prev,
-        experiencePoints: user.data.user.totalExperiencePoints,
-        currentLevel: user.data.user.level,
-        nextLevelXP: levelThresholds[user.data.user.level],
-        coursesCompleted: numCompletedCourses,
-        scenariosCompleted: numCompletedScenarios,
-        quizzesCompleted: numCompletedQuizzes,
-        simulatorsUsed: numSimulatorsUsed,
-      };
-    });
-  }
 
-  useFocusEffect(() => {
-    loadUserStats();
-  });
+    setUserStats((prev) => ({
+      ...prev,
+      experiencePoints: user.data.user.totalExperiencePoints,
+      currentLevel: user.data.user.level,
+      nextLevelXP: levelThresholds[user.data.user.level],
+      coursesCompleted: numCompletedCourses,
+      scenariosCompleted: numCompletedScenarios,
+      quizzesCompleted: numCompletedQuizzes,
+      simulatorsUsed: numSimulatorsUsed,
+    }));
+  } catch (err) {
+    console.error("Error fetching stats:", err);
+  }
+}, []);
+
+
+    useFocusEffect(
+    useCallback(() => {
+      loadUserStats();
+    }, [loadUserStats])
+  );
+
+
 
   useFocusEffect(() => {
     const backHandler = BackHandler.addEventListener(

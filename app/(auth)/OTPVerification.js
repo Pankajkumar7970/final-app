@@ -153,7 +153,7 @@ const OTPVerification = ({ onVerificationComplete }) => {
 
         <View style={styles.otpContainer}>
           {otp.map((digit, index) => (
-            <SecureTextInput
+            <TextInput
               key={index}
               ref={(el) => (inputs.current[index] = el)}
               style={styles.otpInput}

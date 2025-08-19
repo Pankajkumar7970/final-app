@@ -184,12 +184,12 @@ export const LessonViewer = ({
           </View>
 
           {/* {isCompleted && ( */}
-          <View style={styles.completedBadge}>
+          {/* <View style={styles.completedBadge}>
             <CheckCircle size={16} color={colors.white} />
             <TranslatedText style={styles.completedBadgeText}>
               Completed
             </TranslatedText>
-          </View>
+          </View> */}
           {/* )} */}
         </View>
 

@@ -9,7 +9,7 @@ const LearnScreen = () => {
       <View style={styles.webViewContainer}>
         <WebView
           source={{
-            uri: "https://www.chatbase.co/chatbot-iframe/HfkB8AwS8RkSfjW84TkZB",
+            uri: "https://www.chatbase.co/chatbot-iframe/6YexqhkIYrotmlGE2ESgA",
           }}
           style={styles.webView}
           javaScriptEnabled={true}

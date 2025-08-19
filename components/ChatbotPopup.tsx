@@ -60,7 +60,7 @@ const ChatbotPopup: React.FC<ChatbotPopupProps> = ({ visible, onClose }) => {
           {/* Chatbot */}
           <WebView
             source={{
-              uri: "https://www.chatbase.co/chatbot-iframe/HfkB8AwS8RkSfjW84TkZB",
+              uri: "https://www.chatbase.co/chatbot-iframe/6YexqhkIYrotmlGE2ESgA",
             }}
             style={styles.webView}
             javaScriptEnabled

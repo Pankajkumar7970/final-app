@@ -46,7 +46,7 @@ import YoutubeIframe from "react-native-youtube-iframe";
 
 const fraudTypes = [
   {
-    id: 3,
+    id: 1,
     title: "Ponzi Scheme",
     icon: Banknote,
     url: "RPz95qoPFLQ",
@@ -322,7 +322,7 @@ const fraudTypes = [
   },
   {
     id: 5,
-    title: "Email Phishing",
+    title: "Phishing Scam",
     url: "/vF-YUQqOv5Y",
     icon: Mail,
     color: "#3B82F6",
@@ -395,7 +395,7 @@ const fraudTypes = [
     ],
   },
   {
-    id: 5,
+    id: 6,
     title: "Investment Fraud",
     icon: TrendingDown,
     color: "#8B5CF6",
@@ -461,7 +461,7 @@ const fraudTypes = [
     ],
   },
   {
-    id: 6,
+    id: 7,
     title: "Mortgage Fraud",
     icon: Home,
     color: "#0EA5E9",
@@ -526,8 +526,8 @@ const fraudTypes = [
     ],
   },
   {
-    id: 7,
-    title: "Tax Scams",
+    id: 8,
+    title: "Tax Scam",
     icon: FileWarning,
     color: "#F43F5E",
     description:
@@ -592,7 +592,7 @@ const fraudTypes = [
     ],
   },
   {
-    id: 8,
+    id: 9,
     title: "Lottery and Sweepstakes Fraud",
     icon: Gift,
     color: "#EAB308",
@@ -658,8 +658,8 @@ const fraudTypes = [
     ],
   },
   {
-    id: 9,
-    title: "Charity Scams",
+    id: 10,
+    title: "Charity Scam",
     icon: HeartHandshake,
     url: "EDAVW5TGeUw",
     color: "#F97316",
@@ -725,8 +725,8 @@ const fraudTypes = [
     ],
   },
   {
-    id: 10,
-    title: "Debt Relief Scams",
+    id: 11,
+    title: "Debt Relief Scam",
     icon: BadgeAlert,
     color: "#14B8A6",
     description: "False promises to eliminate or reduce debt for a fee",
@@ -790,8 +790,8 @@ const fraudTypes = [
     ],
   },
   {
-    id: 11,
-    title: "Fake Check Scams",
+    id: 12,
+    title: "Fake Check Scam",
     icon: CheckCheck,
     color: "#A855F7",
     description: "Fraud involving counterfeit checks that bounce after cashing",
@@ -855,7 +855,7 @@ const fraudTypes = [
     ],
   },
   {
-    id: 12,
+    id: 13,
     title: "Online Banking Fraud",
     icon: LockKeyhole,
     url: "IQW2oAjoHt4",
@@ -922,7 +922,7 @@ const fraudTypes = [
     ],
   },
   {
-    id: 13,
+    id: 14,
     title: "Employment Fraud",
     icon: Briefcase,
     color: "#7C3AED",
@@ -989,7 +989,7 @@ const fraudTypes = [
     ],
   },
   {
-    id: 14,
+    id: 15,
     title: "Student Loan Scam",
     icon: GraduationCap,
     color: "#3B82F6",
@@ -1055,7 +1055,7 @@ const fraudTypes = [
     ],
   },
   {
-    id: 1,
+    id: 16,
     title: "Old Tax Regime",
     icon: FileText,
     color: "#F97316",

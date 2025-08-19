@@ -21,17 +21,27 @@ import expo.modules.ReactNativeHostWrapper
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.gms.security.ProviderInstaller
+import com.pankaj465.FinGuard.DeveloperSettingsModule
 
 class MainApplication : Application(), ReactApplication {
 
   override val reactNativeHost: ReactNativeHost = ReactNativeHostWrapper(
     this,
     object : DefaultReactNativeHost(this) {
-      override fun getPackages(): List<ReactPackage> {
-        val packages = PackageList(this).packages
-        // Add manual packages here if needed
-        return packages
-      }
+      override fun getPackages(): MutableList<ReactPackage> {
+        return mutableListOf(
+          MainReactPackage(),
+          object : ReactPackage {
+            override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
+                return listOf(DeveloperSettingsModule(reactContext),RootDetectionModule(reactContext) )
+            }
+
+            override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
+                return emptyList()
+            }
+        }
+    )
+}
 
       override fun getJSMainModuleName(): String = ".expo/.virtual-metro-entry"
 

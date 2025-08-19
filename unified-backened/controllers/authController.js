@@ -429,6 +429,7 @@ exports.forgotPassword = async (req, res) => {
 exports.verifyOTP = async (req, res) => {
   try {
     const { email, otp } = req.body;
+    console.log("jhjghj", email, otp);
 
     if (!email || !otp) {
       return res

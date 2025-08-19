@@ -37,9 +37,9 @@ export const ScenarioSimulator = ({ scenarioId, onComplete, onExit }) => {
   const [currentScenario, setCurrentScenario] = useState(null);
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [showResult, setShowResult] = useState(false);
-  const [timeLeft, setTimeLeft] = (useState < number) | (null > null);
+  const [timeLeft, setTimeLeft] = useState(null);
   const [timeSpent, setTimeSpent] = useState(0);
-  const [startTime, setStartTime] = (useState < Date) | (null > null);
+  const [startTime, setStartTime] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -395,9 +395,9 @@ export const ScenarioSimulator = ({ scenarioId, onComplete, onExit }) => {
               >
                 <View style={styles.choiceContent}>
                   <View style={styles.choiceNumber}>
-                    <TTranslatedTextext style={styles.choiceNumberText}>
+                    <TranslatedText style={styles.choiceNumberText}>
                       {index + 1}
-                    </TTranslatedTextext>
+                    </TranslatedText>
                   </View>
                   <TranslatedText style={styles.choiceButtonText}>
                     {choice.text}

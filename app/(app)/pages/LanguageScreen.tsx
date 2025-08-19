@@ -96,13 +96,13 @@ const LanguageScreen: React.FC = ({ navigation }: any) => {
             >
               <Shield size={32} color="white" />
             </LinearGradient>
-            <TranslatedText style={styles.appTitle}>
+            <Text style={styles.appTitle}>
               SurakshaCall
-            </TranslatedText>
-            <TranslatedText style={styles.appSubtitle}>
+            </Text>
+            <Text style={styles.appSubtitle}>
               Learn to protect yourself from fraud with voice-based lessons and
               quizzes
-            </TranslatedText>
+            </Text>
           </View>
 
           {/* Language Selection */}
@@ -113,9 +113,9 @@ const LanguageScreen: React.FC = ({ navigation }: any) => {
             >
               <View style={styles.languageHeader}>
                 <Globe size={20} color={PSBColors.primary.darkGreen} />
-                <TranslatedText style={styles.languageTitle}>
+                <Text style={styles.languageTitle}>
                   Select Your Language
-                </TranslatedText>
+                </Text>
               </View>
 
               <TouchableOpacity
@@ -123,12 +123,12 @@ const LanguageScreen: React.FC = ({ navigation }: any) => {
                 onPress={() => setShowLanguageDropdown(!showLanguageDropdown)}
               >
                 <View style={styles.selectedLanguage}>
-                  <TranslatedText style={styles.languageFlag}>
+                  <Text style={styles.languageFlag}>
                     {selectedLang?.flag}
-                  </TranslatedText>
-                  <TranslatedText style={styles.languageName}>
+                  </Text>
+                  <Text style={styles.languageName}>
                     {selectedLang?.name}
-                  </TranslatedText>
+                  </Text>
                 </View>
                 <ChevronDown
                   size={20}
@@ -155,12 +155,12 @@ const LanguageScreen: React.FC = ({ navigation }: any) => {
                         setShowLanguageDropdown(false);
                       }}
                     >
-                      <TranslatedText style={styles.languageFlag}>
+                      <Text style={styles.languageFlag}>
                         {lang.flag}
-                      </TranslatedText>
-                      <TranslatedText style={styles.languageName}>
+                      </Text>
+                      <Text style={styles.languageName}>
                         {lang.name}
-                      </TranslatedText>
+                      </Text>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -171,13 +171,13 @@ const LanguageScreen: React.FC = ({ navigation }: any) => {
           {/* Lessons Section */}
           <View style={styles.lessonsSection}>
             <View style={styles.lessonsSectionHeader}>
-              <TranslatedText style={styles.lessonsTitle}>
+              <Text style={styles.lessonsTitle}>
                 Available Lessons
-              </TranslatedText>
-              <TranslatedText style={styles.lessonsCount}>
+              </Text>
+              <Text style={styles.lessonsCount}>
                 {currentLessons.length} lesson
                 {currentLessons.length !== 1 ? "s" : ""}
-              </TranslatedText>
+              </Text>
             </View>
 
             <Animated.View
@@ -198,12 +198,12 @@ const LanguageScreen: React.FC = ({ navigation }: any) => {
                     />
                   </View>
                   <View style={styles.lessonContent}>
-                    <TranslatedText style={styles.lessonTitle}>
+                    <Text style={styles.lessonTitle}>
                       {lesson.title}
-                    </TranslatedText>
-                    <TranslatedText style={styles.lessonDescription}>
+                    </Text>
+                    <Text style={styles.lessonDescription}>
                       {lesson.description}
-                    </TranslatedText>
+                    </Text>
                   </View>
                 </TouchableOpacity>
               ))}
@@ -212,9 +212,9 @@ const LanguageScreen: React.FC = ({ navigation }: any) => {
 
           {/* Footer */}
           <View style={styles.footer}>
-            <TranslatedText style={styles.footerText}>
+            <Text style={styles.footerText}>
               Stay safe, stay informed. Protect yourself from fraud.
-            </TranslatedText>
+            </Text>
           </View>
         </ScrollView>
       </SafeAreaView>

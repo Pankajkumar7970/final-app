@@ -1,4 +1,3 @@
-// components/TranslatedText.js
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -9,12 +8,26 @@ const TranslatedText = ({ children, style }) => {
 
   useEffect(() => {
     let mounted = true;
+
+    // If it's not a string, skip translation
+    if (typeof children !== "string") {
+      setTranslated(children);
+      return;
+    }
+
     if (children) {
       translateText(children).then((res) => {
-        if (mounted) setTranslated(res);
+        if (mounted) {
+          // 🔑 Remove unwanted commas/whitespace
+          const cleanResult = res.replace(/^,|,$/g, "").trim();
+          setTranslated(cleanResult);
+        }
       });
     }
-    return () => (mounted = false);
+
+    return () => {
+      mounted = false;
+    };
   }, [lang, children]);
 
   return <Text style={style}>{translated}</Text>;

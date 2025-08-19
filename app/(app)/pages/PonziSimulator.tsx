@@ -53,16 +53,6 @@ const { width } = Dimensions.get("window");
 const SimulatorScreen = ({ navigation }: any) => {
   const { theme } = useTheme();
 
-  useEffect(() => {
-    API.post("/simulator-use/ponzi-simulator");
-    //  const Exp = response.data.progress.experiencePoints;
-    Alert.alert(
-      "Exp Earned!",
-      `Congratulations!!! You have earned Exp points.`,
-      [{ text: "OK" }]
-    );
-  }, []);
-
   const [simulation, setSimulation] = useState<SimulationState>({
     investors: [
       {
@@ -165,6 +155,13 @@ const SimulatorScreen = ({ navigation }: any) => {
             simulation.investors.filter((inv) => inv.netProfit < 0).length
           } people lost their money.`
         );
+         API.post("/simulator-use/ponzi-simulator");
+    //  const Exp = response.data.progress.experiencePoints;
+    Alert.alert(
+      "Exp Earned!",
+      `Congratulations!!! You have earned Exp points.`,
+      [{ text: "OK" }]
+    );
       }
     };
 

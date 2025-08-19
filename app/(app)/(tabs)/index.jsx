@@ -78,6 +78,7 @@ const LanguageSwitcher = () => {
         style={styles.dropdownButton}
         onPress={() => setOpen(!open)}
         activeOpacity={0.8}
+        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       >
         <Text style={styles.dropdownButtonText}>
           {languages.find((l) => l.code === lang)?.label}
@@ -95,6 +96,7 @@ const LanguageSwitcher = () => {
                 styles.optionButton,
                 lang === langObj.code && styles.optionSelected,
               ]}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               onPress={() => handleSelect(langObj)}
             >
               <Text
@@ -201,7 +203,7 @@ const home = () => {
       description: "Learn to spot phishing attempts",
       icon: Smartphone,
       color: "#E91E63",
-      gradient: ["#667eea", "#764ba2"] as const,
+      gradient: ["#667eea", "#764ba2"],
       route: "/pages/PhishingSimulator",
       difficulty: "Beginner",
     },
@@ -211,7 +213,7 @@ const home = () => {
       description: "Understand OTP scams",
       icon: Lock,
       color: "#9C27B0",
-      gradient: ["#f5576c", "#F50057"] as const,
+      gradient: ["#f5576c", "#F50057"],
       route: "/pages/identityTheftSimulator",
       difficulty: "Intermediate",
     },
@@ -221,7 +223,7 @@ const home = () => {
       description: "Identify loan fraud patterns",
       icon: CreditCard,
       color: "#00BCD4",
-      gradient: ["#00f2fe", "#4facfe"] as const,
+      gradient: ["#00f2fe", "#4facfe"],
       route: "/pages/loanScamSimulator",
       difficulty: "Advanced",
     },
@@ -231,7 +233,7 @@ const home = () => {
       description: "Spot lottery scams",
       icon: Award,
       color: "#FF9800",
-      gradient: ["#8b5cf6", "#a855f7"] as const,
+      gradient: ["#8b5cf6", "#a855f7"],
       route: "/pages/lotteryFraudSimulator",
       difficulty: "Beginner",
     },
@@ -287,7 +289,7 @@ const home = () => {
   const scrollRef = useRef<ScrollView>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const slideUpAnim = useRef(new Animated.Value(50)).current;
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [selectedOption, setSelectedOption] = useState(null);
   const [isCorrect, setIsCorrect] = useState(false);
   const [isPopupVisible, setPopupVisible] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -410,7 +412,7 @@ const home = () => {
     return () => clearInterval(interval);
   }, [currentIndex]);
 
-  const handleScroll = (event: any) => {
+  const handleScroll = (event) => {
     const xOffset = event.nativeEvent.contentOffset.x;
     const newIndex = Math.round(xOffset / (width - 30));
     setCurrentIndex(newIndex);
@@ -431,16 +433,16 @@ const home = () => {
     }).start();
   };
 
-  const handleOptionPress = (index: number) => {
+  const handleOptionPress = (index) => {
     setSelectedOption(index);
     const correct = index === dailyQuiz.correctAnswer;
     setIsCorrect(correct);
   };
-  const handleCardPress = (route: string) => {
-    router.push(route as any);
+  const handleCardPress = (route) => {
+    router.push(route);
   };
 
-  const getDifficultyColor = (difficulty: string) => {
+  const getDifficultyColor = (difficulty) => {
     switch (difficulty.toLowerCase()) {
       case "beginner":
         return "#10B981";
@@ -594,7 +596,7 @@ const home = () => {
                   ]}
                   onPressIn={handlePressIn}
                   onPressOut={handlePressOut}
-                  onPress={() => router.push(feature.route as any)}
+                  onPress={() => router.push(feature.route)}
                   activeOpacity={0.85}
                 >
                   <LinearGradient

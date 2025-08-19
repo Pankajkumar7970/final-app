@@ -259,7 +259,7 @@ const HomeScreen = () => {
       ]).start(() => {
         router.replace("/(tabs)");
       });
-    }, 2200);
+    }, 5200);
 
     return () => clearTimeout(timer);
   }, []);

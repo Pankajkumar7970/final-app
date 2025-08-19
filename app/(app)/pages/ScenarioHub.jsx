@@ -13,10 +13,10 @@ import TranslatedText from "../../../components/TranslatedText";
 const COMPLETED_SCENARIOS_KEY = "completed_scenarios";
 
 export default function ScenarioHub() {
-  const [currentScenarioId, setCurrentScenarioId] = useState<string | null>(
+  const [currentScenarioId, setCurrentScenarioId] = useState(
     null
   );
-  const [completedScenarios, setCompletedScenarios] = useState<string[]>([]);
+  const [completedScenarios, setCompletedScenarios] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useFocusEffect(() => {
@@ -58,7 +58,7 @@ export default function ScenarioHub() {
     }
   };
 
-  const handleScenarioSelect = (scenarioId: string) => {
+  const handleScenarioSelect = (scenarioId) => {
     setCurrentScenarioId(scenarioId);
   };
 

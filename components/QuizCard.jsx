@@ -20,7 +20,7 @@ const QuizCard = ({ quiz, onPress }) => {
   // const score = progress[quiz.id]?.score || 0;
   // const attempts = progress[quiz.id]?.attempts || 0;
   const [completedQuizzes, setCompletedQuizzes] = React.useState([]);
-  const [score, setScore] = React.useState < number > 0;
+  const [score, setScore] = React.useState(0);
 
   useEffect(() => {
     // Load completed quizzes from local storage or server

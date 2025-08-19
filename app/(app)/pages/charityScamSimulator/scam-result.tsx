@@ -214,7 +214,7 @@ export default function ScamResultScreen() {
 
             <TouchableOpacity
               style={styles.learnButton}
-              onPress={() => router.replace("/pages/education")}
+              onPress={() => router.replace("/pages/charityScamSimulator/education")}
             >
               <BookOpen size={20} color="#3B82F6" />
               <Text style={styles.learnButtonText}>Learn More</Text>

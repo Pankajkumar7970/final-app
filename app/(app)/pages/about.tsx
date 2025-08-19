@@ -33,11 +33,11 @@ export default function AboutScreen() {
   });
 
   const handleEmailPress = () => {
-    Linking.openURL("mailto:contact@fineduguard.com");
+    Linking.openURL("mailto:contact@xxxxxxx.com");
   };
 
   const handleWebsitePress = () => {
-    Linking.openURL("https://www.fineduguard.com");
+    Linking.openURL("https://www.xxxxxxxx.com");
   };
 
   if (!fontsLoaded) {
